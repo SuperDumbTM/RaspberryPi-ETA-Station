@@ -86,7 +86,7 @@ def main():
                 epd.init()
                 epd.clear()
         else:
-            Logger.set_log_level('info')
+            Logger.set_log_level(Logger.INFO)
         
         # get and draw ETA
         Logger.log.info("Drawing ETA information")
