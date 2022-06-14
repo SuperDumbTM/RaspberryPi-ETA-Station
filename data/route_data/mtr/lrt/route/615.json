@@ -1,0 +1,436 @@
+{
+    "inbound": [
+        {
+            "stop_code": "YLL",
+            "stop": 600,
+            "name_ch": "\u5143\u6717",
+            "name_en": "Yuen Long",
+            "seq": 1,
+            "platform_id": 4
+        },
+        {
+            "stop_code": "TTR",
+            "stop": 590,
+            "name_ch": "\u5927\u68e0\u8def",
+            "name_en": "Tai Tong Road",
+            "seq": 2,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "HLR",
+            "stop": 580,
+            "name_ch": "\u5eb7\u6a02\u8def",
+            "name_en": "Hong Lok Road",
+            "seq": 3,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "FNR",
+            "stop": 570,
+            "name_ch": "\u8c50\u5e74\u8def",
+            "name_en": "Fung Nin Road",
+            "seq": 4,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "SPW",
+            "stop": 560,
+            "name_ch": "\u6c34\u908a\u570d",
+            "name_en": "Shui Pin Wai",
+            "seq": 5,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "PIS",
+            "stop": 400,
+            "name_ch": "\u5c4f\u5c71",
+            "name_en": "Ping Shan",
+            "seq": 6,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TOF",
+            "stop": 390,
+            "name_ch": "\u5858\u574a\u6751",
+            "name_en": "Tong Fong Tsuen",
+            "seq": 7,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "HSK",
+            "stop": 380,
+            "name_ch": "\u6d2a\u6c34\u6a4b",
+            "name_en": "Hung Shui Kiu",
+            "seq": 8,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "CUT",
+            "stop": 370,
+            "name_ch": "\u937e\u5c4b\u6751",
+            "name_en": "Chung Uk Tsuen",
+            "seq": 9,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "NAW",
+            "stop": 360,
+            "name_ch": "\u6ce5\u570d",
+            "name_en": "Nai Wai",
+            "seq": 10,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "LTE",
+            "stop": 350,
+            "name_ch": "\u85cd\u5730",
+            "name_en": "Lam Tei",
+            "seq": 11,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "SHL",
+            "stop": 100,
+            "name_ch": "\u5146\u5eb7",
+            "name_en": "Siu Hong",
+            "seq": 12,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "CHC",
+            "stop": 120,
+            "name_ch": "\u9752\u677e",
+            "name_en": "Ching Chung",
+            "seq": 13,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "KIS",
+            "stop": 130,
+            "name_ch": "\u5efa\u751f",
+            "name_en": "Kin Sang",
+            "seq": 14,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TNK",
+            "stop": 140,
+            "name_ch": "\u7530\u666f",
+            "name_en": "Tin King",
+            "seq": 15,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "LEK",
+            "stop": 150,
+            "name_ch": "\u826f\u666f",
+            "name_en": "Leung King",
+            "seq": 16,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "SAW",
+            "stop": 160,
+            "name_ch": "\u65b0\u570d",
+            "name_en": "San Wai",
+            "seq": 17,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "SHP",
+            "stop": 170,
+            "name_ch": "\u77f3\u6392",
+            "name_en": "Shek Pai",
+            "seq": 18,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "MIK",
+            "stop": 200,
+            "name_ch": "\u9cf4\u7434",
+            "name_en": "Ming Kum",
+            "seq": 19,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TWN",
+            "stop": 50,
+            "name_ch": "\u9752\u96f2",
+            "name_en": "Tsing Wun",
+            "seq": 20,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TSS",
+            "stop": 40,
+            "name_ch": "\u9752\u5c71\u6751",
+            "name_en": "Tsing Shan Tsuen",
+            "seq": 21,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "LUM",
+            "stop": 30,
+            "name_ch": "\u9f8d\u9580",
+            "name_en": "Lung Mun",
+            "seq": 22,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "LRD",
+            "stop": 20,
+            "name_ch": "\u8f15\u9435\u8eca\u5ee0",
+            "name_en": "Light Rail Depot",
+            "seq": 23,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "BUT",
+            "stop": 15,
+            "name_ch": "\u8774\u8776",
+            "name_en": "Butterfly",
+            "seq": 24,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "MEG",
+            "stop": 10,
+            "name_ch": "\u7f8e\u6a02",
+            "name_en": "Melody Garden",
+            "seq": 25,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "FEP",
+            "stop": 1,
+            "name_ch": "\u5c6f\u9580\u78bc\u982d",
+            "name_en": "Tuen Mun Ferry Pier",
+            "seq": 26,
+            "platform_id": 3
+        }
+    ],
+    "outbound": [
+        {
+            "stop_code": "FEP",
+            "stop": 1,
+            "name_ch": "\u5c6f\u9580\u78bc\u982d",
+            "name_en": "Tuen Mun Ferry Pier",
+            "seq": 1,
+            "platform_id": 5
+        },
+        {
+            "stop_code": "MEG",
+            "stop": 10,
+            "name_ch": "\u7f8e\u6a02",
+            "name_en": "Melody Garden",
+            "seq": 2,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "BUT",
+            "stop": 15,
+            "name_ch": "\u8774\u8776",
+            "name_en": "Butterfly",
+            "seq": 3,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "LRD",
+            "stop": 20,
+            "name_ch": "\u8f15\u9435\u8eca\u5ee0",
+            "name_en": "Light Rail Depot",
+            "seq": 4,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "LUM",
+            "stop": 30,
+            "name_ch": "\u9f8d\u9580",
+            "name_en": "Lung Mun",
+            "seq": 5,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TSS",
+            "stop": 40,
+            "name_ch": "\u9752\u5c71\u6751",
+            "name_en": "Tsing Shan Tsuen",
+            "seq": 6,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TWN",
+            "stop": 50,
+            "name_ch": "\u9752\u96f2",
+            "name_en": "Tsing Wun",
+            "seq": 7,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "MIK",
+            "stop": 200,
+            "name_ch": "\u9cf4\u7434",
+            "name_en": "Ming Kum",
+            "seq": 8,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "SHP",
+            "stop": 170,
+            "name_ch": "\u77f3\u6392",
+            "name_en": "Shek Pai",
+            "seq": 9,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "SAW",
+            "stop": 160,
+            "name_ch": "\u65b0\u570d",
+            "name_en": "San Wai",
+            "seq": 10,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "LEK",
+            "stop": 150,
+            "name_ch": "\u826f\u666f",
+            "name_en": "Leung King",
+            "seq": 11,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TNK",
+            "stop": 140,
+            "name_ch": "\u7530\u666f",
+            "name_en": "Tin King",
+            "seq": 12,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "KIS",
+            "stop": 130,
+            "name_ch": "\u5efa\u751f",
+            "name_en": "Kin Sang",
+            "seq": 13,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "CHC",
+            "stop": 120,
+            "name_ch": "\u9752\u677e",
+            "name_en": "Ching Chung",
+            "seq": 14,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "SHL",
+            "stop": 100,
+            "name_ch": "\u5146\u5eb7",
+            "name_en": "Siu Hong",
+            "seq": 15,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "LTE",
+            "stop": 350,
+            "name_ch": "\u85cd\u5730",
+            "name_en": "Lam Tei",
+            "seq": 16,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "NAW",
+            "stop": 360,
+            "name_ch": "\u6ce5\u570d",
+            "name_en": "Nai Wai",
+            "seq": 17,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "CUT",
+            "stop": 370,
+            "name_ch": "\u937e\u5c4b\u6751",
+            "name_en": "Chung Uk Tsuen",
+            "seq": 18,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "HSK",
+            "stop": 380,
+            "name_ch": "\u6d2a\u6c34\u6a4b",
+            "name_en": "Hung Shui Kiu",
+            "seq": 19,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TOF",
+            "stop": 390,
+            "name_ch": "\u5858\u574a\u6751",
+            "name_en": "Tong Fong Tsuen",
+            "seq": 20,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "PIS",
+            "stop": 400,
+            "name_ch": "\u5c4f\u5c71",
+            "name_en": "Ping Shan",
+            "seq": 21,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "SPW",
+            "stop": 560,
+            "name_ch": "\u6c34\u908a\u570d",
+            "name_en": "Shui Pin Wai",
+            "seq": 22,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "FNR",
+            "stop": 570,
+            "name_ch": "\u8c50\u5e74\u8def",
+            "name_en": "Fung Nin Road",
+            "seq": 23,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "HLR",
+            "stop": 580,
+            "name_ch": "\u5eb7\u6a02\u8def",
+            "name_en": "Hong Lok Road",
+            "seq": 24,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TTR",
+            "stop": 590,
+            "name_ch": "\u5927\u68e0\u8def",
+            "name_en": "Tai Tong Road",
+            "seq": 25,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "YLL",
+            "stop": 600,
+            "name_ch": "\u5143\u6717",
+            "name_en": "Yuen Long",
+            "seq": 26,
+            "platform_id": 4
+        }
+    ],
+    "details": {
+        "outbound": {
+            "linename_ch": "615\u7dab\uff08\u5c6f\u9580\u78bc\u982d\u2192\u5143\u6717\uff09",
+            "linename_en": "Route 615 (Tuen Mun Ferry Pier\u2192Yuen Long)",
+            "orig_id": 1,
+            "dest_id": 600
+        },
+        "inbound": {
+            "linename_ch": "615\u7dab\uff08\u5143\u6717\u2192\u5c6f\u9580\u78bc\u982d\uff09",
+            "linename_en": "Route 615 (Yuen Long\u2192Tuen Mun Ferry Pier)",
+            "orig_id": 600,
+            "dest_id": 1
+        }
+    }
+}

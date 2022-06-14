@@ -1,0 +1,276 @@
+{
+    "stop":{
+        "1":{
+            "name_ch":"屯門碼頭",
+            "name_en":"Tuen Mun Ferry Pier"
+        },
+        "10":{
+            "name_ch":"美樂",
+            "name_en":"Melody Garden"
+        },
+        "15":{
+            "name_ch":"蝴蝶",
+            "name_en":"Butterfly"
+        },
+        "20":{
+            "name_ch":"輕鐵車廠",
+            "name_en":"Light Rail Depot"
+        },
+        "30":{
+            "name_ch":"龍門",
+            "name_en":"Lung Mun"
+        },
+        "40":{
+            "name_ch":"青山村",
+            "name_en":"Tsing Shan Tsuen"
+        },
+        "50":{
+            "name_ch":"青雲",
+            "name_en":"Tsing Wun"
+        },
+        "60":{
+            "name_ch":"建安",
+            "name_en":"Kin On"
+        },
+        "70":{
+            "name_ch":"河田",
+            "name_en":"Ho Tin"
+        },
+        "75":{
+            "name_ch":"蔡意橋",
+            "name_en":"Choy Yee Bridge"
+        },
+        "80":{
+            "name_ch":"澤豐",
+            "name_en":"Affluence"
+        },
+        "90":{
+            "name_ch":"屯門醫院",
+            "name_en":"Tuen Mun Hospital"
+        },
+        "100":{
+            "name_ch":"兆康",
+            "name_en":"Siu Hong"
+        },
+        "110":{
+            "name_ch":"麒麟",
+            "name_en":"Kei Lun"
+        },
+        "120":{
+            "name_ch":"青松",
+            "name_en":"Ching Chung"
+        },
+        "130":{
+            "name_ch":"建生",
+            "name_en":"Kin Sang"
+        },
+        "140":{
+            "name_ch":"田景",
+            "name_en":"Tin King"
+        },
+        "150":{
+            "name_ch":"良景",
+            "name_en":"Leung King"
+        },
+        "160":{
+            "name_ch":"新圍",
+            "name_en":"San Wai"
+        },
+        "170":{
+            "name_ch":"石排",
+            "name_en":"Shek Pai"
+        },
+        "180":{
+            "name_ch":"山景 (北)",
+            "name_en":"Shan King (North)"
+        },
+        "190":{
+            "name_ch":"山景 (南)",
+            "name_en":"Shan King (South)"
+        },
+        "200":{
+            "name_ch":"鳴琴",
+            "name_en":"Ming Kum"
+        },
+        "212":{
+            "name_ch":"大興 (北)",
+            "name_en":"Tai Hing (North)"
+        },
+        "220":{
+            "name_ch":"大興 (南)",
+            "name_en":"Tai Hing (South)"
+        },
+        "230":{
+            "name_ch":"銀圍",
+            "name_en":"Ngan Wai"
+        },
+        "240":{
+            "name_ch":"兆禧",
+            "name_en":"Siu Hei"
+        },
+        "250":{
+            "name_ch":"屯門泳池",
+            "name_en":"Tuen Mun Swimming Pool"
+        },
+        "260":{
+            "name_ch":"豐景園",
+            "name_en":"Goodview Garden"
+        },
+        "265":{
+            "name_ch":"兆麟",
+            "name_en":"Siu Lun"
+        },
+        "270":{
+            "name_ch":"安定",
+            "name_en":"On Ting"
+        },
+        "275":{
+            "name_ch":"友愛",
+            "name_en":"Yau Oi"
+        },
+        "280":{
+            "name_ch":"市中心",
+            "name_en":"Town Centre"
+        },
+        "295":{
+            "name_ch":"屯門",
+            "name_en":"Tuen Mun"
+        },
+        "300":{
+            "name_ch":"杯渡",
+            "name_en":"Pui To"
+        },
+        "310":{
+            "name_ch":"何福堂",
+            "name_en":"Hoh Fuk Tong"
+        },
+        "320":{
+            "name_ch":"新墟",
+            "name_en":"San Hui"
+        },
+        "330":{
+            "name_ch":"景峰",
+            "name_en":"Prime View"
+        },
+        "340":{
+            "name_ch":"鳳地",
+            "name_en":"Fung Tei"
+        },
+        "350":{
+            "name_ch":"藍地",
+            "name_en":"Lam Tei"
+        },
+        "360":{
+            "name_ch":"泥圍",
+            "name_en":"Nai Wai"
+        },
+        "370":{
+            "name_ch":"鍾屋村",
+            "name_en":"Chung Uk Tsuen"
+        },
+        "380":{
+            "name_ch":"洪水橋",
+            "name_en":"Hung Shui Kiu"
+        },
+        "390":{
+            "name_ch":"塘坊村",
+            "name_en":"Tong Fong Tsuen"
+        },
+        "400":{
+            "name_ch":"屏山",
+            "name_en":"Ping Shan"
+        },
+        "425":{
+            "name_ch":"坑尾村",
+            "name_en":"Hang Mei Tsuen"
+        },
+        "430":{
+            "name_ch":"天水圍",
+            "name_en":"Tin Shui Wai"
+        },
+        "435":{
+            "name_ch":"天慈",
+            "name_en":"Tin Tsz"
+        },
+        "445":{
+            "name_ch":"天耀",
+            "name_en":"Tin Yiu"
+        },
+        "448":{
+            "name_ch":"樂湖",
+            "name_en":"Locwood"
+        },
+        "450":{
+            "name_ch":"天湖",
+            "name_en":"Tin Wu"
+        },
+        "455":{
+            "name_ch":"銀座",
+            "name_en":"Ginza"
+        },
+        "460":{
+            "name_ch":"天瑞",
+            "name_en":"Tin Shui"
+        },
+        "468":{
+            "name_ch":"頌富",
+            "name_en":"Chung Fu"
+        },
+        "480":{
+            "name_ch":"天富",
+            "name_en":"Tin Fu"
+        },
+        "490":{
+            "name_ch":"翠湖",
+            "name_en":"Chestwood"
+        },
+        "500":{
+            "name_ch":"天榮",
+            "name_en":"Tin Wing"
+        },
+        "510":{
+            "name_ch":"天悅",
+            "name_en":"Tin Yuet"
+        },
+        "520":{
+            "name_ch":"天秀",
+            "name_en":"Tin Sau"
+        },
+        "530":{
+            "name_ch":"濕地公園",
+            "name_en":"Wetland Park"
+        },
+        "540":{
+            "name_ch":"天恒",
+            "name_en":"Tin Heng"
+        },
+        "550":{
+            "name_ch":"天逸",
+            "name_en":"Tin Yat"
+        },
+        "560":{
+            "name_ch":"水邊圍",
+            "name_en":"Shui Pin Wai"
+        },
+        "570":{
+            "name_ch":"豐年路",
+            "name_en":"Fung Nin Road"
+        },
+        "580":{
+            "name_ch":"康樂路",
+            "name_en":"Hong Lok Road"
+        },
+        "590":{
+            "name_ch":"大棠路",
+            "name_en":"Tai Tong Road"
+        },
+        "600":{
+            "name_ch":"元朗",
+            "name_en":"Yuen Long"
+        },
+        "920":{
+            "name_ch":"三聖",
+            "name_en":"Sam Shing"
+        }
+    }
+}

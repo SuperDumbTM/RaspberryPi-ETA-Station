@@ -1,0 +1,25 @@
+import json
+
+with open("data/mtrb/route.json","r",encoding="utf-8") as f:
+    data = json.load(f)
+
+    for route in data:
+        data[route].setdefault("details",{})
+        for dir in data[route]["stations"]:
+            data[route]["details"].setdefault(dir,{})
+            data[route]["details"][dir].setdefault("orig",{
+                "name_zh":data[route]["stations"][dir]["orig"]["name_zh"],
+                "name_en":data[route]["stations"][dir]["orig"]["name_en"],
+                "station_id":data[route]["stations"][dir]["orig"]["station_id"],
+                })
+            data[route]["details"][dir].setdefault("dest",{
+                "name_zh":data[route]["stations"][dir]["dest"]["name_zh"],
+                "name_en":data[route]["stations"][dir]["dest"]["name_en"],
+                "station_id":data[route]["stations"][dir]["dest"]["station_id"],
+                })
+            
+            #del data[route]["stations"][dir]["orig"]
+            #del data[route]["stations"][dir]["dest"]
+
+    with open("data/mtrb/test.json","w+",encoding="utf-8") as g:
+        g.write(json.dumps(data))
