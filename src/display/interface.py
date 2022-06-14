@@ -101,7 +101,7 @@ class DisplayABC:
         self.logger.debug("Refreshing the display in full update mode")
 
     @abstractmethod
-    def partial_update(self, deg: int):
+    def partial_update(self, deg: int, intv: int, times: int):
         self.logger.debug("Refreshing the display in partial update mode")
 
     @abstractmethod

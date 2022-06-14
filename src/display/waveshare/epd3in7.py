@@ -17,18 +17,18 @@ LAYOUT = {
     3:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 15,
-        'f_mins': 18,
+        'f_time': 25,
+        'f_mins': 25,
         'f_min': 18,
         'f_lmins': 14,
         'etax': 170,
-        'etay': 2,
-        'minsx': 190,
-        'minsy': 2,
-        'minx': 215,
-        'miny': 5,
-        'lminsx': 170,
-        'lminsy': 5,
+        'etay': 0,
+        'minx': 200,
+        'miny': 4,
+        'timex': 225,
+        'timey': 1,
+        'lminx': 170,
+        'lminy': 6,
         'eta_pad': 25,
         'min_desc': "分"
     },
@@ -36,18 +36,18 @@ LAYOUT = {
     2:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 15,
-        'f_mins': 20,
+        'f_time': 30,
+        'f_mins': 33,
         'f_min': 20,
         'f_lmins': 16,
         'etax': 170,
-        'etay': 2,
-        'minsx': 190,
-        'minsy': 2,
-        'minx': 230,
-        'miny': 25,
-        'lminsx': 170,
-        'lminsy': 7,
+        'etay': 0,
+        'minx': 203,
+        'miny': 10,
+        'timex': 225,
+        'timey': 5,
+        'lminx': 170,
+        'lminy': 12,
         'eta_pad': 35,
         'min_desc': "分"
     },
@@ -55,18 +55,18 @@ LAYOUT = {
     1:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 20,
-        'f_mins': 25,
-        'f_min': 25,
+        'f_time': 40,
+        'f_mins': 35,
+        'f_min': 35,
         'f_lmins': 14,
         'etax': 170,
-        'etay': 10,
-        'minsx': 200,
-        'minsy': 10,
-        'minx': 170,
-        'miny': 40,
-        'lminsx': 170,
-        'lminsy': 25,
+        'etay': 0,
+        'minx': 205,
+        'miny': 0,
+        'timex': 170,
+        'timey': 35,
+        'lminx': 180,
+        'lminy': 30,
         'eta_pad': 35,
         'min_desc': "分鐘"
     }
@@ -118,15 +118,18 @@ class Epd3in7(DisplayABC):
     def can_partial():
         return PARTIAL
 
-    def partial_update(self, deg: int):
-        super().partial_update(deg)
+    def partial_update(self, deg: int, intv: int, times: int):
+        super().full_update(deg)
+        self.full_update()
         
-        _img = Image.new('1', (self.epd_width, self.epd_height), 255)
-        ImageDraw.Draw(_img).rectangle((0, 150, self.epd_width, self.epd_height), fill = 255)
-        self.epd.display_1Gray(self.epd.getbuffer(_img.rotate(deg)))
-        time.sleep(0.3)
-        self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
-
+        while times > 1:
+            time.sleep(intv)
+            super().partial_update(deg)
+            self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
+            self.draw()
+            self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
+            
+            times -= 1
 
     def draw(self):
         '''

@@ -34,10 +34,14 @@ parser.add_argument('-L', '--log-path', default="log/", type=str, dest="log_dir"
 parser.add_argument('--log-level', default="warning", type=str.lower, choices=["debug","info","warning","error","critical"], dest="log_lv", 
                     help="Specify the log level for both stdout and fout.  (Default: [warning])")
 # EPD
-parser.add_argument('-x', '--dry-run', action="store_true", dest="dryrun", 
+parser.add_argument('-d', '--dry-run', action="store_true", dest="dryrun", 
                     help="Run the program without printing the output to the display.  \nflags -i, -v, -l will be automatically set, and log level will be set to [debugpythj]")
 parser.add_argument('-p', '--partial', default=None, type=int, dest="partial", 
                     help="Updating the e-paper display using partial update mode if supported (-p/--partial <pt update mode no>)")
+parser.add_argument('-t', '--partial-interval', default=60, type=int, dest="interval", 
+                    help="Only for partial update.  Update display every -t/--partial-interval <second>.  Defaule: 60s")
+parser.add_argument('-c', '--partial-cycle', default=10, type=int, dest="cycle", 
+                    help="Only for partial update.  Update -c/--partial-cycle <times>, then exits the program.  Default 10 times")
 parser.add_argument('-r', '--rotate', default=0, type=int, dest="degree", 
                     help="Rotating the output by -r/--rotate <degree>")
 
@@ -71,7 +75,6 @@ def obj_setup():
 def main():
     global epd
     epd = obj_setup()
-
     
     if epd is not None:
         if not args.dryrun:
@@ -87,6 +90,8 @@ def main():
             else:
                 epd.init()
                 epd.clear()
+        else:
+            Logger.set_log_level('info')
         
         Logger.log.info("Drawing ETA information")
         epd.draw()
@@ -98,7 +103,7 @@ def main():
         if not args.dryrun: 
             Logger.log.info(f"Displaying output to e-paper display")
             if args.partial is not None:
-                epd.partial_update(args.degree)
+                epd.partial_update(args.degree, args.interval, args.cycle)
             else:
                 epd.full_update(args.degree)
     else:
