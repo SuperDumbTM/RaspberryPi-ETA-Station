@@ -80,7 +80,7 @@ class Epd3in7(DisplayABC):
     black = epd.GRAY4
     white = epd.GRAY1
 
-    def __init__(self, size: int) -> None:
+    def __init__(self, root: str,size: int) -> None:
         '''
         mode:
             - 0->4Gary mode
@@ -89,7 +89,7 @@ class Epd3in7(DisplayABC):
         self.row_h = 80
         self.row_size = 6       
         self.LAYOUT = LAYOUT
-        super().__init__(size)
+        super().__init__(root, size)
         
         
         
@@ -105,10 +105,6 @@ class Epd3in7(DisplayABC):
     def clear(self):
         super().clear()
         self.epd.Clear(0xFF, self.mode)
-
-    def exit(self):
-        super().exit()
-        self.epd.sleep()
         
     def full_update(self, deg: int):
         super().full_update(deg)
@@ -203,10 +199,6 @@ class Epd3in7(DisplayABC):
                         else:
                             self.drawing.text((self.lyo['lminx'], self.lyo['lminy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_lmins)
                     else: break
-
-    def save_image(self):
-        super().save_image()
-        self.img.save("tmp/output.bmp")
 
 
 CLS = Epd3in7

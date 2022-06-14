@@ -1,7 +1,7 @@
 import os
 import sys
 from abc import ABC, abstractmethod
-from PIL import Image,ImageDraw,ImageFont
+from PIL import ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
 from src.config import _configparser
 from src.log.mylogger import Logger
@@ -17,8 +17,9 @@ class DisplayABC:
     LAYOUT: dict
     logger = Logger.log
     
-    def __init__(self, size: int) -> None:
+    def __init__(self, root: str, size: int) -> None:
         self.logger.debug(f"Initializing class {self.__class__.__name__}")
+        self.root = root
         self.__path_check()
         
         if size > 3:
@@ -54,23 +55,23 @@ class DisplayABC:
         return self.partial
     
     def __path_check(self):
-        if not os.path.exists("conf/epd.conf"):
+        if not os.path.exists(os.path.join(self.root, "conf", "epd.conf")):
             self.logger.critical("epd.conf is missing")
             raise FileNotFoundError()
-        if not os.path.exists("conf/eta.conf"):
+        if not os.path.exists(os.path.join(self.root, "conf", "eta.conf")):
             self.logger.critical("epd.conf is missing")
             raise FileNotFoundError("eta.conf")
-        if not os.path.exists("font/"):
+        if not os.path.exists(os.path.join(self.root, "font")):
             self.logger.critical("font/ is missing")
             raise FileNotFoundError()
-        if not os.path.exists("data/"):
+        if not os.path.exists(os.path.join(self.root, "data")):
             self.logger.warning("data/ is missing")
-            os.makedirs("data/")
-            os.makedirs("data/route_data")
-            os.makedirs("data/route_data/kmb")
-            os.makedirs("data/route_data/mtr")
-            os.makedirs("data/route_data/mtr/bus")
-            os.makedirs("data/route_data/mtr/bus/lrt")
+            os.makedirs(os.path.join(self.root, "data"))
+            os.makedirs(os.path.join(self.root, "data", "route_data"))
+            os.makedirs(os.path.join(self.root, "data", "route_data", "kmb"))
+            os.makedirs(os.path.join(self.root, "data", "route_data", "mtr"))
+            os.makedirs(os.path.join(self.root, "data", "route_data", "mtr", "bus"))
+            os.makedirs(os.path.join(self.root, "data", "route_data", "mtr", "lrt"))
 
     def set_mode(self, mode):
         self.mode = mode
@@ -88,9 +89,9 @@ class DisplayABC:
     def clear(self):
         self.logger.debug("Clearing the e-paper")
 
-    @abstractmethod
     def exit(self):
         self.logger.info("Powering down the e-paper")
+        self.epd.sleep()
     
     @abstractmethod
     def draw(self):
@@ -115,6 +116,9 @@ class DisplayABC:
         '''
         self.logger.debug("Refreshing the display in partial update mode")
 
-    @abstractmethod
-    def save_image(self):
-        self.logger.debug("Saving the image output")
+    def save_image(self, path: str):
+        if os.path.exists(os.path.dirname(path)):
+            self.img.save(path)
+        else:
+            self.logger.warning(f"{path} do not exits, saving the image to tmp/output.bmp")
+            self.img.save(self.root, "tmp", "output.bmp")

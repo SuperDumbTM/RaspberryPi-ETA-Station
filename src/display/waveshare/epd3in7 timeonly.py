@@ -86,12 +86,16 @@ LAYOUT = {
 
 class Epd3in7(DisplayABC):
 
-    def __init__(self, size: int) -> None:
-        
+    def __init__(self, path: str,size: int) -> None:
+        '''
+        mode:
+            - 0->4Gary mode
+            - 1->1Gary mode
+        '''
         self.row_h = 80
+        self.row_size = 6       
         self.LAYOUT = LAYOUT
-        
-        super().__init__(size)
+        super().__init__(path, size)
         
         if size > 3:
             self.num_etas = 3
@@ -190,17 +194,5 @@ class Epd3in7(DisplayABC):
 
     def display_full(self):
         self.display_4Gray(self.getbuffer_4Gray(self.img))
-
-    def avil_partial_update(self):
-        return self.partial_upd
-
-    def display_partial(self):
-        pass
-
-    def save_image(self):
-        self.img.save("tmp/output.bmp")
-
-    def exit(self):
-        pass
         
 CLS = Epd3in7
