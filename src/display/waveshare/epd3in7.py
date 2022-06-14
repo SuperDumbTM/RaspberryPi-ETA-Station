@@ -99,8 +99,8 @@ class Epd3in7(DisplayABC):
         self.drawing = ImageDraw.Draw(self.img)
     
     def init(self):
-        self.epd.init(self.mode)  
         super().init()
+        self.epd.init(self.mode)  
 
     def clear(self):
         super().clear()
@@ -118,18 +118,35 @@ class Epd3in7(DisplayABC):
     def can_partial():
         return PARTIAL
 
-    def partial_update(self, deg: int, intv: int, times: int):
-        super().full_update(deg)
-        self.full_update()
-        
-        while times > 1:
-            time.sleep(intv)
-            super().partial_update(deg)
-            self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
-            self.draw()
-            self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
-            
-            times -= 1
+    def partial_update(self, deg: int, intv: int, times: int, ppath: str = None):
+        if ppath is None:
+            # loop mode
+            super().full_update(deg)
+            self.full_update(deg)
+            while times > 1:
+                self.exit()
+                time.sleep(intv)
+                super().partial_update(deg, intv, times)
+                prev_img = self.img
+                self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
+                self.drawing = ImageDraw.Draw(self.img)
+                
+                self.init()
+                self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
+                self.draw()
+                self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
+                
+                times -= 1
+        else:
+            # normal mode
+            if os.path.exists(ppath):
+                prev_img = Image.open(ppath)
+                self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
+                time.sleep(0.5)
+                self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
+            else:
+                self.logger.error("Image file for partial update do not exists.  No update is done.\n\
+                    Please check the path or do a full update with flag -i first (optional: -I <path> to specify the path)")
 
     def draw(self):
         '''
@@ -141,7 +158,7 @@ class Epd3in7(DisplayABC):
         '''
         super().draw()
         # Frame
-        self.logger.debug("Drawing the frame")
+        self.logger.debug("Drawing the layout")
         for row in range(self.row_size):
             self.drawing.line((0, self.row_h * (row+1), self.epd_height, 80 * (row+1)))
         
@@ -152,7 +169,7 @@ class Epd3in7(DisplayABC):
                 self.logger.warning(f"Number of ETA entry in eta.conf ({len(self.conf)}) is larger than allowed display number.  Stoped at {row}.")
                 break
             
-            self.logger.info(f"Reading entry {entry}")
+            self.logger.debug(f"- Reading entry {entry}")
             _dets = dets.Details.get_obj(entry['eta_co'])(**entry)
             _eta = eta.Eta.get_obj(entry['eta_co'])(**entry)
             
@@ -166,13 +183,13 @@ class Epd3in7(DisplayABC):
             stop = _dets.get_stop_name()
             
             # titles
-            self.logger.debug(f"Drawing row {row}'s route information")
+            self.logger.debug(f"- Drawing row {row}'s route information")
             self.drawing.text((5, (self.row_h*row + 0)), text=rte, fill=self.black, font=self.f_route)
             self.drawing.text((5, (self.row_h*row + 35)), dest, fill=self.black, font=self.f_text)
             self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
             
             # time
-            self.logger.debug(f"Drawing row {row}'s ETA time")
+            self.logger.debug(f"- Drawing row {row}'s ETA time")
             if _eta.error:
                 self.drawing.text((170, self.row_h*row + 25), text=_eta.msg, fill=self.black, font=self.f_text)
             else:
@@ -181,10 +198,10 @@ class Epd3in7(DisplayABC):
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :
                             self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_mins)
-                            self.drawing.text((self.lyo['minsx'], self.lyo['minsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=self.lyo['min_desc'], fill=self.black, font=self.f_min)
-                            self.drawing.text((self.lyo['minx'], self.lyo['miny'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=time['eta_time'], fill=self.black, font=self.f_time)
+                            self.drawing.text((self.lyo['minx'], self.lyo['miny'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=self.lyo['min_desc'], fill=self.black, font=self.f_min)
+                            self.drawing.text((self.lyo['timex'], self.lyo['timey'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=time['eta_time'], fill=self.black, font=self.f_time)
                         else:
-                            self.drawing.text((self.lyo['lminsx'], self.lyo['lminsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_lmins)
+                            self.drawing.text((self.lyo['lminx'], self.lyo['lminy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_lmins)
                     else: break
 
     def save_image(self):

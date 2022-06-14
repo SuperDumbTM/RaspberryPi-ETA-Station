@@ -100,8 +100,19 @@ class DisplayABC:
     def full_update(self, deg: int):
         self.logger.debug("Refreshing the display in full update mode")
 
-    @abstractmethod
-    def partial_update(self, deg: int, intv: int, times: int):
+    def partial_update(self, deg: int, intv: int, times: int, ppath: str = None):
+        '''
+        No ppath supplied -> loop mode;  Otherwise -> normal mode
+        
+        loop mode: a full update follow by `times` - 1 partial update with interval `intv`
+        normal mode: one partial update only, require a previous output image to work
+        
+        @args
+            - `deg`: Angle for diplay output rotation
+            - `intv`: Time in second for partial update period (loop mode)
+            - `times`: looping time (loop mode)
+            - `ppath`: path to previous display output image file for (normal mode)
+        '''
         self.logger.debug("Refreshing the display in partial update mode")
 
     @abstractmethod
