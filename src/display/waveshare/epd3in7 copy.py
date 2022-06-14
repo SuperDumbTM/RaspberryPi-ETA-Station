@@ -29,18 +29,18 @@ LAYOUT = {
     3:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 15,
-        'f_mins': 18,
+        'f_time': 25,
+        'f_mins': 25,
         'f_min': 18,
         'f_lmins': 14,
         'etax': 170,
-        'etay': 2,
-        'minsx': 190,
-        'minsy': 2,
-        'minx': 215,
-        'miny': 5,
-        'lminsx': 170,
-        'lminsy': 5,
+        'etay': 0,
+        'minx': 200,
+        'miny': 4,
+        'timex': 225,
+        'timey': 1,
+        'lminx': 170,
+        'lminy': 6,
         'eta_pad': 25,
         'min_desc': "分"
     },
@@ -48,18 +48,18 @@ LAYOUT = {
     2:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 15,
-        'f_mins': 20,
+        'f_time': 30,
+        'f_mins': 33,
         'f_min': 20,
         'f_lmins': 16,
         'etax': 170,
-        'etay': 2,
-        'minsx': 190,
-        'minsy': 2,
-        'minx': 230,
-        'miny': 25,
-        'lminsx': 170,
-        'lminsy': 7,
+        'etay': 0,
+        'minx': 203,
+        'miny': 10,
+        'timex': 225,
+        'timey': 5,
+        'lminx': 170,
+        'lminy': 12,
         'eta_pad': 35,
         'min_desc': "分"
     },
@@ -67,18 +67,18 @@ LAYOUT = {
     1:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 20,
-        'f_mins': 25,
-        'f_min': 25,
+        'f_time': 40,
+        'f_mins': 35,
+        'f_min': 35,
         'f_lmins': 14,
         'etax': 170,
-        'etay': 10,
-        'minsx': 200,
-        'minsy': 10,
-        'minx': 170,
-        'miny': 40,
-        'lminsx': 170,
-        'lminsy': 25,
+        'etay': 0,
+        'minx': 205,
+        'miny': 0,
+        'timex': 170,
+        'timey': 35,
+        'lminx': 180,
+        'lminy': 30,
         'eta_pad': 35,
         'min_desc': "分鐘"
     }
@@ -119,7 +119,7 @@ class Epd3in7(DisplayABC):
         # font
         self.f_route = ImageFont.truetype("./font/superstar_memesbruh03.ttf", self.lyo['f_route'])
         self.f_text = ImageFont.truetype("./font/msjh.ttc", self.lyo['f_text'])
-        self.f_time = ImageFont.truetype("./font/arialnb.ttf", self.lyo['f_time'])
+        self.f_time = ImageFont.truetype("./font/agencyb.tff", self.lyo['f_time'])
         self.f_mins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_mins'])
         self.f_min = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Regular.ttf", self.lyo['f_min'])
         self.f_lmins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_lmins'])
@@ -182,10 +182,10 @@ class Epd3in7(DisplayABC):
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :
                             self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_mins)
-                            self.drawing.text((self.lyo['minsx'], self.lyo['minsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=self.lyo['min_desc'], fill=self.black, font=self.f_min)
-                            self.drawing.text((self.lyo['minx'], self.lyo['miny'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=time['eta_time'], fill=self.black, font=self.f_time)
+                            self.drawing.text((self.lyo['minx'], self.lyo['miny'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=self.lyo['min_desc'], fill=self.black, font=self.f_min)
+                            self.drawing.text((self.lyo['timex'], self.lyo['timey'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=time['eta_time'], fill=self.black, font=self.f_time)
                         else:
-                            self.drawing.text((self.lyo['lminsx'], self.lyo['lminsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=GRAY4, font=self.f_lmins)
+                            self.drawing.text((self.lyo['lminx'], self.lyo['lminy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=GRAY4, font=self.f_lmins)
                     else: break
 
     def display_full(self):

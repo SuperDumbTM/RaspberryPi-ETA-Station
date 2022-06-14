@@ -60,6 +60,7 @@ def obj_setup():
                 brand = cparser.get("epd","brand")
                 model = cparser.get("epd","model")
                 test = "epd3in7 copy"
+                test2 = "epd3in7 timeonly"
                 module = importlib.import_module(f"src.display.{brand}.{test}")
                 
                 return getattr(module, "CLS")(int(size))

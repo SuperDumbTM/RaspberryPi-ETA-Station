@@ -37,7 +37,7 @@ LAYOUT = {
         'etay': 2,
         'minsx': 190,
         'minsy': 2,
-        'timex': 170,
+        'timex': 190,
         'timey': 1,
         'lminsx': 170,
         'lminsy': 6,
@@ -48,7 +48,7 @@ LAYOUT = {
     2:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 15,
+        'f_time': 42,
         'f_mins': 20,
         'f_min': 20,
         'f_lmins': 16,
@@ -56,10 +56,10 @@ LAYOUT = {
         'etay': 2,
         'minsx': 190,
         'minsy': 2,
-        'timex': 230,
-        'timey': 25,
+        'timex': 170,
+        'timey': 0,
         'lminsx': 170,
-        'lminsy': 7,
+        'lminsy': 10,
         'eta_pad': 35,
         'min_desc': "分"
     },
@@ -67,7 +67,7 @@ LAYOUT = {
     1:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 20,
+        'f_time': 60,
         'f_mins': 25,
         'f_min': 25,
         'f_lmins': 14,
@@ -76,9 +76,9 @@ LAYOUT = {
         'minsx': 200,
         'minsy': 10,
         'timex': 170,
-        'timey': 40,
+        'timey': 3,
         'lminsx': 170,
-        'lminsy': 25,
+        'lminsy': 30,
         'eta_pad': 35,
         'min_desc': "分鐘"
     }
@@ -119,7 +119,7 @@ class Epd3in7(DisplayABC):
         # font
         self.f_route = ImageFont.truetype("./font/superstar_memesbruh03.ttf", self.lyo['f_route'])
         self.f_text = ImageFont.truetype("./font/msjh.ttc", self.lyo['f_text'])
-        self.f_time = ImageFont.truetype("./font/arialnb.ttf", self.lyo['f_time'])
+        self.f_time = ImageFont.truetype("./font/agencyb.tff", self.lyo['f_time'])
         self.f_mins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_mins'])
         self.f_min = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Regular.ttf", self.lyo['f_min'])
         self.f_lmins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_lmins'])

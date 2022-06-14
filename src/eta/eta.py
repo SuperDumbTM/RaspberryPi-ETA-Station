@@ -162,7 +162,7 @@ class MtrLrt(Eta):
                         output['data'].append({
                                 'eta_mins': eta_min,
                                 #NOTE: 'eta_mins' may not a be a number due to "即將抵達/離開" -> ValueError
-                                'eta_time': "--",
+                                'eta_time': "----",
                                 'remark': "",
                         })
                     else:

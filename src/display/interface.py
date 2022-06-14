@@ -45,7 +45,7 @@ class DisplayABC:
         self.logger.debug("setting up font")
         self.f_route = ImageFont.truetype("./font/superstar_memesbruh03.ttf", self.lyo['f_route'])
         self.f_text = ImageFont.truetype("./font/msjh.ttc", self.lyo['f_text'])
-        self.f_time = ImageFont.truetype("./font/arialnb.ttf", self.lyo['f_time'])
+        self.f_time = ImageFont.truetype("./font/agencyb.tff", self.lyo['f_time'])
         self.f_mins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_mins'])
         self.f_min = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Regular.ttf", self.lyo['f_min'])
         self.f_lmins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_lmins'])
