@@ -15,33 +15,27 @@ class Logger:
     
     log: logging.Logger
     
+    DEBUG = logging.DEBUG
+    INFO = logging.INFO
+    WARNING = logging.WARNING
+    ERROR = logging.ERROR
+    CRITICAL = logging.CRITICAL
+    
+    
     def __init__(self) -> None:
         self.log = logging.getLogger('root')
-        self.log.setLevel(logging.DEBUG)
+        self.log.setLevel(logging.INFO)
 
         # console out hander
         formatter_ch = logging.Formatter('[%(asctime)s] %(message)s', datefmt='%H:%M')
         ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
+        ch.setLevel(logging.INFO)
         ch.setFormatter(formatter_ch)
         self.log.addHandler(ch)
     
-    def set_log_level(self, lv: Literal["debug","info","warning","error","critical"]):
-        if lv == "debug":
-            self.log.debug("Setting log level to <debug>")
-            self.log.setLevel(logging.DEBUG)
-        elif lv == "info":
-            self.log.debug("Setting log level to <info>")
-            self.log.setLevel(logging.INFO)
-        elif lv == "warning":
-            self.log.debug("Setting log level to <warning>")
-            self.log.setLevel(logging.WARNING)
-        elif lv == "error":
-            self.log.debug("Setting log level to <error>")
-            self.log.setLevel(logging.ERROR)
-        elif lv == "critical":
-            self.log.debug("Setting log level to <critical>")
-            self.log.setLevel(logging.CRITICAL)
+    def set_log_level(self, lv):
+        self.log.setLevel(lv)
+        self.log.debug(f"Updating log level")
     
     def add_file_logger(self):
         log_filename = datetime.datetime.now().strftime("%Y%m%d.log")
