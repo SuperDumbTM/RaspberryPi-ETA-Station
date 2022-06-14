@@ -29,7 +29,7 @@ LAYOUT = {
     3:{
         'f_route': 40,
         'f_text': 16,
-        'f_time': 15,
+        'f_time': 27,
         'f_mins': 18,
         'f_min': 18,
         'f_lmins': 14,
@@ -37,11 +37,11 @@ LAYOUT = {
         'etay': 2,
         'minsx': 190,
         'minsy': 2,
-        'minx': 215,
-        'miny': 5,
+        'timex': 170,
+        'timey': 1,
         'lminsx': 170,
-        'lminsy': 5,
-        'eta_pad': 25,
+        'lminsy': 6,
+        'eta_pad': 24,
         'min_desc': "分"
     },
     # size = 6
@@ -56,8 +56,8 @@ LAYOUT = {
         'etay': 2,
         'minsx': 190,
         'minsy': 2,
-        'minx': 230,
-        'miny': 25,
+        'timex': 230,
+        'timey': 25,
         'lminsx': 170,
         'lminsy': 7,
         'eta_pad': 35,
@@ -75,8 +75,8 @@ LAYOUT = {
         'etay': 10,
         'minsx': 200,
         'minsy': 10,
-        'minx': 170,
-        'miny': 40,
+        'timex': 170,
+        'timey': 40,
         'lminsx': 170,
         'lminsy': 25,
         'eta_pad': 35,
@@ -181,9 +181,9 @@ class Epd3in7(DisplayABC):
                     if (idx < self.num_etas):
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :
-                            self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_mins)
-                            self.drawing.text((self.lyo['minsx'], self.lyo['minsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=self.lyo['min_desc'], fill=self.black, font=self.f_min)
-                            self.drawing.text((self.lyo['minx'], self.lyo['miny'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=time['eta_time'], fill=self.black, font=self.f_time)
+                            self.drawing.text((self.lyo['timex'], self.lyo['timey'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=time['eta_time'], fill=GRAY4, font=self.f_time)
+                            #self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=GRAY4, font=self.f_mins)
+                            #self.drawing.text((self.lyo['minsx'], self.lyo['minsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=self.lyo['min_desc'], fill=GRAY4, font=self.f_min)
                         else:
                             self.drawing.text((self.lyo['lminsx'], self.lyo['lminsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=GRAY4, font=self.f_lmins)
                     else: break
