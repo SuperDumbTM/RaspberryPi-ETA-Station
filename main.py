@@ -58,7 +58,9 @@ def obj_setup():
                 size = cparser.get("epd","size")
                 brand = cparser.get("epd","brand")
                 model = cparser.get("epd","model")
-                module = importlib.import_module(f"src.display.{brand}.{model}")
+                test = "epd3in7 copy"
+                test2 = "epd3in7 timeonly"
+                module = importlib.import_module(f"src.display.{brand}.{test}")
                 
                 return getattr(module, "CLS")(ROOTDIR, int(size))
             except Exception as e:
