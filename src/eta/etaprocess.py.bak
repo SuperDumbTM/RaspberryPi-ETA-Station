@@ -1,0 +1,182 @@
+import json
+import math, sys
+import _request as rqst
+import exception as ce
+import route_details as dtls
+from datetime import datetime, timedelta
+# remove if no applicatable (logger)
+from logging import Logger
+
+# @Return Format
+"""_return format_
+
+Raises:
+    ce.ReturnError: data from API has status code that is indicating error
+    ce.EOSError: services of the route has ended
+    ce.EmptyDataError: no return/data from API
+
+Returns:
+    format:
+        {'dest': str,
+        'stop: str,
+        'data':{
+            1:{
+                'co': str,
+                'eta_mins': int,
+                'eta_time': str,
+                'remark': str
+                }     
+            },
+            ...,
+            n:{...}
+        }
+"""
+
+# ------------------ KMB ------------------
+def get_kmb_eta(route: str, stop_seq: int, dir: str, services_type: int, lang: str = "tc") -> dict:
+    '''
+    ``dir`` options: outbound, inbound
+    ``lang`` options: tc, sc, en
+    '''
+    route = route.upper() # force upper case
+    data = rqst.kmb_eta(route, services_type)["data"]
+    # E: empty return
+    if len(data) == 0: 
+        raise ce.ReturnError
+
+    eta_seq = 1
+    output = {}
+    output["dest"] = data[0]["dest_"+lang]
+    output["stop"] = dtls.get_kmb_stop_name(route, dir, stop_seq, services_type)
+    output["data"] = {}
+
+    #TODO: Optimization: by dir
+    for stops in data:
+        if stops["seq"] == stop_seq and stops["dir"]==dir[0].upper():
+            if stops["eta"] == None:
+                raise ce.EOSError
+
+            eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z")
+            timestamp = datetime.strptime(stops["data_timestamp"], "%Y-%m-%dT%H:%M:%S%z")
+
+            output["data"][stops["eta_seq"]] = {
+                "co": stops["co"],
+                "eta_mins": int(str(eta_time - timestamp).split(":")[1]) + round(int(str(eta_time-timestamp).split(":")[2])/60),
+                "eta_time": datetime.strftime(eta_time, "%H:%M:%S"),
+                "remark": stops["rmk_"+lang]
+            }
+
+            if eta_seq == 3: break
+            eta_seq += 1           
+        else:  continue
+
+    # E: empty output
+    if output.get("data",1) == 1: 
+        raise ce.EmptyDataError
+    return output
+
+# ------------------ LRT ------------------
+def get_mtr_lrt_eta(route: str, platform_id: int, station_id: int, lang: str = "ch"):
+    '''
+    ``lang`` options: ch, en
+    '''
+
+    data = rqst.mtr_lrt_eta(station_id)
+    # E: return status error
+    if data["status"] == 0:
+        raise ce.ReturnError
+
+    timestamp = datetime.strptime(data["system_time"], "%Y-%m-%d %H:%M:%S")
+    eta_seq = 1
+    output = {}
+    output["stop"]=dtls.get_mtr_lrt_stop_name(station_id, lang)
+
+    for platform in data["platform_list"]:
+        if platform["platform_id"] == platform_id:
+            if platform.setdefault("end_service_status",1) != 1:
+                raise ce.EOSError
+
+
+            for routes in platform["route_list"]:
+                if routes["route_no"] == route:
+                    output.setdefault("dest",routes["dest_"+lang])
+                    output.setdefault("data",{})
+                    output["data"].setdefault(eta_seq,{})
+                    output["data"][eta_seq]["eta_mins"] = routes["time_"+lang].split(" ")[0]
+                    output["data"][eta_seq]["remark"] = ""
+
+                    try:
+                        output["data"][eta_seq]["eta_time"] = datetime.strftime(timestamp+timedelta(minutes=int(output["data"][eta_seq]["eta_mins"])), "%H:%M:%S")
+                    except ValueError:
+                        output["data"][eta_seq]["eta_time"] = "--"
+
+                eta_seq+=1
+
+    # E: empty output
+    if output.get("data",1)==1: 
+        raise ce.EmptyDataError
+    return output
+
+# ------------------ MTRB ------------------
+def get_mtr_bus_eta(route: str, dir: str, stop_id: str,lang: str = "zh"):
+    '''
+    ``dir`` options: outbound, inbound
+    ``lang`` options: zh, en
+    '''
+    data = rqst.mtr_bus_eta(route.upper(), lang)
+    # E: return status error
+    if data["status"] == 0:
+        raise ce.ReturnError
+
+    timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
+    eta_seq = 1
+    output = {}
+    output["stop"] = dtls.get_mtr_bus_stop_name(route, dir, stop_id, lang)
+    output["dest"] = dtls.get_mtr_bus_dest(route, dir, lang)
+
+    # E: EOS
+    if data["routeStatusRemarkTitle"]=="停止服務":
+        raise ce.EOSError
+    
+    for stops in data["busStop"]:
+        if stops["busStopId"] == stop_id:
+            # if (int(stops["isSuspended"])): raise BaseException #TODO
+            output.setdefault("data",{})
+            for bus in stops["bus"]:
+                output["data"].setdefault(eta_seq,{})
+
+                # eta_mins
+                time_ref = "arrival" # default "arrival"
+                if dtls.get_mtr_bus_stop_type(route,dir,stop_id) == "orig":
+                    time_ref = "departure"
+                elif dtls.get_mtr_bus_stop_type(route,dir,stop_id) in ("mid","dest"):
+                    time_ref = "arrival"
+                output["data"][eta_seq]["eta_mins"] = bus[time_ref+"TimeText"].split(" ")[0]
+
+                # eta_time
+                try:
+                    output["data"][eta_seq]["eta_time"] = datetime.strftime(timestamp+timedelta(seconds=int(bus[time_ref+"TimeInSecond"])), "%H:%M:%S")
+                except ValueError:
+                    output["data"][eta_seq]["eta_time"] = "--"
+
+                # remark
+                if bus["isScheduled"]:
+                    if (lang=="zh"): output["data"][eta_seq]["remark"] = "原定班次"
+                    else: output["data"][eta_seq]["remark"] = "Scheduled Bus"
+                else:
+                    output["data"][eta_seq]["remark"] = ""
+
+                eta_seq+=1
+
+    # E: empty output
+    if output.get("data",1) == 1: 
+        raise ce.EmptyDataError
+    return output
+
+# ------------------ debug ------------------
+if __name__ == "__main__":
+    #print(get_kmb_eta("N269",5,"outbound",1))
+    print(get_kmb_eta("265M",10,"inbound",1))
+    # print(get_mtr_lrt_eta("706",1,540))
+    # print(get_mtr_bus_eta("K76","inbound","K76-D030"))
+    pass

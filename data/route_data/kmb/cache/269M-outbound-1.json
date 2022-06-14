@@ -1,0 +1,143 @@
+{
+    "lastupdate": "20220515",
+    "data": [
+        {
+            "name_en": "TIN YAN ESTATE BUS TERMINUS",
+            "name_tc": "\u5929\u6069\u90a8\u7e3d\u7ad9",
+            "name_sc": "\u5929\u6069\u90a8\u603b\u7ad9",
+            "seq": "1"
+        },
+        {
+            "name_en": "TIN YAN ESTATE",
+            "name_tc": "\u5929\u6069\u90a8",
+            "name_sc": "\u5929\u6069\u90a8",
+            "seq": "2"
+        },
+        {
+            "name_en": "YAT YEUNG HOUSE TIN YAT ESTATE",
+            "name_tc": "\u5929\u9038\u90a8\u9038\u6d0b\u6a13",
+            "name_sc": "\u5929\u9038\u90a8\u9038\u6d0b\u697c",
+            "seq": "3"
+        },
+        {
+            "name_en": "CHING PIK HOUSE TIN CHING ESTATE",
+            "name_tc": "\u5929\u6674\u90a8\u6674\u78a7\u6a13",
+            "name_sc": "\u5929\u6674\u90a8\u6674\u78a7\u697c",
+            "seq": "4"
+        },
+        {
+            "name_en": "HKFYG LEE SHAU KEE COLLEGE",
+            "name_tc": "\u9999\u6e2f\u9752\u5e74\u5354\u6703\u674e\u5146\u57fa\u66f8\u9662",
+            "name_sc": "\u9999\u6e2f\u9752\u5e74\u534f\u4f1a\u674e\u5146\u57fa\u4e66\u9662",
+            "seq": "5"
+        },
+        {
+            "name_en": "MAYWOOD COURT",
+            "name_tc": "\u7f8e\u6e56\u5c45",
+            "name_sc": "\u7f8e\u6e56\u5c45",
+            "seq": "6"
+        },
+        {
+            "name_en": "KENSWOOD COURT",
+            "name_tc": "\u666f\u6e56\u5c45",
+            "name_sc": "\u666f\u6e56\u5c45",
+            "seq": "7"
+        },
+        {
+            "name_en": "TIN TSZ ESTATE",
+            "name_tc": "\u5929\u6148\u90a8",
+            "name_sc": "\u5929\u6148\u90a8",
+            "seq": "8"
+        },
+        {
+            "name_en": "TAI LAM TUNNEL (A5)",
+            "name_tc": "\u5927\u6b16\u96a7\u9053 (A5)",
+            "name_sc": "\u5927\u6984\u96a7\u9053 (A5)",
+            "seq": "9"
+        },
+        {
+            "name_en": "TAI LAM TUNNEL (A4)",
+            "name_tc": "\u5927\u6b16\u96a7\u9053 (A4)",
+            "name_sc": "\u5927\u6984\u96a7\u9053 (A4)",
+            "seq": "10"
+        },
+        {
+            "name_en": "TSUEN KING CIRCUIT FLYOVER",
+            "name_tc": "\u8343\u666f\u570d\u5929\u6a4b",
+            "name_sc": "\u8343\u666f\u56f4\u5929\u6865",
+            "seq": "11"
+        },
+        {
+            "name_en": "DISCOVERY PARK",
+            "name_tc": "\u6109\u666f\u65b0\u57ce",
+            "name_sc": "\u6109\u666f\u65b0\u57ce",
+            "seq": "12"
+        },
+        {
+            "name_en": "TSUEN WAN STATION",
+            "name_tc": "\u8343\u7063\u7ad9",
+            "name_sc": "\u8343\u6e7e\u7ad9",
+            "seq": "13"
+        },
+        {
+            "name_en": "CHUNG ON STREET TSUEN WAN",
+            "name_tc": "\u8343\u7063\u773e\u5b89\u8857",
+            "name_sc": "\u8343\u6e7e\u4f17\u5b89\u8857",
+            "seq": "14"
+        },
+        {
+            "name_en": "TAI WO HAU STATION",
+            "name_tc": "\u5927\u7aa9\u53e3\u7ad9",
+            "name_sc": "\u5927\u7a9d\u53e3\u7ad9",
+            "seq": "15"
+        },
+        {
+            "name_en": "CHEUNG WING ROAD GYRATORY",
+            "name_tc": "\u660c\u69ae\u8def\u8ff4\u65cb\u8655",
+            "name_sc": "\u660c\u8363\u8def\u56de\u65cb\u5904",
+            "seq": "16"
+        },
+        {
+            "name_en": "KWAI CHUN COURT",
+            "name_tc": "\u8475\u4fca\u82d1",
+            "name_sc": "\u8475\u4fca\u82d1",
+            "seq": "17"
+        },
+        {
+            "name_en": "SUN KWAI HING GARDENS",
+            "name_tc": "\u65b0\u8475\u8208\u82b1\u5712",
+            "name_sc": "\u65b0\u8475\u5174\u82b1\u56ed",
+            "seq": "18"
+        },
+        {
+            "name_en": "KWAI FONG ESTATE",
+            "name_tc": "\u8475\u82b3\u90a8",
+            "name_sc": "\u8475\u82b3\u90a8",
+            "seq": "19"
+        },
+        {
+            "name_en": "JOINT STREET",
+            "name_tc": "\u806f\u63a5\u8857",
+            "name_sc": "\u8054\u63a5\u8857",
+            "seq": "20"
+        },
+        {
+            "name_en": "LAI KING STATION",
+            "name_tc": "\u8354\u666f\u7ad9",
+            "name_sc": "\u8354\u666f\u7ad9",
+            "seq": "21"
+        },
+        {
+            "name_en": "LOK KING HOUSE LAI KING ESTATE",
+            "name_tc": "\u8354\u666f\u90a8\u6a02\u666f\u6a13",
+            "name_sc": "\u8354\u666f\u90a8\u4e50\u666f\u697c",
+            "seq": "22"
+        },
+        {
+            "name_en": "CHO YIU CHUEN BUS TERMINUS",
+            "name_tc": "\u7956\u582f\u90a8\u5df4\u58eb\u7e3d\u7ad9",
+            "name_sc": "\u7956\u5c27\u90a8\u5df4\u58eb\u603b\u7ad9",
+            "seq": "23"
+        }
+    ]
+}

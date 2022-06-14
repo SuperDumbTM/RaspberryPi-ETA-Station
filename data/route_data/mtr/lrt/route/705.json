@@ -1,0 +1,150 @@
+{
+    "inbound": [
+        {
+            "stop_code": "TWI",
+            "stop": 500,
+            "name_ch": "\u5929\u69ae",
+            "name_en": "Tin Wing",
+            "seq": 1,
+            "platform_id": 7
+        },
+        {
+            "stop_code": "TYU",
+            "stop": 510,
+            "name_ch": "\u5929\u6085",
+            "name_en": "Tin Yuet",
+            "seq": 2,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TSA",
+            "stop": 520,
+            "name_ch": "\u5929\u79c0",
+            "name_en": "Tin Sau",
+            "seq": 3,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "WEP",
+            "stop": 530,
+            "name_ch": "\u6fd5\u5730\u516c\u5712",
+            "name_en": "Wetland Park",
+            "seq": 4,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "THE",
+            "stop": 540,
+            "name_ch": "\u5929\u6052",
+            "name_en": "Tin Heng",
+            "seq": 5,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TYA",
+            "stop": 550,
+            "name_ch": "\u5929\u9038",
+            "name_en": "Tin Yat",
+            "seq": 6,
+            "platform_id": 4
+        },
+        {
+            "stop_code": "TFU",
+            "stop": 480,
+            "name_ch": "\u5929\u5bcc",
+            "name_en": "Tin Fu",
+            "seq": 7,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "CHF",
+            "stop": 468,
+            "name_ch": "\u980c\u5bcc",
+            "name_en": "Chung Fu",
+            "seq": 8,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TSU",
+            "stop": 460,
+            "name_ch": "\u5929\u745e",
+            "name_en": "Tin Shui",
+            "seq": 9,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "LOC",
+            "stop": 448,
+            "name_ch": "\u6a02\u6e56",
+            "name_en": "Locwood",
+            "seq": 10,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TIY",
+            "stop": 445,
+            "name_ch": "\u5929\u8000",
+            "name_en": "Tin Yiu",
+            "seq": 11,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TSL",
+            "stop": 430,
+            "name_ch": "\u5929\u6c34\u570d",
+            "name_en": "Tin Shui Wai",
+            "seq": 12,
+            "platform_id": 1
+        }
+    ],
+    "outbound": [
+        {
+            "stop_code": "TSL",
+            "stop": 430,
+            "name_ch": "\u5929\u6c34\u570d",
+            "name_en": "Tin Shui Wai",
+            "seq": 1,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TIT",
+            "stop": 435,
+            "name_ch": "\u5929\u6148",
+            "name_en": "Tin Tsz",
+            "seq": 2,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TWU",
+            "stop": 450,
+            "name_ch": "\u5929\u6e56",
+            "name_en": "Tin Wu",
+            "seq": 3,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "GIN",
+            "stop": 455,
+            "name_ch": "\u9280\u5ea7",
+            "name_en": "Ginza",
+            "seq": 4,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TWI",
+            "stop": 500,
+            "name_ch": "\u5929\u69ae",
+            "name_en": "Tin Wing",
+            "seq": 5,
+            "platform_id": 7
+        }
+    ],
+    "details": {
+        "inbound": {
+            "linename_ch": "705\u7dab\uff08\u5929\u6c34\u570d\u5faa\u74b0\u7dab\uff09",
+            "linename_en": "Route 705 (TSW Circular)",
+            "orig_id": 430,
+            "dest_id": 430
+        }
+    }
+}

@@ -1,0 +1,252 @@
+{
+    "inbound": [
+        {
+            "stop_code": "YLL",
+            "stop": 600,
+            "name_ch": "\u5143\u6717",
+            "name_en": "Yuen Long",
+            "seq": 1,
+            "platform_id": 5
+        },
+        {
+            "stop_code": "TTR",
+            "stop": 590,
+            "name_ch": "\u5927\u68e0\u8def",
+            "name_en": "Tai Tong Road",
+            "seq": 2,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "HLR",
+            "stop": 580,
+            "name_ch": "\u5eb7\u6a02\u8def",
+            "name_en": "Hong Lok Road",
+            "seq": 3,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "FNR",
+            "stop": 570,
+            "name_ch": "\u8c50\u5e74\u8def",
+            "name_en": "Fung Nin Road",
+            "seq": 4,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "SPW",
+            "stop": 560,
+            "name_ch": "\u6c34\u908a\u570d",
+            "name_en": "Shui Pin Wai",
+            "seq": 5,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "PIS",
+            "stop": 400,
+            "name_ch": "\u5c4f\u5c71",
+            "name_en": "Ping Shan",
+            "seq": 6,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TOF",
+            "stop": 390,
+            "name_ch": "\u5858\u574a\u6751",
+            "name_en": "Tong Fong Tsuen",
+            "seq": 7,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "HMT",
+            "stop": 425,
+            "name_ch": "\u5751\u5c3e\u6751",
+            "name_en": "Hang Mei Tsuen",
+            "seq": 8,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TIY",
+            "stop": 445,
+            "name_ch": "\u5929\u8000",
+            "name_en": "Tin Yiu",
+            "seq": 9,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "LOC",
+            "stop": 448,
+            "name_ch": "\u6a02\u6e56",
+            "name_en": "Locwood",
+            "seq": 10,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TSU",
+            "stop": 460,
+            "name_ch": "\u5929\u745e",
+            "name_en": "Tin Shui",
+            "seq": 11,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "CHF",
+            "stop": 468,
+            "name_ch": "\u980c\u5bcc",
+            "name_en": "Chung Fu",
+            "seq": 12,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TFU",
+            "stop": 480,
+            "name_ch": "\u5929\u5bcc",
+            "name_en": "Tin Fu",
+            "seq": 13,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TYA",
+            "stop": 550,
+            "name_ch": "\u5929\u9038",
+            "name_en": "Tin Yat",
+            "seq": 14,
+            "platform_id": 5
+        },
+        {
+            "stop_code": "TYA",
+            "stop": 550,
+            "name_ch": "\u5929\u9038",
+            "name_en": "Tin Yat",
+            "seq": 15,
+            "platform_id": 2
+        }
+    ],
+    "outbound": [
+        {
+            "stop_code": "TYA",
+            "stop": 550,
+            "name_ch": "\u5929\u9038",
+            "name_en": "Tin Yat",
+            "seq": 1,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TFU",
+            "stop": 480,
+            "name_ch": "\u5929\u5bcc",
+            "name_en": "Tin Fu",
+            "seq": 2,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "CHF",
+            "stop": 468,
+            "name_ch": "\u980c\u5bcc",
+            "name_en": "Chung Fu",
+            "seq": 3,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TSU",
+            "stop": 460,
+            "name_ch": "\u5929\u745e",
+            "name_en": "Tin Shui",
+            "seq": 4,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "LOC",
+            "stop": 448,
+            "name_ch": "\u6a02\u6e56",
+            "name_en": "Locwood",
+            "seq": 5,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TIY",
+            "stop": 445,
+            "name_ch": "\u5929\u8000",
+            "name_en": "Tin Yiu",
+            "seq": 6,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "HMT",
+            "stop": 425,
+            "name_ch": "\u5751\u5c3e\u6751",
+            "name_en": "Hang Mei Tsuen",
+            "seq": 7,
+            "platform_id": 2
+        },
+        {
+            "stop_code": "TOF",
+            "stop": 390,
+            "name_ch": "\u5858\u574a\u6751",
+            "name_en": "Tong Fong Tsuen",
+            "seq": 8,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "PIS",
+            "stop": 400,
+            "name_ch": "\u5c4f\u5c71",
+            "name_en": "Ping Shan",
+            "seq": 9,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "SPW",
+            "stop": 560,
+            "name_ch": "\u6c34\u908a\u570d",
+            "name_en": "Shui Pin Wai",
+            "seq": 10,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "FNR",
+            "stop": 570,
+            "name_ch": "\u8c50\u5e74\u8def",
+            "name_en": "Fung Nin Road",
+            "seq": 11,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "HLR",
+            "stop": 580,
+            "name_ch": "\u5eb7\u6a02\u8def",
+            "name_en": "Hong Lok Road",
+            "seq": 12,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "TTR",
+            "stop": 590,
+            "name_ch": "\u5927\u68e0\u8def",
+            "name_en": "Tai Tong Road",
+            "seq": 13,
+            "platform_id": 1
+        },
+        {
+            "stop_code": "YLL",
+            "stop": 600,
+            "name_ch": "\u5143\u6717",
+            "name_en": "Yuen Long",
+            "seq": 14,
+            "platform_id": 5
+        }
+    ],
+    "details": {
+        "outbound": {
+            "linename_ch": "761P\u7dab\uff08\u5929\u9038\u2192\u5143\u6717\uff09",
+            "linename_en": "Route 751P (Tin Yat\u2192Yuen Long)",
+            "orig_id": 550,
+            "dest_id": 600
+        },
+        "inbound": {
+            "linename_ch": "761P\u7dab\uff08\u5143\u6717\u2192\u5929\u9038\uff09",
+            "linename_en": "Route 751P (Yuen Long\u2192Tin Yat)",
+            "orig_id": 600,
+            "dest_id": 550
+        }
+    }
+}
