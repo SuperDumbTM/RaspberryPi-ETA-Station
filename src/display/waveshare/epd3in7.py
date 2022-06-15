@@ -4,8 +4,6 @@ import sys
 import time
 from PIL import Image,ImageDraw,ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
-sys.path.append(os.path.dirname(__file__)) # waveshare path
-from config import _configparser
 from display.interface import DisplayABC
 from eta import details as dets
 from eta import eta

@@ -5,6 +5,7 @@ import os
 import sys
 import argparse
 import configparser
+from turtle import title
 from src.log.mylogger import Logger
 from src.display.interface import DisplayABC
 
@@ -14,33 +15,35 @@ ROOTDIR = os.path.dirname(__file__)
 parser = argparse.ArgumentParser()
 # image
 parser.add_argument('-i', '--save-image', action="store_true", dest="image_out", 
-                    help="Save the e-paper display output to \"tmp/\".  Use -I, --image-path to specify other destination")
+                    help="Save the display to image file.  Use -I, --image-path to specify other destination")
 parser.add_argument('-I', '--image-path', default=os.path.join(ROOTDIR, "tmp", "output.bmp"), type=str, dest="image_path", 
-                    help="Specify the path to save the e-paper display output.  (Default: \"tmp/output.bmp\")")
+                    help="Specify the path to save the display output (Default: tmp/output.bmp)")
 # verbose
 parser.add_argument('-v', '--verbose', action="store_true", dest="verbose", 
-                    help="Print execution details of the programs to terminal.")
-# log
-parser.add_argument('-l', '--log', action="store_true", dest="log", 
-                    help="Save the program log to \"log/\".  Use -L, --log-dir to specify other destination")
-parser.add_argument('-L', '--log-dir', default=os.path.join(ROOTDIR, "log"), type=str, dest="log_dir", 
-                    help="Specify the path to save the log.  (Default: \"log/\")")
-parser.add_argument('--log-level', default="warning", type=str.upper, choices=["DEBUG","INFO","WARNING","ERROR","CRITICAL"], dest="log_lv", 
-                    help="Specify the log level for both stdout and fout.  (Default: [warning])")
+                    help="Print execution details of the programs to terminal.  Specifying the log level to get more information")
 # EPD
 parser.add_argument('-d', '--dry-run', action="store_true", dest="dryrun", 
-                    help="Run the program without printing the output to the display.  \nflags -i, -v, -l will be automatically set, and log level will be set to [debugpythj]")
+                    help="Run the program without updating the display.  Flags -i, -v, -l will be automatically set")
 parser.add_argument('-r', '--rotate', default=0, type=int, dest="degree", 
-                    help="Rotating the output by -r/--rotate <degree>")
+                    help="Rotate the display output by <degree> degree")
+    # log
+args_log = parser.add_argument_group(title="Logging")
+args_log.add_argument('-l', '--log', action="store_true", dest="log", 
+                    help="Save the log to file.  Use -L, --log-dir to specify other destination (Default: log/)")
+args_log.add_argument('-L', '--log-dir', default=os.path.join(ROOTDIR, "log"), type=str, dest="log_dir", 
+                    help="Specify the directory to save the log.  (Default: log/)")
+args_log.add_argument('--log-level', default="warning", type=str.upper, choices=["DEBUG","INFO","WARNING","ERROR","CRITICAL"], dest="log_lv", 
+                    help="Specify the log level for both stdout and fout (Default: [warning])")
     # partial
-parser.add_argument('-p', '--partial', action="store_true", dest="partial", 
-                    help="Updating the e-paper display using partial update mode if supported (-p/--partial <pt update mode no>)")
-parser.add_argument('-m', '--partial-mode', default="loop", type=str.lower, choices=["loop","normal"], dest="mode", 
+args_partial = parser.add_argument_group(title="Partial update")
+args_partial.add_argument('-p', '--partial', action="store_true", dest="partial", 
+                    help="Update the display using partial update mode if supported")
+args_partial.add_argument('-m', '--partial-mode', default="loop", type=str.lower, choices=["loop","normal"], dest="mode", 
                     help="")
-parser.add_argument('-t', '--partial-interval', default=60, type=int, dest="interval", 
-                    help="Only for partial update.  Update display every -t/--partial-interval <second>.  Defaule: 60s")
-parser.add_argument('-C', '--partial-cycle', default=10, type=int, dest="times", 
-                    help="Only for partial update.  Update -c/--partial-cycle <times>, then exits the program.  Default 10 times")
+args_partial.add_argument('-t', '--partial-interval', default=60, type=int, dest="interval", 
+                    help="Update display every <interval> second (Default: 60s)")
+args_partial.add_argument('-C', '--partial-cycle', default=10, type=int, dest="times", 
+                    help="Update <times> times, then exits the program (Default 10 times)")
 
 
 args = parser.parse_args()
