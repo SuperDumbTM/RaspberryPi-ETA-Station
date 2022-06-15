@@ -44,12 +44,14 @@ class DisplayABC:
         
         # font
         self.logger.debug("setting up font")
-        self.f_route = ImageFont.truetype("./font/superstar_memesbruh03.ttf", self.lyo['f_route'])
-        self.f_text = ImageFont.truetype("./font/msjh.ttc", self.lyo['f_text'])
-        self.f_time = ImageFont.truetype("./font/agencyb.tff", self.lyo['f_time'])
-        self.f_mins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_mins'])
-        self.f_min = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Regular.ttf", self.lyo['f_min'])
-        self.f_lmins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_lmins'])
+        font_dir = os.path.join(root, "font")
+        
+        self.f_route = ImageFont.truetype(os.path.join(font_dir, "superstar_memesbruh03.ttf"), self.lyo['f_route'])
+        self.f_text = ImageFont.truetype(os.path.join(font_dir, "msjh.ttc"), self.lyo['f_text'])
+        self.f_time = ImageFont.truetype(os.path.join(font_dir, "agencyb.tff"), self.lyo['f_time'])
+        self.f_mins = ImageFont.truetype(os.path.join(font_dir, "GenJyuuGothic-Monospace-Medium.ttf"), self.lyo['f_mins'])
+        self.f_min = ImageFont.truetype(os.path.join(font_dir, "GenJyuuGothic-Monospace-Regular.ttf"), self.lyo['f_min'])
+        self.f_lmins = ImageFont.truetype(os.path.join(font_dir, "GenJyuuGothic-Monospace-Medium.ttf"), self.lyo['f_lmins'])
     
     def can_partial(self) -> bool:
         return self.partial

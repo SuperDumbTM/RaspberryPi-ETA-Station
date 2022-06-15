@@ -86,7 +86,7 @@ LAYOUT = {
 
 class Epd3in7(DisplayABC):
 
-    def __init__(self, path: str,size: int) -> None:
+    def __init__(self, root: str,size: int) -> None:
         '''
         mode:
             - 0->4Gary mode
@@ -95,7 +95,7 @@ class Epd3in7(DisplayABC):
         self.row_h = 80
         self.row_size = 6       
         self.LAYOUT = LAYOUT
-        super().__init__(path, size)
+        super().__init__(root, size)
         
         if size > 3:
             self.num_etas = 3

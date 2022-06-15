@@ -49,11 +49,11 @@ args = parser.parse_args()
 epd: DisplayABC = None
 
 def obj_setup():   
-    if not os.path.exists("conf/epd.conf"):
+    if not os.path.exists(os.path.join(ROOTDIR, "conf", "epd.conf")):
         raise FileNotFoundError("epd.conf do not exists, consider using configurator recreate it.")
     else:
         Logger.log.debug("Parsing epd.conf")
-        with open("conf/epd.conf", "r") as f:
+        with open(os.path.join(ROOTDIR, "conf", "epd.conf"), "r") as f:
             cparser = configparser.ConfigParser()
             cparser.read_file(f)
             try:
@@ -111,10 +111,9 @@ if __name__=='__main__':
             args.image_out = True
             args.log_lv = "DEBUG"
         # set log level 
-        if not args.verbose:
-            Logger.set_log_level(Logger.CRITICAL)
-        else:
-            Logger.set_log_level(getattr(Logger, args.log_lv))
+        if args.verbose:
+            Logger.verbose(getattr(Logger, args.log_lv))
+            Logger.log.info(f"Log level is set to {args.log_lv}")
         
         main()
     except KeyboardInterrupt:
