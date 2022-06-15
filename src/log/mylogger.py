@@ -27,9 +27,9 @@ class Logger:
         self.log.setLevel(logging.INFO)
 
         # console out hander
-        formatter_ch = logging.Formatter('[%(asctime)s] %(message)s', datefmt='%H:%M')
+        formatter_ch = logging.Formatter('[%(levelname)s] %(message)s', datefmt='%H:%M')
         ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
+        ch.setLevel(logging.DEBUG)
         ch.setFormatter(formatter_ch)
         self.log.addHandler(ch)
     
@@ -43,5 +43,5 @@ class Logger:
         formatter_fh = logging.Formatter('[%(levelname)s][%(asctime)s@%(module)s:%(lineno)d] %(message)s',
             datefmt='%Y%m%d|%H:%M:%S')
         fh.setLevel(logging.DEBUG)
-        fh.setFormatter(self.formatter_ch)
+        fh.setFormatter(formatter_fh)
         self.log.addHandler(fh)

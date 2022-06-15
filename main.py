@@ -61,7 +61,7 @@ def obj_setup():
                 size = cparser.get("epd","size")
                 brand = cparser.get("epd","brand")
                 model = cparser.get("epd","model")
-                test = "epd3in7 copy"
+                test = "epd3in7_test"
                 test2 = "epd3in7 timeonly"
                 module = importlib.import_module(f"src.display.{brand}.{test}")
                 
@@ -110,8 +110,7 @@ if __name__=='__main__':
         if args.dryrun:
             args.verbose = True
             args.image_out = True
-            if args.log_lv == "WARNING":
-                args.log_lv = "INFO"
+            args.log_lv = "DEBUG"
         # set log level 
         if not args.verbose:
             Logger.set_log_level(Logger.CRITICAL)
