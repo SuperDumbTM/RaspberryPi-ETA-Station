@@ -31,19 +31,19 @@ class Logger:
         self.log.debug(f"Updating log level")
         
     def verbose(self, lv):
-        formatter_ch = logging.Formatter('%(message)s', datefmt='%H:%M')
+        format = logging.Formatter('%(message)s', datefmt='%H:%M')
         
         ch = logging.StreamHandler()
         ch.setLevel(lv)
-        ch.setFormatter(formatter_ch)
+        ch.setFormatter(format)
         self.log.addHandler(ch)
     
     def add_file_logger(self, lv):
-        log_filename = datetime.datetime.now().strftime("%Y%m%d.log")
+        filename = datetime.datetime.now().strftime("%Y%m%d.log")
         
-        fh = logging.FileHandler(log_filename,mode='w+')
-        formatter_fh = logging.Formatter('[%(levelname)s][%(asctime)s@%(module)s:%(lineno)d] %(message)s',
-            datefmt='%Y%m%d|%H:%M:%S')
+        fh = logging.FileHandler(filename, mode='a')
+        format = logging.Formatter('[%(levelname)s][%(asctime)s@%(module)s:%(lineno)d] %(message)s',
+            datefmt='%H:%M:%S')
         fh.setLevel(lv)
-        fh.setFormatter(formatter_fh)
+        fh.setFormatter(format)
         self.log.addHandler(fh)

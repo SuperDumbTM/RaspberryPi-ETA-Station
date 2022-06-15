@@ -2,7 +2,7 @@ import os
 import sys
 from abc import ABC, abstractmethod
 from PIL import ImageFont
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
 from src.config import _configparser
 from src.log.mylogger import Logger
 
@@ -103,18 +103,18 @@ class DisplayABC:
     def full_update(self, deg: int):
         self.logger.debug("Refreshing the display in full update mode")
 
-    def partial_update(self, deg: int, intv: int, times: int, ppath: str = None):
+    def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
         '''
-        No ppath supplied -> loop mode;  Otherwise -> normal mode
-        
-        loop mode: a full update follow by `times` - 1 partial update with interval `intv`
-        normal mode: one partial update only, require a previous output image to work
+        partial update only available when e-paper display is supported
         
         @args
             - `deg`: Angle for diplay output rotation
             - `intv`: Time in second for partial update period (loop mode)
             - `times`: looping time (loop mode)
-            - `ppath`: path to previous display output image file for (normal mode)
+            - `mode`: {loop, mode}
+                - [loop] a full update follow by `times` - 1 partial update with interval `intv`
+                - [normal] one partial update only, require a previous output image to work
+            - `img_path`: path to previous display output image file for (normal mode)
         '''
         self.logger.debug("Refreshing the display in partial update mode")
 
