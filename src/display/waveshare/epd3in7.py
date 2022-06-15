@@ -139,7 +139,7 @@ class Epd3in7(DisplayABC):
             if os.path.exists(img_path):
                 prev_img = Image.open(img_path)
                 self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
-                time.sleep(0.5)
+                time.sleep(1)
                 self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
             else:
                 self.logger.error("Image file for partial update do not exists.  No update is done.\n\

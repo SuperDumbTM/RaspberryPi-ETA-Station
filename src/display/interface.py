@@ -37,15 +37,14 @@ class DisplayABC:
             self.lyo = self.LAYOUT[3]
         
         # conf  
-        self.logger.debug("reading conf/epd.conf")
-        self.parser = _configparser.ConfigParser("conf/eta.conf")
+        self.logger.debug("reading epd.conf")
+        self.parser = _configparser.ConfigParser(os.path.join(root, "conf", "eta.conf"))
         self.parser.read()
         self.conf = self.parser.get_conf()
         
         # font
         self.logger.debug("setting up font")
         font_dir = os.path.join(root, "font")
-        
         self.f_route = ImageFont.truetype(os.path.join(font_dir, "superstar_memesbruh03.ttf"), self.lyo['f_route'])
         self.f_text = ImageFont.truetype(os.path.join(font_dir, "msjh.ttc"), self.lyo['f_text'])
         self.f_time = ImageFont.truetype(os.path.join(font_dir, "agencyb.tff"), self.lyo['f_time'])
@@ -67,7 +66,7 @@ class DisplayABC:
             self.logger.critical("font/ is missing")
             raise FileNotFoundError()
         if not os.path.exists(os.path.join(self.root, "data")):
-            self.logger.warning("data/ is missing")
+            self.logger.warning("data/ is missing, trying to recontruct")
             os.makedirs(os.path.join(self.root, "data"))
             os.makedirs(os.path.join(self.root, "data", "route_data"))
             os.makedirs(os.path.join(self.root, "data", "route_data", "kmb"))
