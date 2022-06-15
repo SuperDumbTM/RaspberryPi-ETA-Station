@@ -23,7 +23,7 @@ class Logger:
     
     
     def __init__(self) -> None:
-        self.log = logging.getLogger('root')
+        self.log = logging.getLogger('mylogger')
         self.log.setLevel(logging.INFO)
 
         # console out hander

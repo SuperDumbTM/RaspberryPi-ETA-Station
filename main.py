@@ -5,7 +5,6 @@ import os
 import sys
 import argparse
 import configparser
-from turtle import title
 from src.log.mylogger import Logger
 from src.display.interface import DisplayABC
 
