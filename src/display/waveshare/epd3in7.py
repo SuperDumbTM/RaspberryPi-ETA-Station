@@ -89,13 +89,14 @@ class Epd3in7(DisplayABC):
         self.row_h = 80
         self.row_size = 6       
         self.LAYOUT = LAYOUT
+        self.mode = 1
         super().__init__(root, size)
         
         
         
         # obj
         self.epd = epd.EPD()
-        self.img = Image.new('1', (self.epd_width, self.epd_height), 255) # may need override
+        self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
         self.drawing = ImageDraw.Draw(self.img)
     
     def init(self):
@@ -114,14 +115,16 @@ class Epd3in7(DisplayABC):
     def can_partial():
         return PARTIAL
 
-    def partial_update(self, deg: int, intv: int, times: int, ppath: str = None):
-        if ppath is None:
+    def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
+        if mode == "loop":
             # loop mode
             super().full_update(deg)
             self.full_update(deg)
             while times > 1:
                 self.exit()
-                time.sleep(intv)
+                end = time.time()
+                time.sleep(intv - (end - start))
+                start = time.time()
                 super().partial_update(deg, intv, times)
                 prev_img = self.img
                 self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
@@ -133,10 +136,10 @@ class Epd3in7(DisplayABC):
                 self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
                 
                 times -= 1
-        else:
+        elif mode == "normal":
             # normal mode
-            if os.path.exists(ppath):
-                prev_img = Image.open(ppath)
+            if os.path.exists(img_path):
+                prev_img = Image.open(img_path)
                 self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
                 time.sleep(0.5)
                 self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))

@@ -15,7 +15,7 @@ parser = argparse.ArgumentParser()
 # image
 parser.add_argument('-i', '--save-image', action="store_true", dest="image_out", 
                     help="Save the e-paper display output to \"tmp/\".  Use -I, --image-path to specify other destination")
-parser.add_argument('-I', '--image-path', default=os.path.join(ROOTDIR, "tmp", "output.bmp"), type=str, dest="image_dir", 
+parser.add_argument('-I', '--image-path', default=os.path.join(ROOTDIR, "tmp", "output.bmp"), type=str, dest="image_path", 
                     help="Specify the path to save the e-paper display output.  (Default: \"tmp/output.bmp\")")
 # verbose
 parser.add_argument('-v', '--verbose', action="store_true", dest="verbose", 
@@ -30,25 +30,25 @@ parser.add_argument('--log-level', default="warning", type=str.upper, choices=["
 # EPD
 parser.add_argument('-d', '--dry-run', action="store_true", dest="dryrun", 
                     help="Run the program without printing the output to the display.  \nflags -i, -v, -l will be automatically set, and log level will be set to [debugpythj]")
-parser.add_argument('-p', '--partial', default=None, type=int, dest="partial", 
+parser.add_argument('-r', '--rotate', default=0, type=int, dest="degree", 
+                    help="Rotating the output by -r/--rotate <degree>")
+    # partial
+parser.add_argument('-p', '--partial', action="store_true", dest="partial", 
                     help="Updating the e-paper display using partial update mode if supported (-p/--partial <pt update mode no>)")
+parser.add_argument('-m', '--partial-mode', default="loop", type=str.lower, choices=["loop","normal"], dest="mode", 
+                    help="")
 parser.add_argument('-t', '--partial-interval', default=60, type=int, dest="interval", 
                     help="Only for partial update.  Update display every -t/--partial-interval <second>.  Defaule: 60s")
 parser.add_argument('-C', '--partial-cycle', default=10, type=int, dest="times", 
                     help="Only for partial update.  Update -c/--partial-cycle <times>, then exits the program.  Default 10 times")
-parser.add_argument('-P', '--partial-image', default=None, type=str, dest="image_path", 
-                    help="Image path for partial update.")
-parser.add_argument('-r', '--rotate', default=0, type=int, dest="degree", 
-                    help="Rotating the output by -r/--rotate <degree>")
 
 
 args = parser.parse_args()
 epd: DisplayABC = None
 
-def obj_setup():    
+def obj_setup():   
     if not os.path.exists("conf/epd.conf"):
-        Logger.log.error("epd.conf do not exists, consider using configurator recreate it.")
-        return None
+        raise FileNotFoundError("epd.conf do not exists, consider using configurator recreate it.")
     else:
         Logger.log.debug("Parsing epd.conf")
         with open("conf/epd.conf", "r") as f:
@@ -64,52 +64,41 @@ def obj_setup():
                 
                 return getattr(module, "CLS")(ROOTDIR, int(size))
             except Exception as e:
-                Logger.log.error(f"Error occurrs during initialization: {e}")
-                return None
+                raise RuntimeError(f"[initialization]: {e}")
 
 def main():
     global epd
     epd = obj_setup()
     
-    if epd is not None:
-        # init EPD
-        if not args.dryrun:
-            if args.partial is not None:
-                if not epd.can_partial():
-                    Logger.log.error(f"{epd.__class__.__name__} do not support partial update")
-                    return
-                else:
-                    # partial update
-                    epd.set_mode(args.partial)
-                    epd.init()
-                    epd.clear()
-            else:
-                # full update
-                epd.init()
-                epd.clear()
+    if not args.dryrun:
+        if args.partial and not epd.can_partial():
+            Logger.log.error(f"{epd.__class__.__name__} do not support partial update")
+            return
+        
+        epd.init()
+        # if not args.partial:
+        epd.clear()
+    
+    # get and draw ETA
+    Logger.log.info("Drawing ETA information")
+    epd.draw()
+    
+    # update display
+    if not args.dryrun: 
+        Logger.log.info(f"Displaying output to e-paper display")
+        if args.partial:
+            # partial update
+            epd.partial_update(args.degree, args.interval, args.times, args.mode ,args.image_path)
         else:
-            Logger.set_log_level(Logger.INFO)
-        
-        # get and draw ETA
-        Logger.log.info("Drawing ETA information")
-        epd.draw()
-        
-        # save image
-        if args.dryrun or args.image_out: 
-            Logger.log.info(f"Saving output to {args.image_dir}")
-            epd.save_image(args.image_dir)
-        
-        if not args.dryrun: 
-            Logger.log.info(f"Displaying output to e-paper display")
-            if args.partial is not None:
-                # partial update
-                epd.partial_update(args.degree, args.interval, args.times, args.image_path)
-            else:
-                # full update
-                epd.full_update(args.degree)
-    else:
-        return
-
+            # full update
+            epd.full_update(args.degree)
+            
+    # save image
+    if args.dryrun or args.image_out or args.partial: 
+        Logger.log.info(f"Saving output to {args.image_path}")
+        epd.save_image(args.image_path)
+    
+    return 0
 
 
 if __name__=='__main__':
@@ -118,14 +107,17 @@ if __name__=='__main__':
         if args.dryrun:
             args.verbose = True
             args.image_out = True
-        
+            if args.log_lv == "WARNING":
+                args.log_lv = "INFO"
         # set log level 
         if not args.verbose:
             Logger.set_log_level(Logger.CRITICAL)
         else:
             Logger.set_log_level(getattr(Logger, args.log_lv))
-            
+        
         main()
+    except KeyboardInterrupt:
+        Logger.log.info("")
     except Exception as e:
         Logger.log.error(f"Error occurrs during execution: {e}")
     finally:

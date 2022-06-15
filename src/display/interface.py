@@ -78,7 +78,7 @@ class DisplayABC:
     
     @staticmethod
     @abstractmethod
-    def can_partial():
+    def can_partial() -> bool:
         pass
     
     @abstractmethod
