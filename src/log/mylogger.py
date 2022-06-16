@@ -23,25 +23,27 @@ class Logger:
     
     
     def __init__(self) -> None:
-        self.log = logging.getLogger('root')
-        self.log.setLevel(logging.INFO)
-
-        # console out hander
-        formatter_ch = logging.Formatter('[%(asctime)s] %(message)s', datefmt='%H:%M')
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
-        ch.setFormatter(formatter_ch)
-        self.log.addHandler(ch)
+        self.log = logging.getLogger('mylogger')
+        self.log.setLevel(logging.DEBUG)
     
     def set_log_level(self, lv):
         self.log.setLevel(lv)
         self.log.debug(f"Updating log level")
+        
+    def verbose(self, lv):
+        format = logging.Formatter('%(message)s', datefmt='%H:%M')
+        
+        ch = logging.StreamHandler()
+        ch.setLevel(lv)
+        ch.setFormatter(format)
+        self.log.addHandler(ch)
     
-    def add_file_logger(self):
-        log_filename = datetime.datetime.now().strftime("%Y%m%d.log")
-        fh = logging.FileHandler(log_filename,mode='w+')
-        formatter_fh = logging.Formatter('[%(levelname)s][%(asctime)s@%(module)s:%(lineno)d] %(message)s',
-            datefmt='%Y%m%d|%H:%M:%S')
-        fh.setLevel(logging.DEBUG)
-        fh.setFormatter(self.formatter_ch)
+    def add_file_logger(self, lv):
+        filename = datetime.datetime.now().strftime("%Y%m%d.log")
+        
+        fh = logging.FileHandler(filename, mode='a')
+        format = logging.Formatter('[%(levelname)s][%(asctime)s@%(module)s:%(lineno)d] %(message)s',
+            datefmt='%H:%M:%S')
+        fh.setLevel(lv)
+        fh.setFormatter(format)
         self.log.addHandler(fh)

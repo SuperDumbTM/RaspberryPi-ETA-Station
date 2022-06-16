@@ -1,13 +1,10 @@
 import os
 import string
 import sys
-import time
-from PIL import Image,ImageDraw,ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
-from display.interface import DisplayABC
 from eta import details as dets
 from eta import eta
-from epd_lib import epd3in7 as epd
+import epd3in7
 
 PARTIAL = True
 LAYOUT = {
@@ -70,13 +67,13 @@ LAYOUT = {
     }
 }
 
-class Epd3in7(DisplayABC):
+class Epd3in7TimeOnly(epd3in7.Epd3in7):
     
     mode = 0
-    epd_height = epd.EPD_HEIGHT
-    epd_width = epd.EPD_WIDTH
-    black = epd.GRAY4
-    white = epd.GRAY1
+    epd_height: int
+    epd_width: int
+    black: int
+    white: int
 
     def __init__(self, root: str,size: int) -> None:
         '''
@@ -90,61 +87,10 @@ class Epd3in7(DisplayABC):
         self.mode = 1
         super().__init__(root, size)
         
-        
-        
-        # obj
-        self.epd = epd.EPD()
-        self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
-        self.drawing = ImageDraw.Draw(self.img)
-    
-    def init(self):
-        super().init()
-        self.epd.init(self.mode)  
-
-    def clear(self):
-        super().clear()
-        self.epd.Clear(0xFF, self.mode)
-        
-    def full_update(self, deg: int):
-        super().full_update(deg)
-        self.epd.display_4Gray(self.epd.getbuffer_4Gray(self.img.rotate(deg)))
-
     @staticmethod
     def can_partial():
-        return PARTIAL
-
-    def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
-        if mode == "loop":
-            # loop mode
-            super().full_update(deg)
-            self.full_update(deg)
-            while times > 1:
-                self.exit()
-                end = time.time()
-                time.sleep(intv - (end - start))
-                start = time.time()
-                super().partial_update(deg, intv, times)
-                prev_img = self.img
-                self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
-                self.drawing = ImageDraw.Draw(self.img)
-                
-                self.init()
-                self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
-                self.draw()
-                self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
-                
-                times -= 1
-        elif mode == "normal":
-            # normal mode
-            if os.path.exists(img_path):
-                prev_img = Image.open(img_path)
-                self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
-                time.sleep(1)
-                self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
-            else:
-                self.logger.error("Image file for partial update do not exists.  No update is done.\n\
-                    Please check the path or do a full update with flag -i first (optional: -I <path> to specify the path)")
-
+        return PARTIAL    
+    
     def draw(self):
         '''
         M: 
@@ -202,4 +148,4 @@ class Epd3in7(DisplayABC):
                     else: break
 
 
-CLS = Epd3in7
+CLS = Epd3in7TimeOnly
