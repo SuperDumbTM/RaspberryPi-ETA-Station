@@ -5,9 +5,9 @@ import time
 from PIL import Image,ImageDraw,ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
 from display.interface import DisplayABC
+from display.waveshare.epd_lib import epd3in7 as epd
 from eta import details as dets
 from eta import eta
-from epd_lib import epd3in7 as epd
 
 PARTIAL = True
 LAYOUT = {
