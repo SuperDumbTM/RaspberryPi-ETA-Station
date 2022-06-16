@@ -86,6 +86,12 @@ LAYOUT = {
 
 class Epd3in7(DisplayABC):
 
+    mode = 0
+    epd_height = EPD_HEIGHT
+    epd_width = EPD_WIDTH
+    black = GRAY4
+    white = GRAY1
+
     def __init__(self, root: str,size: int) -> None:
         '''
         mode:
@@ -96,50 +102,10 @@ class Epd3in7(DisplayABC):
         self.row_size = 6       
         self.LAYOUT = LAYOUT
         super().__init__(root, size)
-        
-        if size > 3:
-            self.num_etas = 3
-        else :
-            self.num_etas = size
-            
-        if self.num_etas == 1:
-            self.lyo = LAYOUT[1]
-        elif self.num_etas == 2:
-            self.lyo = LAYOUT[2]
-        else:
-            self.lyo = LAYOUT[3]
             
         # obj
         self.img = Image.new('1', (EPD_WIDTH, EPD_HEIGHT), 255)
         self.drawing = ImageDraw.Draw(self.img)
-        self.partial_upd = PARTIAL_UPD
-        self.parser = _configparser.ConfigParser("conf/eta.conf")
-        self.parser.read()
-        self.conf = self.parser.get_conf()
-        
-        # constants
-        self.black = GRAY4
-        self.white = GRAY1
-        # font
-        self.f_route = ImageFont.truetype("./font/superstar_memesbruh03.ttf", self.lyo['f_route'])
-        self.f_text = ImageFont.truetype("./font/msjh.ttc", self.lyo['f_text'])
-        self.f_time = ImageFont.truetype("./font/agencyb.tff", self.lyo['f_time'])
-        self.f_mins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_mins'])
-        self.f_min = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Regular.ttf", self.lyo['f_min'])
-        self.f_lmins = ImageFont.truetype("./font/GenJyuuGothic-Monospace-Medium.ttf", self.lyo['f_lmins'])
-    
-    def init(self, mode: int = 0):
-        '''mode:
-            - 0->4Gary mode
-            - 1->1Gary mode
-        '''
-        super().init()
-
-    def clear(self):
-        super().clear()
-
-    def exit(self):
-        super().exit()
     
     def draw(self):
         super().draw()
@@ -192,7 +158,14 @@ class Epd3in7(DisplayABC):
                             self.drawing.text((self.lyo['lminsx'], self.lyo['lminsy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=GRAY4, font=self.f_lmins)
                     else: break
 
-    def display_full(self):
-        self.display_4Gray(self.getbuffer_4Gray(self.img))
+    def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
+        if mode == "loop":
+            # loop mode
+            self.logger.debug("Partial update - loop mode")
+        if mode == "normal":
+            self.logger.debug("Partial update - normal mode")
+
+    def full_update(self, deg: int):
+        super().full_update(deg)
         
 CLS = Epd3in7

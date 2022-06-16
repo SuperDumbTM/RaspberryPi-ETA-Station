@@ -1,9 +1,13 @@
 import os
+import requests
 import _request as rqst
 import details as dets
 import exception as ce
 from datetime import datetime, timedelta
 from typing import Literal
+import logging
+
+Logger = logging.getLogger(__name__)
 
 class Eta:
 
@@ -24,13 +28,21 @@ class Eta:
             self.error = True
             self.msg = "API 錯誤"
             self.eta_len = 0
-        except ce.EndOfServices as e:
+        except ce.EndOfServices:
             self.error = True
             self.msg = "服務時間已過"
             self.eta_len = 0
         except ce.EmptyDataError:
             self.error = True
             self.msg = "沒有數據"
+            self.eta_len = 0
+        except requests.exceptions.RequestException as e:
+            self.error = True
+            self.msg = "網絡錯誤"
+            self.eta_len = 0
+        except Exception as e:
+            self.error = True
+            self.msg = "錯誤"
             self.eta_len = 0
         finally:
             pass

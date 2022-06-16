@@ -1,4 +1,3 @@
-from abc import abstractmethod
 import configparser
 import os
 
@@ -11,7 +10,7 @@ class ConfigParser:
 
     def __init__(self, path: str) -> None:
         self.__path = path
-        # self.__conf = self.__conf_to_dict()
+        self.__conf = self.__conf_to_dict()
         
 
     def __conf_to_dict(self) -> dict:

@@ -20,7 +20,6 @@ class DisplayABC:
     def __init__(self, root: str, size: int) -> None:
         self.logger.debug(f"Initializing class {self.__class__.__name__}")
         self.root = root
-        self.__path_check()
         
         if size > 3:
             self.num_etas = 3
@@ -54,25 +53,6 @@ class DisplayABC:
     
     def can_partial(self) -> bool:
         return self.partial
-    
-    def __path_check(self):
-        if not os.path.exists(os.path.join(self.root, "conf", "epd.conf")):
-            self.logger.critical("epd.conf is missing")
-            raise FileNotFoundError()
-        if not os.path.exists(os.path.join(self.root, "conf", "eta.conf")):
-            self.logger.critical("epd.conf is missing")
-            raise FileNotFoundError("eta.conf")
-        if not os.path.exists(os.path.join(self.root, "font")):
-            self.logger.critical("font/ is missing")
-            raise FileNotFoundError()
-        if not os.path.exists(os.path.join(self.root, "data")):
-            self.logger.warning("data/ is missing, trying to recontruct")
-            os.makedirs(os.path.join(self.root, "data"))
-            os.makedirs(os.path.join(self.root, "data", "route_data"))
-            os.makedirs(os.path.join(self.root, "data", "route_data", "kmb"))
-            os.makedirs(os.path.join(self.root, "data", "route_data", "mtr"))
-            os.makedirs(os.path.join(self.root, "data", "route_data", "mtr", "bus"))
-            os.makedirs(os.path.join(self.root, "data", "route_data", "mtr", "lrt"))
 
     def set_mode(self, mode):
         self.mode = mode

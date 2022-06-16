@@ -1,5 +1,5 @@
 from typing import Literal
-import requests, json, csv
+import requests, json
 
 # -------------------- eta --------------------
 

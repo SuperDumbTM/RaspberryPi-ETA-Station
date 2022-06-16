@@ -1,3 +1,4 @@
+from importlib import import_module
 import os
 import string
 import sys
@@ -97,19 +98,7 @@ class Epd3in7(DisplayABC):
         # obj
         self.img = Image.new('1', (EPD_WIDTH, EPD_HEIGHT), 255)
         self.drawing = ImageDraw.Draw(self.img)
-    
-    def init(self, mode: int = 0):
-        '''mode:
-            - 0->4Gary mode
-            - 1->1Gary mode
-        '''
-        super().init()
 
-    def clear(self):
-        super().clear()
-
-    def exit(self):
-        super().exit()
     
     def draw(self):
         super().draw()
@@ -124,8 +113,9 @@ class Epd3in7(DisplayABC):
             if  self.row_size <= row: 
                 self.logger.warning(f"Number of ETA entry in eta.conf ({len(self.conf)}) is larger than allowed display number.  Stoped at {row}.")
                 break
+            self.logger.debug(f"----- Row {row} -----")
+            self.logger.debug(f"Reading entry {str(entry)}")
             
-            self.logger.debug(f"- Reading entry {entry}")
             _dets = dets.Details.get_obj(entry['eta_co'])(**entry)
             _eta = eta.Eta.get_obj(entry['eta_co'])(**entry)
             
@@ -139,18 +129,20 @@ class Epd3in7(DisplayABC):
             stop = _dets.get_stop_name()
             
             # titles
-            self.logger.debug(f"- Drawing row {row}'s route information")
+            self.logger.debug(f"Drawing route information")
             self.drawing.text((5, (self.row_h*row + 0)), text=rte, fill=self.black, font=self.f_route)
             self.drawing.text((5, (self.row_h*row + 35)), dest, fill=self.black, font=self.f_text)
             self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
             
             # time
-            self.logger.debug(f"- Drawing row {row}'s ETA time")
+            self.logger.debug(f"Drawing ETA information")
             if _eta.error:
+                self.logger.info(f"No ETA received: {_eta.msg}")
                 self.drawing.text((170, self.row_h*row + 25), text=_eta.msg, fill=self.black, font=self.f_text)
             else:
                 for idx, time in enumerate(_eta.get_etas()):
                     if (idx < 3):
+                        self.logger.debug(time)
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :
                             self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_mins)
@@ -159,6 +151,7 @@ class Epd3in7(DisplayABC):
                         else:
                             self.drawing.text((self.lyo['lminx'], self.lyo['lminy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_lmins)
                     else: break
+        
 
     def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
         if mode == "loop":
@@ -167,6 +160,9 @@ class Epd3in7(DisplayABC):
         if mode == "normal":
             self.logger.debug("Partial update - normal mode")
 
+    def full_update(self, deg: int):
+        super().full_update(deg)
+    
     def exit(self):
         pass
         
