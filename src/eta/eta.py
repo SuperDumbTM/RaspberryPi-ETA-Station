@@ -44,6 +44,7 @@ class Eta:
             self.error = True
             self.msg = "錯誤"
             self.eta_len = 0
+            Logger.error("", exc_info=1)
         finally:
             pass
     
@@ -116,12 +117,13 @@ class Kmb(Eta):
                     raise ce.EndOfServices
 
                 eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z")
-                timestamp = datetime.strptime(stops["data_timestamp"], "%Y-%m-%dT%H:%M:%S%z")
+                #timestamp = datetime.strptime(stops["data_timestamp"], "%Y-%m-%dT%H:%M:%S%z")
+                now = datetime.now()
                 
                 output['data'].append(
                     {
                     "co": stops["co"],
-                    'eta_mins': (eta_time - timedelta(hours=timestamp.hour, minutes=timestamp.minute)).minute,
+                    'eta_mins': (eta_time - timedelta(hours=now.hour, minutes=now.minute)).minute,
                     'eta_time': datetime.strftime(eta_time, "%H:%M"),
                     'remark': stops["rmk_"+self.lang]
                     }
