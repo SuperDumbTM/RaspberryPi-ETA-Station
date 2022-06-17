@@ -44,8 +44,6 @@ class Eta:
             self.error = True
             self.msg = "錯誤"
             self.eta_len = 0
-            
-            Logger.error("", exc_info=1)
         finally:
             pass
     
