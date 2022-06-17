@@ -119,7 +119,7 @@ class Epd3in7(DisplayABC):
         for row in range(5):
             self.drawing.line((0, self.row_h * (row+1), EPD_HEIGHT, 80 * (row+1)))
         
-        for row, entry in enumerate(self.conf.values()):            
+        for row, entry in enumerate(self.conf):            
             _dets = dets.Details.get_obj(entry['eta_co'])(**entry)
             _eta = eta.Eta.get_obj(entry['eta_co'])(**entry)
             

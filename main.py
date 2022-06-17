@@ -4,7 +4,7 @@ import importlib
 import os
 import sys
 import argparse
-import configparser
+from src.config import config
 from src.config import configurator
 from src.log.mylogger import Logger
 from src.display.interface import DisplayABC
@@ -71,23 +71,22 @@ def path_check():
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "bus"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "lrt"))
 
-def obj_setup():   
-    if not os.path.exists(os.path.join(ROOT, "conf", "epd.json")):
+def obj_setup():
+    path_conf = os.path.join(ROOT, "conf", "epd.json")
+    if not os.path.exists(path_conf):
         raise FileNotFoundError("epd.json do not exists, consider using configurator recreate it.")
     else:
         Logger.log.debug("Parsing epd.json")
-        with open(os.path.join(ROOT, "conf", "epd.json"), "r") as f:
-            cparser = configparser.ConfigParser()
-            cparser.read_file(f)
-            try:
-                size = cparser.get("epd", "size")
-                brand = cparser.get("epd", "brand")
-                model = cparser.get("epd", "model")
-                module = importlib.import_module(f"src.display.{brand}.{model}")
-                
-                return getattr(module, "CLS")(ROOT, int(size))
-            except Exception as e:
-                raise RuntimeError(f"[initialization]: {e}")
+        conf = config.get(path_conf)
+        try:
+            size = conf['size']
+            brand = conf['brand']
+            model = conf['model']
+            module = importlib.import_module(f"src.display.{brand}.{model}")
+            
+            return getattr(module, "CLS")(ROOT, int(size))
+        except Exception as e:
+            raise RuntimeError(f"[initialization]: {e}")
 
 def main():
     global epd

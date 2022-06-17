@@ -144,6 +144,7 @@ class Configurator:
             print(f"[{idx}] {entry['route']:<5}@ {stop}\t\t\t {orig} → {dest}")
 
     def edit(self):
+        self.__read_confs()
         if len(self.epd_conf) == 0:
             pass
         else:

@@ -110,7 +110,7 @@ class Epd3in7(DisplayABC):
         
         # ETA
         self.logger.debug("Drawing ETA(s)")
-        for row, entry in enumerate(self.conf.values()):
+        for row, entry in enumerate(self.conf):
             if  self.row_size <= row: 
                 self.logger.warning(f"Number of ETA entry in eta.conf ({len(self.conf)}) is larger than allowed display number.  Stoped at {row}.")
                 break
@@ -123,7 +123,7 @@ class Epd3in7(DisplayABC):
             rte = entry['route']
             dest = _dets.get_dest()
             if not dest.lower().islower() and len(dest.translate(str.maketrans('', '', string.punctuation))) > 9:
-                dest = dest[:9] + "..."
+                dest = dest[:10] + "..."
             elif dest.lower().islower() and len(dest) > 22:
                 dest = dest[:21] + "..."
                 

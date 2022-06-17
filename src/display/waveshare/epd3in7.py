@@ -162,7 +162,7 @@ class Epd3in7(DisplayABC):
         
         # ETA
         self.logger.debug("Drawing ETA(s)")
-        for row, entry in enumerate(self.conf.values()):
+        for row, entry in enumerate(self.conf):
             if  self.row_size <= row: 
                 self.logger.warning(f"Number of ETA entry in eta.conf ({len(self.conf)}) is larger than allowed display number.  Stoped at {row}.")
                 break
