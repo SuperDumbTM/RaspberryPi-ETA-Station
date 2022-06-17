@@ -1,42 +1,37 @@
+import os
 import importlib
 import shutil
-import os
 from src.config import config
-from src.config import routeselector as rtsel
-from src.config import epdselector as epdsel
+from src.config.routeselector import *
+from src.config.epdselector import *
+from src.eta import eta
 from src.eta import details as dets
 
 ROOT = os.getcwd()
-DP = os.path.join(ROOT, "lib", "display")
-ETA_CONF_PATH = os.path.join(ROOT, "conf", "eta.conf")
-EPD_CONF_PATH = os.path.join(ROOT, "conf", "epd.conf")
-DATA_PATH = os.path.join(ROOT, "data", "route_data")
-
 
 class Configurator:
-    lang_list = {
-        '1': ("tc", "繁體中文"),
-        '2': ("en", "English")
-    }
+    
+    lang_list = {'1': ("tc", "繁體中文"), '2': ("en", "English")}
 
     def __init__(self, root: str) -> None:
         self.intput_count = 0
         self.eta_row_size = 0
+        # paths
         self.path_eta = os.path.join(root, "conf", "eta.json")
         self.path_epd = os.path.join(root, "conf", "epd.json")
         self.path_epd_list = os.path.join(root, "src", "display", "epd_list.json")        
         
         dir_data = os.path.join(root, "data", "route_data")
-        self.eta_co_list: dict[str, rtsel.Selector] = {
-            '1': rtsel.KmbSelector(dir_data, "tc"),
+        self.eta_co_list: dict[str, Selector] = {
+            '1': KmbSelector(dir_data, "tc"),
             # '2':"新巴/城巴",
             # '3':"港鐵-重鐵",
-            '4': rtsel.MtrLrtSelector(dir_data, "tc"),
-            '5': rtsel.MtrBusSelector(dir_data, "tc"),
+            '4': MtrLrtSelector(dir_data, "tc"),
+            '5': MtrBusSelector(dir_data, "tc"),
         }
         self.list_function()
 
-    def __read_confs(self):
+    def __load_confs(self):
         try:
             self.epd_conf = config.get(self.path_epd)
         except FileNotFoundError:
@@ -48,7 +43,7 @@ class Configurator:
     
     def __select_co(self):
         for idx, co in self.eta_co_list.items():
-            print(f"[{idx}] {co.get_name()[1]}")
+            print(f"[{idx}] {co.name_tc}")
         _input = input(">> 請選擇: ")
         
         if _input in ('q', 'Q'):
@@ -58,10 +53,10 @@ class Configurator:
         return self.eta_co_list[_input].select()
 
     def __select_epd(self):
-        epdconf = epdsel.Epdselector.select_epd(self.path_epd_list)
+        epdconf = Epdselector.select_epd(self.path_epd_list)
         self.epd_conf['brand'] =  epdconf[0]
         self.epd_conf['model'] =  epdconf[1]
-        epdsize = epdsel.Epdselector.select_display_size()
+        epdsize = Epdselector.select_display_size()
         self.epd_conf['size'] =  epdsize
     
     def list_function(self):
@@ -90,10 +85,10 @@ class Configurator:
         if os.path.exists(self.path_eta):
             shutil.copyfile(self.path_eta, self.path_eta.replace(".json", ".json.bak"))
             os.remove(self.path_eta)
-
-        self.epd_conf = {}
-        self.eta_conf = []
+            
         try:
+            self.epd_conf = {}
+            self.eta_conf = []
             # epd config 
             self.__select_epd()
             # eta co [loop]
@@ -107,58 +102,74 @@ class Configurator:
                     self.eta_conf.append(_rt)
                 except KeyboardInterrupt: # user quit
                     break
-            # write
+            # write config
             config.put(self.path_epd , self.epd_conf)
             config.put(self.path_eta , self.eta_conf)
             self.view(refresh=False)
         except (Exception, KeyboardInterrupt) as e:
-            print(e)
-            shutil.copyfile(self.path_epd.replace(
-                ".json", ".json.bak"), self.path_epd)
-            shutil.copyfile(self.path_eta.replace(
-                ".json", ".json.bak"), self.path_eta)
+            # restore backups
+            shutil.copyfile(self.path_epd.replace(".json", ".json.bak"), self.path_epd)
+            shutil.copyfile(self.path_eta.replace(".json", ".json.bak"), self.path_eta)
         finally:
             if os.path.exists(self.path_epd.replace(".json", ".json.bak")) and os.path.exists(self.path_epd):
                 os.remove(self.path_epd.replace(".json", ".json.bak"))
             if os.path.exists(self.path_eta.replace(".json", ".json.bak")) and os.path.exists(self.path_eta):
                 os.remove(self.path_eta.replace(".json", ".json.bak"))
 
-    def view(self, refresh: bool = True):
-
-        if refresh:
-            self.__read_confs()
-        # epd conf
-
-        # eta conf
-        print("設定：")
+    def __veiw_epd(self):
+        for descr, content in self.epd_conf.items():
+            print(f"[{descr}]\t{content}")
+            
+    def __view_eta(self):
         for idx, entry in enumerate(self.eta_conf):
-            if entry['eta_co'] == "kmb":
-                _dets = dets.DetailsKmb(**entry)
+            if entry['eta_co'] == eta.Kmb.abbr:
+                _dets = dets.DetailsKmb
             elif entry['eta_co'] == "ctb/nwb":  # TODO: ctb/nwb
                 pass
-            elif entry['eta_co'] == "mtr_hrt":  # TODO: mtr_hrt
-                pass
-            elif entry['eta_co'] == "mtr_lrt":
-                _dets = dets.DetailsMtrLrt(**entry)
-            elif entry['eta_co'] == "mtr_bus":
-                _dets = dets.DetailsMtrBus(**entry)
+            elif entry['eta_co'] == eta.MtrTrain.abbr:  # TODO: mtr_hrt
+                _dets = dets.DetailsMtrTrain
+            elif entry['eta_co'] == eta.MtrLrt.abbr:
+                _dets = dets.DetailsMtrLrt
+            elif entry['eta_co'] == eta.MtrBus.abbr:
+                _dets = dets.DetailsMtrBus
+                
+            del entry['eta_co']
+            _dets = _dets(**entry)
             orig = _dets.get_orig()
             dest = _dets.get_dest()
             stop = _dets.get_stop_name()
             print(f"[{idx}] {entry['route']:<5}@ {stop}\t\t\t {orig} → {dest}")
+    
+    def view(self, refresh: bool = True):
+
+        if refresh:
+            self.__load_confs()
+        # epd conf
+        print("----- 墨水屏設定 -----")
+        self.__veiw_epd()
+        # eta conf
+        print("-----預報設定 -----")
+        self.__veiw_eta()
+        
 
     def edit(self):
-        self.__read_confs()
+        self.__load_confs()
         
         print("[0] 墨水屏設定\n[1] 預報設定")
         input_mod = input("請選擇修改項目：")
         while input_mod not in ("0", "1"):
             input_mod = input("輸入無效，請重新選擇: ")
         
-        if input_mod == "0" and self.epd_conf != 0: # epd
+        if input_mod == "0": # epd
+            print("----- 現有設定 -----")
+            self.__veiw_epd()
+            print("-----")
             self.__select_epd()
             config.put(self.path_epd , self.epd_conf)
         elif input_mod == "1": # eta
+            print("----- 現有設定 -----")
+            self.__view_eta()
+            print("-----")
             print("[0] 修改\n[1] 刪除")
             input_act = input("請選動作: ")
             while input_act not in ("0", "1"):
@@ -183,7 +194,8 @@ class Configurator:
     def remove(self):
         confirm = input("確定刪除? [y/n]")
         if confirm.lower() == "y":
-            open(EPD_CONF_PATH, 'w').close()
+            open(self.path_epd, 'w').close()
+            open(self.path_eta, 'w').close()
             print("已刪除。")
         else:
             print("已取消。")

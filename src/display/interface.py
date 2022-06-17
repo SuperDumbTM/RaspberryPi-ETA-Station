@@ -7,7 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__f
 from src.config import config
 from src.log.mylogger import Logger
 
-class DisplayABC:
+class DisplayABC(ABC):
     
     partial: bool
     epd_height: int
@@ -64,7 +64,6 @@ class DisplayABC:
         else:
             return text
                 
-    
     @staticmethod
     @abstractmethod
     def can_partial() -> bool:

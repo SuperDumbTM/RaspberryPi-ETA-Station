@@ -3,9 +3,8 @@ import os
 import sys
 import json
 import datetime
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__))))
-#from ..eta import eta_process as proc, request as rqst
-from eta import details as upd
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)))) # scr/
+from eta import details as dets
 
 class Selector:
     # returns
@@ -19,30 +18,16 @@ class Selector:
     trans_lang: dict
     route_data: dict
     dir_opts: list
+    rte_path: os.path
     trans_direction = {'O': "outbound", 'I': "inbound"}
-    abbr_trans = {
-            'kmb': "九巴",
-            'mtr_bus': "港鐵巴士",
-            'mtr_lrt': "港鐵輕鐵",
-            'mtr_hrt': "港鐵重鐵"
-        }
+    # var
+    trans_lang: dict
+    name_tc: str
     
     def __init__(self, data_path: str, lang: str) -> None:
         self.dir_opts = []
         self.root = data_path
         self.lang = self.trans_lang[lang]
-    
-    def get_name(self) -> tuple:
-        """get object company name
-
-        Returns:
-            tuple: (abbr, zh name)
-        """
-        return self.name
-    
-    @staticmethod
-    def get_zh_name(abbr) -> str:
-        return Selector.abbr_trans[abbr]
     
     def sel_route(self): 
         with open(self.rte_path, "r", encoding="utf-8") as f:
@@ -89,7 +74,6 @@ class SelectorWithServiceType(Selector):
     st_opts: list
     
     def __init__(self, data_path: str, lang: str) -> None:
-        self.lang = self.trans_lang[lang]
         super().__init__(data_path, lang)
     
     @abstractmethod
@@ -117,6 +101,7 @@ class SelectorWithServiceType(Selector):
     
 class KmbSelector(SelectorWithServiceType):
     
+    name_tc = "九巴"
     trans_lang = {'tc': "tc", 'sc': "sc", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -151,7 +136,7 @@ class KmbSelector(SelectorWithServiceType):
         
     def sel_stop(self):
         cache_path = os.path.join(self.root, "kmb", "cache", f"{self.route}-{self.direction}-{self.service_type}.json")
-        _upd = upd.DetailsKmb(self.name[0], self.route, self.direction, self.service_type, 0, self.lang)
+        _upd = dets.DetailsKmb(self.name[0], self.route, self.direction, self.service_type, 0, self.lang)
         
         if _upd.is_outdated(cache_path):
             _upd.cache()
@@ -180,6 +165,7 @@ class KmbSelector(SelectorWithServiceType):
               
 class MtrBusSelector(Selector):
 
+    name_tc = "港鐵：巴士"
     trans_lang = {'tc': "zh", 'sc': "zh", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -205,7 +191,7 @@ class MtrBusSelector(Selector):
         
     def sel_stop(self):
         fpath = os.path.join(self.root, "mtr", "bus", "route.json")
-        _upd = upd.DetailsMtrBus(self.name[0], self.route, self.direction, None, 0, self.lang)
+        _upd = dets.DetailsMtrBus(self.name[0], self.route, self.direction, None, 0, self.lang)
         if _upd.is_outdated(fpath):
             _upd.update()
             
@@ -233,6 +219,7 @@ class MtrBusSelector(Selector):
         
 class MtrLrtSelector(Selector):
     
+    name_tc = "港鐵：輕鐵"
     trans_lang = {'tc': "ch", 'sc': "ch", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:

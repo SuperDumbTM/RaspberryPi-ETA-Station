@@ -1,1 +1,50 @@
-[{"eta_co": "kmb", "route": "265B", "direction": "outbound", "service_type": 1, "stop": "1", "lang": "tc"}, {"eta_co": "kmb", "route": "265B", "direction": "outbound", "service_type": 1, "stop": "1", "lang": "tc"}, {"eta_co": "mtr_lrt", "route": "705", "direction": "outbound", "service_type": null, "stop": "540", "lang": "ch"}, {"eta_co": "mtr_lrt", "route": "705", "direction": "outbound", "service_type": null, "stop": "550", "lang": "ch"}, {"eta_co": "mtr_bus", "route": "K73", "direction": "outbound", "service_type": null, "stop": "K73-U050", "lang": "zh"}, {"eta_co": "mtr_bus", "route": "K73", "direction": "inbound", "service_type": null, "stop": "K73-D090", "lang": "zh"}]
+[
+    {
+        "eta_co": "kmb",
+        "route": "265B",
+        "direction": "outbound",
+        "service_type": 1,
+        "stop": "1",
+        "lang": "tc"
+    },
+    {
+        "eta_co": "kmb",
+        "route": "265B",
+        "direction": "outbound",
+        "service_type": 1,
+        "stop": "1",
+        "lang": "tc"
+    },
+    {
+        "eta_co": "mtr_lrt",
+        "route": "705",
+        "direction": "outbound",
+        "service_type": null,
+        "stop": "540",
+        "lang": "ch"
+    },
+    {
+        "eta_co": "mtr_lrt",
+        "route": "705",
+        "direction": "outbound",
+        "service_type": null,
+        "stop": "550",
+        "lang": "ch"
+    },
+    {
+        "eta_co": "mtr_bus",
+        "route": "K73",
+        "direction": "outbound",
+        "service_type": null,
+        "stop": "K73-U050",
+        "lang": "zh"
+    },
+    {
+        "eta_co": "mtr_bus",
+        "route": "K73",
+        "direction": "inbound",
+        "service_type": null,
+        "stop": "K73-D090",
+        "lang": "zh"
+    }
+]

@@ -2,10 +2,10 @@ import os
 import requests
 import _request as rqst
 import details as dets
-import exception as ce
+import logging
+from eta_exceptions import *
 from datetime import datetime, timedelta
 from typing import Literal
-import logging
 
 Logger = logging.getLogger(__name__)
 
@@ -20,44 +20,37 @@ class Eta:
     
     def __init__(self) -> None:
         try:
-            self.data = self._get_etas()['data']
-            self.eta_len = len(self.data)
-            self.error = False
-            self.msg = ""
-        except ce.APIStatusError:
+            self.eta_len = 0
             self.error = True
+            self.data = self.get_etas_data()['data']
+        except APIStatusError:
             self.msg = "API 錯誤"
-            self.eta_len = 0
-        except ce.EndOfServices:
-            self.error = True
+        except EndOfServices:
             self.msg = "服務時間已過"
-            self.eta_len = 0
-        except ce.EmptyDataError:
-            self.error = True
+        except EmptyDataError:
             self.msg = "沒有數據"
-            self.eta_len = 0
-        except requests.exceptions.RequestException as e:
-            self.error = True
+        except requests.exceptions.RequestException:
             self.msg = "網絡錯誤"
-            self.eta_len = 0
-        except Exception as e:
-            self.error = True
+        except Exception:
             self.msg = "錯誤"
-            self.eta_len = 0
+        else:
+            self.msg = ""
+            self.error = False
+            self.eta_len = len(self.data)
         finally:
             pass
     
     @staticmethod
     def get_obj(co: str):
-        if co == "kmb":
-            return Kmb
-        elif co == "mtr_lrt":
-            return MtrLrt
-        elif co == "mtr_bus":
-            return MtrBus
+        if co == Kmb.abbr:      return Kmb
+        elif co == MtrLrt.abbr: return MtrLrt
+        elif co == MtrBus.abbr: return MtrBus
 
     def get_eta_count(self) -> int:
         return self.eta_len
+
+    def get_etas_data(self) -> dict:
+        pass
 
     def get_eta(self, seq: int = 0) -> tuple:
         '''
@@ -85,24 +78,21 @@ class Eta:
     
 class Kmb(Eta):
 
-    def __init__(self, eta_co: str, route: str, direction: Literal["inbound", "outbound"], stop: int, service_type: int, lang: Literal["tc", "sc", "en"]):
-        '''
-        ``dir``: outbound, inbound
-        ``lang``: tc, sc, en
-        '''
+    abbr = 'kmb'
+
+    def __init__(self, route: str, direction: Literal["inbound", "outbound"], stop: int, service_type: int, lang: Literal["tc", "sc", "en"]):
         self.route = route
         self.direction = direction
         self.stop = int(stop)
         self.st = service_type
         self.lang = lang
-        
         super().__init__()
 
-    def _get_etas(self) -> dict:
+    def get_etas_data(self) -> dict:
         data = rqst.kmb_eta(self.route.upper(), self.st)['data']
         # E: empty return
         if len(data) == 0: 
-            raise ce.APIStatusError
+            raise APIStatusError
 
         eta_seq = 1
         output = {}
@@ -113,7 +103,7 @@ class Kmb(Eta):
         for stops in data:
             if stops["seq"] == self.stop and stops["dir"]==self.direction[0].upper():
                 if stops["eta"] == None:
-                    raise ce.EndOfServices
+                    raise EndOfServices
 
                 eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z")
                 #timestamp = datetime.strptime(stops["data_timestamp"], "%Y-%m-%dT%H:%M:%S%z")
@@ -133,11 +123,13 @@ class Kmb(Eta):
 
         # E: empty output
         if output.get('data',1) == 1: 
-            raise ce.EmptyDataError
+            raise EmptyDataError
         
         return output
 
 class MtrLrt(Eta):
+
+    abbr = "mtr_lrt"
 
     def __init__(self, eta_co: str, route: str, direction: None, stop: int, service_type: None, lang: Literal["ch", "en"]):
         '''
@@ -151,11 +143,11 @@ class MtrLrt(Eta):
         
         super().__init__()
 
-    def _get_etas(self):
+    def get_etas_data(self):
         data = rqst.mtr_lrt_eta(self.stop)
         # E: return status error
         if data["status"] == 0:
-            raise ce.APIStatusError
+            raise APIStatusError
 
         timestamp = datetime.strptime(data["system_time"], "%Y-%m-%d %H:%M:%S")
         output = {}
@@ -164,7 +156,7 @@ class MtrLrt(Eta):
         idx = 0
         for platform in data['platform_list']:
             if platform.get("end_service_status",1) != 1:
-                raise ce.EndOfServices
+                raise EndOfServices
             
             for entry in platform['route_list']:
                 if entry['route_no'] == self.route and entry[f'dest_{self.lang}'] == self._dets.get_dest():
@@ -188,11 +180,13 @@ class MtrLrt(Eta):
                         
         # E: empty output
         if output.get('data') is None: 
-            raise ce.EmptyDataError
+            raise EmptyDataError
         return output
 
 class MtrBus(Eta):
 
+    abbr = "mtr_bus"
+    
     def __init__(self, eta_co: str, route: str, direction: str, stop: str, service_type: None, lang: Literal["zh", "en"]):
         '''
         ``dir``: outbound, inbound
@@ -206,13 +200,13 @@ class MtrBus(Eta):
         
         super().__init__()
 
-    def _get_etas(self):
+    def get_etas_data(self):
         data = rqst.mtr_bus_eta(self.route.upper(), self.lang)
         
         if data["status"] == 0: # E: return status error
-            raise ce.APIStatusError
+            raise APIStatusError
         elif data["routeStatusRemarkTitle"]=="停止服務": # E: EOS
-            raise ce.EndOfServices
+            raise EndOfServices
         
         timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
         eta_seq = 1
@@ -249,8 +243,13 @@ class MtrBus(Eta):
 
         # E: empty output
         if output.get('data',1) == 1: 
-            raise ce.EmptyDataError
+            raise EmptyDataError
         return output
+
+class MtrTrain(Eta):
+    
+    abbr = "mtr_train"
+    
 
 # debug
 if __name__ == "__main__":
