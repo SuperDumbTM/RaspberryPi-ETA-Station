@@ -38,7 +38,7 @@ def mtr_bus_eta(route: str, lang: Literal["zh", "en"]) -> dict:
 
     return data
     
-def mtr_lrt_eta(station_id: int) -> dict:
+def mtr_lrt_eta(stop: int) -> dict:
     '''
     Get MTR LRT eta by station from https://data.gov.hk/en-data/dataset/mtr-lrnt_data-light-rail-nexttrain-data/resource/e9cee6d8-4b12-4a0f-8d09-5924dd2db218
 
@@ -48,7 +48,7 @@ def mtr_lrt_eta(station_id: int) -> dict:
     - HTTPError
     '''
 
-    params = {"station_id": station_id}
+    params = {"station_id": stop}
     headers = {}
     url = "https://rt.data.gov.hk/v1/transport/mtr/lrt/getSchedule"
     response = requests.get(url, params=params, headers=headers)
@@ -57,7 +57,7 @@ def mtr_lrt_eta(station_id: int) -> dict:
 
     return data
 
-def mtr_train_eta(route: str, station: str) -> dict:
+def mtr_train_eta(route: str, stop: str, lang: Literal["TC", "EN"]) -> dict:
     '''
     Get MTR LRT eta by route and station from https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data/resource/744cd43f-4f0d-4f58-b244-78486efc68eb
 
@@ -67,7 +67,7 @@ def mtr_train_eta(route: str, station: str) -> dict:
     - HTTPErrors
     '''
 
-    params = {"line": route, "sta":station}
+    params = {"line": route, "sta":stop, "lang": lang}
     url = "https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php"
     response = requests.get(url, params=params)
     response.raise_for_status()
@@ -169,3 +169,19 @@ def kmb_stop_detail(stop_id: str) -> dict:
     data = json.loads(response.text)
 
     return data
+
+def mtr_train_route_stop_detail() -> list:
+    '''
+    Get KMB stop defails by stop_id from https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv
+
+    Details: https://data.gov.hk/tc-data/dataset/mtr-data-routes-fares-barrier-free-facilities/resource/771d42e4-057d-4b4d-ae9e-08dbdf9ac371
+    '''
+    url = "https://opendata.mtr.com.hk/data/mtr_lines_and_stations.csv"
+    response = requests.get(url)
+    response.raise_for_status()
+    
+    with requests.Session() as s:
+        data = s.get(url)
+        data = data.content.decode("utf-8")
+        lines = data.splitlines()
+        return lines

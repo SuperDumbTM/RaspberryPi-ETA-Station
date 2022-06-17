@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 import json
 import datetime
 import os
+from re import M
 from typing import Literal
 import _request as rqst
 
@@ -17,6 +18,8 @@ class Details(ABC):
             return DetailsMtrLrt
         elif co == "mtr_bus":
             return DetailsMtrBus
+        elif co == "mtr_train":
+            return DetailsMtrTrain
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str) -> None:
         self.route = str(route).upper()
@@ -392,3 +395,90 @@ class DetailsMtrBus(Details):
                     return "mid"
         except Exception as e:
             return "err"
+        
+class DetailsMtrTrain(Details):
+    
+    rte_path: str
+    root = "data/route_data/mtr/train/"
+    
+    def __init__(self, eta_co: str, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
+        super().__init__(route, direction, service_type, stop, lang)
+        
+        if root is not None: self.root = root
+        self.rte_path = os.path.join(self.root, "route.json")
+    
+    def update(self):
+        data = rqst.mtr_train_route_stop_detail()
+        dir_trans = {
+            'DT': "inbound",
+            'UT': "outbound",
+            'LMC-DT': "inbound-LMC",
+            'LMC-UT': "outbound-LMC",
+            'TKS-DT': "inbound-TKS",
+            'TKS-UT': "outbount-TKS"}
+        output = {'lastupdate': self.today, 'data': {}}
+        od = output['data']
+        
+        # line, direction, stopCode, stopID, TCName, ENName, stopSeq
+        for row in data[1:]:
+            if not row == ",,,,,," : # ignore empty row
+                row = row.split(',')
+                direct = dir_trans[row[1]]
+                od.setdefault(row[0], {'details': {}})
+                od[row[0]].setdefault(direct, {})
+                # stop
+                od[row[0]][direct][row[2]] = {
+                    'id': row[3],
+                    'name_tc': row[4],
+                    'name_en': row[5],
+                    'seq': row[-1]
+                }
+                # details
+                od[row[0]]['details'].setdefault(direct, {})
+                if row[-1] in (1, '1'): # origin
+                    od[row[0]]['details'][direct]['orig'] = {
+                        'id': row[3],
+                        'code': row[0],
+                        'name_tc': row[4],
+                        'name_en': row[5]
+                    }
+                else: # destnation
+                    od[row[0]]['details'][direct]['dest'] = {
+                        'id': row[3],
+                        'code': row[0],
+                        'name_tc': row[4],
+                        'name_en': row[5]
+                    }
+                    
+        with open(self.rte_path, "w", encoding="utf-8") as f:
+            f.write(json.dumps(output))
+    
+    def get_stop_name(self) -> str:
+        try:
+            if self.is_outdated(self.rte_path):
+                self.update()
+                
+            with open(self.rte_path, 'r', encoding="utf-8") as f:
+                data = json.load(f)['data']
+                return data[self.route]['stop'][self.direction][self.stop]["name_" + self.lang]
+        except Exception as e:
+            return "err"
+    
+    def _get_ends(self, key):
+        try:
+            if self.is_outdated(self.rte_path):
+                self.update()
+                
+            with open(self.rte_path, "r", encoding="utf-8") as f:
+                data = json.load(f)['data']
+                return data[self.route]['details'][self.direction][key]['name_' + self.lang]
+        except Exception as e:
+            return "err"
+
+    def get_dest(self):
+        return self._get_ends("orig")
+    
+    def get_orig(self):
+        return self._get_ends("dest")
+    
+c = DetailsMtrTrain.update()
