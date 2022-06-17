@@ -53,12 +53,12 @@ args = parser.parse_args()
 epd: DisplayABC = None
 
 def path_check():
-    if not os.path.exists(os.path.join(ROOT, "conf", "epd.conf")):
-        Logger.log.critical("epd.conf is missing")
+    if not os.path.exists(os.path.join(ROOT, "conf", "epd.json")):
+        Logger.log.critical("epd.json is missing")
         raise FileNotFoundError()
-    if not os.path.exists(os.path.join(ROOT, "conf", "eta.conf")):
-        Logger.log.critical("eta.conf is missing")
-        raise FileNotFoundError("eta.conf")
+    if not os.path.exists(os.path.join(ROOT, "conf", "eta.json")):
+        Logger.log.critical("eta.json is missing")
+        raise FileNotFoundError("eta.json")
     if not os.path.exists(os.path.join(ROOT, "font")):
         Logger.log.critical("font/ is missing")
         raise FileNotFoundError()
@@ -72,20 +72,18 @@ def path_check():
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "lrt"))
 
 def obj_setup():   
-    if not os.path.exists(os.path.join(ROOT, "conf", "epd.conf")):
-        raise FileNotFoundError("epd.conf do not exists, consider using configurator recreate it.")
+    if not os.path.exists(os.path.join(ROOT, "conf", "epd.json")):
+        raise FileNotFoundError("epd.json do not exists, consider using configurator recreate it.")
     else:
-        Logger.log.debug("Parsing epd.conf")
-        with open(os.path.join(ROOT, "conf", "epd.conf"), "r") as f:
+        Logger.log.debug("Parsing epd.json")
+        with open(os.path.join(ROOT, "conf", "epd.json"), "r") as f:
             cparser = configparser.ConfigParser()
             cparser.read_file(f)
             try:
                 size = cparser.get("epd", "size")
                 brand = cparser.get("epd", "brand")
                 model = cparser.get("epd", "model")
-                test = "epd3in7_debug"
-                test2 = "epd3in7_debug_timeonly"
-                module = importlib.import_module(f"src.display.{brand}.{test}")
+                module = importlib.import_module(f"src.display.{brand}.{model}")
                 
                 return getattr(module, "CLS")(ROOT, int(size))
             except Exception as e:
@@ -128,8 +126,8 @@ def main():
 
 if __name__=='__main__':
     try:
-        path_check()
         if not args.is_config:
+            path_check()
             # set dry run
             if args.dryrun:
                 args.verbose = True

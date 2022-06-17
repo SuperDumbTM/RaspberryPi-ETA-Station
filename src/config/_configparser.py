@@ -12,7 +12,6 @@ class ConfigParser:
         self.__path = path
         self.__conf = self.__conf_to_dict()
         
-
     def __conf_to_dict(self) -> dict:
         output = {}
         parser = configparser.ConfigParser()

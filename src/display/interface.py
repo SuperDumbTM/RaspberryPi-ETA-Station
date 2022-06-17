@@ -3,7 +3,7 @@ import sys
 from abc import ABC, abstractmethod
 from PIL import ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
-from src.config import _configparser
+from src.config import config
 from src.log.mylogger import Logger
 
 class DisplayABC:
@@ -37,9 +37,7 @@ class DisplayABC:
         
         # conf  
         self.logger.debug("reading epd.conf")
-        self.parser = _configparser.ConfigParser(os.path.join(root, "conf", "eta.conf"))
-        self.parser.read()
-        self.conf = self.parser.get_conf()
+        self.conf = config.get(os.path.join(root, "conf", "eta.json"))
         
         # font
         self.logger.debug("setting up font")

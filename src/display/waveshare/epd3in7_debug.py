@@ -11,6 +11,7 @@ from eta import eta
 EPD_WIDTH       = 280
 EPD_HEIGHT      = 480
 PARTIAL_UPD = True
+MAXROW = 6
 GRAY1  = 0xff #white
 GRAY2  = 0xC0 #Close to white
 GRAY3  = 0x80 #Close to black

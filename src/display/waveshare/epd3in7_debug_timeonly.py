@@ -15,7 +15,7 @@ M_ROW = 6
 M_ROW_HEIGHT = 80
 L_ROW = 5
 
-
+MAXROW = 6
 EPD_WIDTH       = 280
 EPD_HEIGHT      = 480
 PARTIAL_UPD = True

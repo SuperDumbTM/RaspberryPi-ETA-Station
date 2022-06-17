@@ -7,6 +7,7 @@ from eta import eta
 import epd3in7
 
 PARTIAL = True
+MAXROW = 6
 LAYOUT = {
     # size = 8
     3:{

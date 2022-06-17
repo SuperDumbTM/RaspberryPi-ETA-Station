@@ -13,14 +13,12 @@ class Selector:
     route: str
     direction: str
     service_type: int
-    stop: str | int
+    stop: str
     lang: str
     # hint
-    trans_direction: dict
     trans_lang: dict
     route_data: dict
-    # predefined
-    dir_opts = list
+    dir_opts: list
     trans_direction = {'O': "outbound", 'I': "inbound"}
     abbr_trans = {
             'kmb': "九巴",
@@ -30,6 +28,7 @@ class Selector:
         }
     
     def __init__(self, data_path: str, lang: str) -> None:
+        self.dir_opts = []
         self.root = data_path
         self.lang = self.trans_lang[lang]
     
@@ -54,7 +53,8 @@ class Selector:
         self.route = _input
     
     @abstractmethod
-    def print_descrp(self): pass
+    def print_descrp(self):
+        self.dir_opts = []
     
     def sel_direction(self):
         choice = ", ".join(self.dir_opts)
@@ -86,7 +86,7 @@ class Selector:
 
 class SelectorWithServiceType(Selector):
     
-    st_opts = list
+    st_opts: list
     
     def __init__(self, data_path: str, lang: str) -> None:
         self.lang = self.trans_lang[lang]
@@ -111,10 +111,12 @@ class SelectorWithServiceType(Selector):
             'lang': self.lang
         }
     
+    def print_descrp(self):
+        self.st_opts = []
+        return super().print_descrp()
+    
 class KmbSelector(SelectorWithServiceType):
     
-    dir_opts = []
-    st_opts = []
     trans_lang = {'tc': "tc", 'sc': "sc", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -123,6 +125,7 @@ class KmbSelector(SelectorWithServiceType):
         self.name = ("kmb", "九巴")
       
     def print_descrp(self):
+        super().print_descrp()
         descr = {
             'O': "去程 [O]:",
             'I': "回程 [I]:"
@@ -177,7 +180,6 @@ class KmbSelector(SelectorWithServiceType):
               
 class MtrBusSelector(Selector):
 
-    dir_opts = []
     trans_lang = {'tc': "zh", 'sc': "zh", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -186,6 +188,7 @@ class MtrBusSelector(Selector):
         self.name = ("mtr_bus", "港鐵巴士")
     
     def print_descrp(self):
+        super().print_descrp()
         descr = {
             'O': "去程 [O]:",
             'I': "回程 [I]:"
@@ -225,13 +228,11 @@ class MtrBusSelector(Selector):
             #         else: 
             #             break
             #     except ValueError:
-            #         _input = input(">> 車站選項不存在，請重新輸入: ")
-                    
-            self.stop = list(stops.keys())[int(_input)]
+            #         _input = input(">> 車站選項不存在，請重新輸入: ") 
+            self.stop = _input
         
 class MtrLrtSelector(Selector):
     
-    dir_opts = []
     trans_lang = {'tc': "ch", 'sc': "ch", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -241,6 +242,7 @@ class MtrLrtSelector(Selector):
         self.name = ("mtr_lrt", "港鐵輕鐵")
     
     def print_descrp(self):
+        super().print_descrp()
         descr = {
             'O': "去程 [O]:",
             'I': "回程 [I]:"

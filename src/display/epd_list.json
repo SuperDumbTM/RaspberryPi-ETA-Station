@@ -1,6 +1,8 @@
 {
     "waveshare":[
         "epd3in7",
-        "epd3in7_timeonly"
+        "epd3in7_timeonly",
+        "epd3in7_debug",
+        "epd3in7_debug_timeonly"
     ]
 }

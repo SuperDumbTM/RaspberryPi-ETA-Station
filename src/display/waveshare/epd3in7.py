@@ -10,6 +10,7 @@ from eta import details as dets
 from eta import eta
 
 PARTIAL = True
+MAXROW = 6
 LAYOUT = {
     # size = 8
     3:{
