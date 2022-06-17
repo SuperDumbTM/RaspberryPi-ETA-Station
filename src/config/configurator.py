@@ -57,6 +57,13 @@ class Configurator:
             _input = input(">> 輸入無效，請重新選擇: ")
         return self.eta_co_list[_input].select()
 
+    def __select_epd(self):
+        epdconf = epdsel.Epdselector.select_epd(self.path_epd_list)
+        self.epd_conf['brand'] =  epdconf[0]
+        self.epd_conf['model'] =  epdconf[1]
+        epdsize = epdsel.Epdselector.select_display_size()
+        self.epd_conf['size'] =  epdsize
+    
     def list_function(self):
         func_list = {
             '1': {'descr':"重新設定/新增設定", 'func': self.new},
@@ -65,6 +72,7 @@ class Configurator:
             '4': {'descr':"刪除設定", 'func': self.remove},
             '5': {'descr':"離開", 'func': exit}
         }
+        print("動作：")
         for id, item in func_list.items():
             print(f"[{id}] {item['descr']}")
         
@@ -87,13 +95,9 @@ class Configurator:
         self.eta_conf = []
         try:
             # epd config 
-            epdconf = epdsel.Epdselector.select_epd(self.path_epd_list)
-            self.epd_conf['brand'] =  epdconf[0]
-            self.epd_conf['model'] =  epdconf[1]
-            epdsize = epdsel.Epdselector.select_display_size()
-            self.epd_conf['size'] =  epdsize
+            self.__select_epd()
             # eta co [loop]
-            module = importlib.import_module(f"src.display.{epdconf[0]}.{epdconf[1]}")
+            module = importlib.import_module(f"src.display.{self.epd_conf['brand']}.{self.epd_conf['model'] }")
             max_row = getattr(module, "MAXROW")
             print(f"**所選擇的型號最多能顯示{max_row}個預報。\n**輸入完成按 ctrl+c 或選擇{max_row}個預報後，置設程序將自動結束。")
             for i in range(1, max_row + 1):
@@ -145,27 +149,36 @@ class Configurator:
 
     def edit(self):
         self.__read_confs()
-        if len(self.epd_conf) == 0:
-            pass
-        else:
+        
+        print("[0] 墨水屏設定\n[1] 預報設定")
+        input_mod = input("請選擇修改項目：")
+        while input_mod not in ("0", "1"):
+            input_mod = input("輸入無效，請重新選擇: ")
+        
+        if input_mod == "0" and self.epd_conf != 0: # epd
+            self.__select_epd()
+            config.put(self.path_epd , self.epd_conf)
+        elif input_mod == "1": # eta
             print("[0] 修改\n[1] 刪除")
             input_act = input("請選動作: ")
             while input_act not in ("0", "1"):
                 input_act = input("輸入無效，請重新選擇: ")
-
+                
             self.view()
             idx = input("請選擇修改項目: ")
-            while idx not in self.eta_conf.keys():
+            while idx not in [str(i) for i in range(len(self.eta_conf))]:
                 idx = input("輸入無效，請重新選擇: ")
+                
+            if input_act == "0": # modify
+                self.eta_conf[int(idx)] =  self.__select_co()
+            elif input_act == "1": # delete
+                self.eta_conf.pop(int(idx))
 
-            if input_act == "0":
-                self.eta_conf[idx] =  self.__select_co()
-            elif input_act == "1":
-                self.eta_conf.pop(idx)
-
-            self.epd_conf.write()
+            config.put(self.path_eta , self.eta_conf)
             print("已完成修改:\n")
-            self.view()
+            self.view(refresh=False)
+        
+        self.list_function()
 
     def remove(self):
         confirm = input("確定刪除? [y/n]")

@@ -131,7 +131,7 @@ if __name__=='__main__':
             if args.dryrun:
                 args.verbose = True
                 args.image_out = True
-                args.log_lv = "DEBUG"
+                #args.log_lv = "DEBUG"
             # set log level 
             if args.verbose:
                 Logger.verbose(getattr(Logger, args.log_lv))

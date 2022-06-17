@@ -172,13 +172,8 @@ class Epd3in7(DisplayABC):
             _eta = eta.Eta.get_obj(entry['eta_co'])(**entry)
             
             rte = entry['route']
-            dest = _dets.get_dest()
-            if not dest.lower().islower() and len(dest.translate(str.maketrans('', '', string.punctuation))) > 9:
-                dest = dest[:9] + "..."
-            elif dest.lower().islower() and len(dest) > 22:
-                dest = dest[:21] + "..."
-                
-            stop = _dets.get_stop_name()
+            dest = self.dotted(_dets.get_dest(), 9)
+            stop = self.dotted(_dets.get_stop_name(), 9)
             
             # titles
             self.logger.debug(f"- Drawing row {row}'s route information")

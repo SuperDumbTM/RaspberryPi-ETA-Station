@@ -229,7 +229,7 @@ class MtrBusSelector(Selector):
             #             break
             #     except ValueError:
             #         _input = input(">> 車站選項不存在，請重新輸入: ") 
-            self.stop = _input
+            self.stop = list(stops.keys())[int(_input)]
         
 class MtrLrtSelector(Selector):
     
@@ -278,7 +278,7 @@ class MtrLrtSelector(Selector):
         while _input not in stops.keys():
             _input = input(">> 輸入無效，請重新選擇: ")
         
-        self.stop = int(_input)
+        self.stop = _input
 
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")

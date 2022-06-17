@@ -1,5 +1,6 @@
 import os
 import sys
+import string
 from abc import ABC, abstractmethod
 from PIL import ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))
@@ -54,6 +55,15 @@ class DisplayABC:
 
     def set_mode(self, mode):
         self.mode = mode
+    
+    def dotted(self, text: str, max: int):
+        only_text = text.translate(str.maketrans('', '', string.punctuation)).replace(" ", "")
+        offset = len(text) - len(only_text)
+        if not text.lower().islower() and len(only_text) > max:
+                return text[:max-1 + offset] + "..."
+        else:
+            return text
+                
     
     @staticmethod
     @abstractmethod
