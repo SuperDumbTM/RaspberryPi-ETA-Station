@@ -20,21 +20,21 @@ class Epdselector:
                 print(f"[{idx}] {_brand}")
             
             _input = input("請選擇墨水屏 (e-paper) 牌子: ")
-            while _input not in str(tuple(range(len(epd_list.keys())))):
+            while _input not in [str(i) for i in range(len(epd_list.keys()))]:
                 _input = input("輸入無效，請重新選擇: ")
             brand = list(epd_list.keys())[int(_input)]
             # epd model
             for idx, _model in enumerate(epd_list[brand]):
                 print(f"[{idx}] {_model}")
             _input = input("請選擇墨水屏 (e-paper) 型號: ")
-            while _input not in str(tuple(range(len(epd_list[brand])))):
+            while _input not in [str(i) for i in range(len(epd_list[brand]))]:
                 _input = input("輸入無效，請重新選擇: ")
             model = epd_list[brand][int(_input)]
         
         return (brand, model)
     
     @staticmethod
-    def select_display_size(fpath: str, model: str) -> int:
+    def select_display_size() -> int:
         # parser = configparser.ConfigParser()
         # parser.read(fpath)
         
@@ -46,7 +46,7 @@ class Epdselector:
         
         for idx, _size in size_list.items():
             print(f"[{idx}] {_size}")
-        _input = input("請選擇: ")
+        _input = input("請選擇預報時間顯示數量: ")
         while(_input not in size_list.keys()):
                 _input = input("輸入無效，請重新選擇: ")
         

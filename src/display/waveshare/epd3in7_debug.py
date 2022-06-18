@@ -1,16 +1,22 @@
+from importlib import import_module
 import os
 import string
 import sys
-import time
 from PIL import Image,ImageDraw,ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
 from display.interface import DisplayABC
-from display.waveshare.epd_lib import epd3in7 as epd
 from eta import details as dets
 from eta import eta
 
-PARTIAL = True
+EPD_WIDTH       = 280
+EPD_HEIGHT      = 480
+PARTIAL_UPD = True
 MAXROW = 6
+GRAY1  = 0xff #white
+GRAY2  = 0xC0 #Close to white
+GRAY3  = 0x80 #Close to black
+GRAY4  = 0x00 #black
+
 LAYOUT = {
     # size = 8
     3:{
@@ -74,10 +80,10 @@ LAYOUT = {
 class Epd3in7(DisplayABC):
     
     mode = 0
-    epd_height = epd.EPD_HEIGHT
-    epd_width = epd.EPD_WIDTH
-    black = epd.GRAY4
-    white = epd.GRAY1
+    epd_height = EPD_HEIGHT
+    epd_width = EPD_WIDTH
+    black = GRAY4
+    white = GRAY1
 
     def __init__(self, root: str,size: int) -> None:
         '''
@@ -88,72 +94,14 @@ class Epd3in7(DisplayABC):
         self.row_h = 80
         self.row_size = 6       
         self.LAYOUT = LAYOUT
-        self.mode = 1
         super().__init__(root, size)
-        
-        
-        
-        # obj
-        self.epd = epd.EPD()
-        self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
-        self.drawing = ImageDraw.Draw(self.img)
-    
-    def init(self):
-        super().init()
-        self.epd.init(self.mode)  
-
-    def clear(self):
-        super().clear()
-        self.epd.Clear(0xFF, self.mode)
-        
-    def full_update(self, deg: int):
-        super().full_update(deg)
-        self.epd.display_4Gray(self.epd.getbuffer_4Gray(self.img.rotate(deg)))
-
-    @staticmethod
-    def can_partial():
-        return PARTIAL
-
-    def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
-        if mode == "loop":
-            # loop mode
-            super().full_update(deg)
-            self.full_update(deg)
-            while times > 1:
-                self.exit()
-                end = time.time()
-                time.sleep(intv - (end - start))
-                start = time.time()
-                super().partial_update(deg, intv, times)
-                prev_img = self.img
-                self.img = Image.new('1', (self.epd_width, self.epd_height), 255)
-                self.drawing = ImageDraw.Draw(self.img)
-                
-                self.init()
-                self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
-                self.draw()
-                self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
-                
-                times -= 1
-        elif mode == "normal":
-            # normal mode
-            if os.path.exists(img_path):
-                prev_img = Image.open(img_path)
-                self.epd.display_1Gray(self.epd.getbuffer(prev_img.rotate(deg)))
-                time.sleep(1)
-                self.epd.display_1Gray(self.epd.getbuffer(self.img.rotate(deg)))
-            else:
-                self.logger.error("Image file for partial update do not exists.  No update is done.\n\
-                    Please check the path or do a full update with flag -i first (optional: -I <path> to specify the path)")
-
-    def draw(self):
-        '''
-        M: 
-            route:  (5,5)
-            dest:   (5,35)
-            stop:   (5,55)
             
-        '''
+        # obj
+        self.img = Image.new('1', (EPD_WIDTH, EPD_HEIGHT), 255)
+        self.drawing = ImageDraw.Draw(self.img)
+
+    
+    def draw(self):
         super().draw()
         # Frame
         self.logger.debug("Drawing the layout")
@@ -166,8 +114,9 @@ class Epd3in7(DisplayABC):
             if  self.row_size <= row: 
                 self.logger.warning(f"Number of ETA entry in eta.conf ({len(self.conf)}) is larger than allowed display number.  Stoped at {row}.")
                 break
+            self.logger.debug(f"----- Row {row} -----")
+            self.logger.debug(f"Reading entry {str(entry)}")
             
-            self.logger.debug(f"- Reading entry {entry}")
             _dets = dets.Details.get_obj(entry['eta_co'])(**entry)
             _eta = eta.Eta.get_obj(entry['eta_co'])(**entry)
             
@@ -176,18 +125,20 @@ class Epd3in7(DisplayABC):
             stop = self.dotted(_dets.get_stop_name(), 9)
             
             # titles
-            self.logger.debug(f"- Drawing row {row}'s route information")
+            self.logger.debug(f"Drawing route information")
             self.drawing.text((5, (self.row_h*row + 0)), text=rte, fill=self.black, font=self.f_route)
             self.drawing.text((5, (self.row_h*row + 35)), dest, fill=self.black, font=self.f_text)
             self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
             
             # time
-            self.logger.debug(f"- Drawing row {row}'s ETA time")
+            self.logger.debug(f"Drawing ETA information")
             if _eta.error:
+                self.logger.info(f"No ETA received: {_eta.msg}")
                 self.drawing.text((170, self.row_h*row + 25), text=_eta.msg, fill=self.black, font=self.f_text)
             else:
                 for idx, time in enumerate(_eta.get_etas()):
                     if (idx < 3):
+                        self.logger.debug(time)
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :
                             self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_mins)
@@ -196,6 +147,19 @@ class Epd3in7(DisplayABC):
                         else:
                             self.drawing.text((self.lyo['lminx'], self.lyo['lminy'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_lmins)
                     else: break
+        
 
+    def partial_update(self, deg: int, intv: int, times: int, mode: str, img_path: str):
+        if mode == "loop":
+            # loop mode
+            self.logger.debug("Partial update - loop mode")
+        if mode == "normal":
+            self.logger.debug("Partial update - normal mode")
 
+    def full_update(self, deg: int):
+        super().full_update(deg)
+    
+    def exit(self):
+        pass
+        
 CLS = Epd3in7

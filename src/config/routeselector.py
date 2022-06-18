@@ -3,9 +3,8 @@ import os
 import sys
 import json
 import datetime
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__))))
-#from ..eta import eta_process as proc, request as rqst
-from eta import details as upd
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)))) # scr/
+from eta import details as dets
 
 class Selector:
     # returns
@@ -13,37 +12,22 @@ class Selector:
     route: str
     direction: str
     service_type: int
-    stop: str | int
+    stop: str
     lang: str
     # hint
-    trans_direction: dict
     trans_lang: dict
     route_data: dict
-    # predefined
-    dir_opts = list
+    dir_opts: list
+    rte_path: os.path
     trans_direction = {'O': "outbound", 'I': "inbound"}
-    abbr_trans = {
-            'kmb': "九巴",
-            'mtr_bus': "港鐵巴士",
-            'mtr_lrt': "港鐵輕鐵",
-            'mtr_hrt': "港鐵重鐵"
-        }
+    # var
+    trans_lang: dict
+    name_tc: str
     
     def __init__(self, data_path: str, lang: str) -> None:
+        self.dir_opts = []
         self.root = data_path
         self.lang = self.trans_lang[lang]
-    
-    def get_name(self) -> tuple:
-        """get object company name
-
-        Returns:
-            tuple: (abbr, zh name)
-        """
-        return self.name
-    
-    @staticmethod
-    def get_zh_name(abbr) -> str:
-        return Selector.abbr_trans[abbr]
     
     def sel_route(self): 
         with open(self.rte_path, "r", encoding="utf-8") as f:
@@ -54,7 +38,8 @@ class Selector:
         self.route = _input
     
     @abstractmethod
-    def print_descrp(self): pass
+    def print_descrp(self):
+        self.dir_opts = []
     
     def sel_direction(self):
         choice = ", ".join(self.dir_opts)
@@ -86,10 +71,9 @@ class Selector:
 
 class SelectorWithServiceType(Selector):
     
-    st_opts = list
+    st_opts: list
     
     def __init__(self, data_path: str, lang: str) -> None:
-        self.lang = self.trans_lang[lang]
         super().__init__(data_path, lang)
     
     @abstractmethod
@@ -111,10 +95,13 @@ class SelectorWithServiceType(Selector):
             'lang': self.lang
         }
     
+    def print_descrp(self):
+        self.st_opts = []
+        return super().print_descrp()
+    
 class KmbSelector(SelectorWithServiceType):
     
-    dir_opts = []
-    st_opts = []
+    name_tc = "九巴"
     trans_lang = {'tc': "tc", 'sc': "sc", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -123,6 +110,7 @@ class KmbSelector(SelectorWithServiceType):
         self.name = ("kmb", "九巴")
       
     def print_descrp(self):
+        super().print_descrp()
         descr = {
             'O': "去程 [O]:",
             'I': "回程 [I]:"
@@ -148,7 +136,7 @@ class KmbSelector(SelectorWithServiceType):
         
     def sel_stop(self):
         cache_path = os.path.join(self.root, "kmb", "cache", f"{self.route}-{self.direction}-{self.service_type}.json")
-        _upd = upd.DetailsKmb(self.name[0], self.route, self.direction, self.service_type, 0, self.lang)
+        _upd = dets.DetailsKmb(self.name[0], self.route, self.direction, self.service_type, 0, self.lang)
         
         if _upd.is_outdated(cache_path):
             _upd.cache()
@@ -177,7 +165,7 @@ class KmbSelector(SelectorWithServiceType):
               
 class MtrBusSelector(Selector):
 
-    dir_opts = []
+    name_tc = "港鐵：巴士"
     trans_lang = {'tc': "zh", 'sc': "zh", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -186,6 +174,7 @@ class MtrBusSelector(Selector):
         self.name = ("mtr_bus", "港鐵巴士")
     
     def print_descrp(self):
+        super().print_descrp()
         descr = {
             'O': "去程 [O]:",
             'I': "回程 [I]:"
@@ -202,7 +191,7 @@ class MtrBusSelector(Selector):
         
     def sel_stop(self):
         fpath = os.path.join(self.root, "mtr", "bus", "route.json")
-        _upd = upd.DetailsMtrBus(self.name[0], self.route, self.direction, None, 0, self.lang)
+        _upd = dets.DetailsMtrBus(self.name[0], self.route, self.direction, None, 0, self.lang)
         if _upd.is_outdated(fpath):
             _upd.update()
             
@@ -225,13 +214,12 @@ class MtrBusSelector(Selector):
             #         else: 
             #             break
             #     except ValueError:
-            #         _input = input(">> 車站選項不存在，請重新輸入: ")
-                    
+            #         _input = input(">> 車站選項不存在，請重新輸入: ") 
             self.stop = list(stops.keys())[int(_input)]
         
 class MtrLrtSelector(Selector):
     
-    dir_opts = []
+    name_tc = "港鐵：輕鐵"
     trans_lang = {'tc': "ch", 'sc': "ch", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
@@ -241,6 +229,7 @@ class MtrLrtSelector(Selector):
         self.name = ("mtr_lrt", "港鐵輕鐵")
     
     def print_descrp(self):
+        super().print_descrp()
         descr = {
             'O': "去程 [O]:",
             'I': "回程 [I]:"
@@ -276,7 +265,7 @@ class MtrLrtSelector(Selector):
         while _input not in stops.keys():
             _input = input(">> 輸入無效，請重新選擇: ")
         
-        self.stop = int(_input)
+        self.stop = _input
 
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")
