@@ -6,6 +6,8 @@ class EndOfServices(Exception): pass
 class APIStatusError(Exception): pass
 
 class EmptyDataError(Exception): pass
+
+class StationClosed(Exception): pass
     
 # class EmptyDataError(Exception):
 

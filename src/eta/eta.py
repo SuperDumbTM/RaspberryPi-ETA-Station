@@ -29,6 +29,8 @@ class Eta:
             self.msg = "服務時間已過"
         except EmptyDataError:
             self.msg = "沒有數據"
+        except StationClosed:
+            self.msg = "車站關閉"
         except requests.exceptions.RequestException:
             self.msg = "網絡錯誤"
         except Exception:
@@ -131,7 +133,7 @@ class MtrLrt(Eta):
 
     abbr = "mtr_lrt"
 
-    def __init__(self, eta_co: str, route: str, direction: None, stop: int, service_type: None, lang: Literal["ch", "en"]):
+    def __init__(self, route: str, direction: None, stop: int, service_type: None, lang: Literal["ch", "en"]):
         '''
         ``lang``: ch, en
         '''
@@ -139,7 +141,7 @@ class MtrLrt(Eta):
         self.direction = direction
         self.stop = stop
         self.lang = lang
-        self._dets = dets.DetailsMtrLrt(eta_co, route, direction, stop, service_type, lang)
+        self._dets = dets.DetailsMtrLrt(route, direction, stop, service_type, lang)
         
         super().__init__()
 
@@ -153,7 +155,6 @@ class MtrLrt(Eta):
         output = {}
         output['data'] = []
 
-        idx = 0
         for platform in data['platform_list']:
             if platform.get("end_service_status",1) != 1:
                 raise EndOfServices
@@ -187,7 +188,7 @@ class MtrBus(Eta):
 
     abbr = "mtr_bus"
     
-    def __init__(self, eta_co: str, route: str, direction: str, stop: str, service_type: None, lang: Literal["zh", "en"]):
+    def __init__(self, route: str, direction: str, stop: str, service_type: None, lang: Literal["zh", "en"]):
         '''
         ``dir``: outbound, inbound
         ``lang``: zh, en
@@ -196,7 +197,7 @@ class MtrBus(Eta):
         self.direction = direction
         self.stop = stop
         self.lang = lang
-        self._dets = dets.DetailsMtrBus(eta_co, route, direction, service_type, stop, lang)
+        self._dets = dets.DetailsMtrBus(route, direction, service_type, stop, lang)
         
         super().__init__()
 
@@ -209,7 +210,6 @@ class MtrBus(Eta):
             raise EndOfServices
         
         timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
-        eta_seq = 1
         output = {}
         output['data'] = []
         
@@ -238,7 +238,6 @@ class MtrBus(Eta):
                         entry['remark'] = ""
 
                     output['data'].append(entry)
-                    eta_seq += 1
                 break
 
         # E: empty output
@@ -249,14 +248,61 @@ class MtrBus(Eta):
 class MtrTrain(Eta):
     
     abbr = "mtr_train"
+    dir_trans = {"inbound": "UP", "outbound": "DOWN"}
+    dir_rtrans = {'UP': "inbound", 'DOWN': "outbound"}
     
+    def __init__(self, route: str, direction: Literal["inbound", "outbound"], stop: int, service_type: int, lang: Literal["tc", "sc", "en"]):
+        self.route = route
+        self.direction = self.dir_trans[direction]
+        self.stop = stop
+        self.st = service_type
+        self.lang = lang
+        super().__init__()
+
+    def get_etas_data(self) -> dict:
+        data: dict = rqst.mtr_train_eta(self.route.upper(), self.stop, self.lang)
+        timestamp = datetime.strptime(data["sys_time"], "%Y-%m-%d %H:%M:%S")
+        # E: empty return
+        if len(data) == 0: 
+            raise APIStatusError
+        
+        if not data['status']:
+            if "suspended" in data['message']:
+                raise StationClosed
+            elif data.get('url') is not None:
+                pass
+        else:
+            data = data['data'][f'{self.route}-{self.stop}']
+            output = {}
+            output['data'] = []
+
+            for entry in data[self.direction]:
+                eta_time = datetime.strptime(entry["time"], "%Y-%m-%d %H:%M:%S")
+                
+                output['data'].append(
+                    {
+                    'eta_mins': (eta_time - timedelta(hours=timestamp.hour, minutes=timestamp.minute)).minute,
+                    'eta_time': datetime.strftime(eta_time, "%H:%M"),
+                    'dest': dets.DetailsMtrTrain(
+                        self.route, self.dir_rtrans[self.direction], self.st, self.stop, self.lang
+                        ).get_stop_name(),
+                    'remark': ""
+                    }
+                )
+
+            # E: empty output
+            if output.get('data', 1) == 1: 
+                raise EmptyDataError
+            return output
 
 # debug
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")
     #cls = Kmb("N269",1,"outbound",1, root,"tc")
-    cls = Kmb("co","1","outbound",1,1,"tc")
-    #cls = MtrLrt("co" ,"705", "inbound", 540, None, "ch")
-    #cls = MtrBus("co", "K76","outbound","K76-U010",None,"zh")
-    print("eta\t", cls._get_etas())
+    #cls = Kmb("948","outbound",1,1,"tc")
+    #cls = MtrLrt("705", "inbound", 540, None, "ch")
+    #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
+    #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
+    cls = MtrTrain("TML","outbound","TIS",None,"tc")
+    print("eta\t", cls.get_etas())
     pass
