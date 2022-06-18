@@ -1,9 +1,9 @@
 import json
 import datetime
 import os
-import eta
 import _request as rqst
 from abc import ABC, abstractmethod
+from src.eta import eta
 from typing import Literal
 
 ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))

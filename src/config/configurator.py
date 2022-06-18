@@ -151,7 +151,6 @@ class Configurator:
         print("-----預報設定 -----")
         self.__veiw_eta()
         
-
     def edit(self):
         self.__load_confs()
         

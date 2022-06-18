@@ -109,13 +109,16 @@ class Epd3in7TimeOnly(epd3in7.Epd3in7):
         # ETA
         self.logger.debug("Drawing ETA(s)")
         for row, entry in enumerate(self.conf.values()):
+            co = entry['eta_co']
+            del entry['eta_co']
+            
             if  self.row_size <= row: 
                 self.logger.warning(f"Number of ETA entry in eta.conf ({len(self.conf)}) is larger than allowed display number.  Stoped at {row}.")
                 break
             
             self.logger.debug(f"- Reading entry {entry}")
-            _dets = dets.Details.get_obj(entry['eta_co'])(**entry)
-            _eta = eta.Eta.get_obj(entry['eta_co'])(**entry)
+            _dets = dets.Details.get_obj(co)(**entry)
+            _eta = eta.Eta.get_obj(co)(**entry)
             
             rte = entry['route']
             dest = self.dotted(_dets.get_dest(), 9)

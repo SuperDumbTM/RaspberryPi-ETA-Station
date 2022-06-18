@@ -225,7 +225,6 @@ class MtrLrtSelector(Selector):
     def __init__(self, data_path: str, lang: str) -> None:
         super().__init__(data_path, lang)
         self.rte_path = os.path.join(self.root, "mtr", "lrt", "route.json")
-        #self.st_path = os.path.join(self.root, "mtr", "lrt", "station.json")
         self.name = ("mtr_lrt", "港鐵輕鐵")
     
     def print_descrp(self):
@@ -266,6 +265,9 @@ class MtrLrtSelector(Selector):
             _input = input(">> 輸入無效，請重新選擇: ")
         
         self.stop = _input
+
+class MtrTrainSelector(Selector):
+    pass
 
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")

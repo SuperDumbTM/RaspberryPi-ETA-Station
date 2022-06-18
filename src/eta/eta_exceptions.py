@@ -8,6 +8,8 @@ class APIStatusError(Exception): pass
 class EmptyDataError(Exception): pass
 
 class StationClosed(Exception): pass
+
+class AbnormalService(Exception): pass
     
 # class EmptyDataError(Exception):
 

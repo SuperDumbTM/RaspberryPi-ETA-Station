@@ -31,6 +31,8 @@ class Eta:
             self.msg = "沒有數據"
         except StationClosed:
             self.msg = "車站關閉"
+        except AbnormalService:
+            self.msg = "正在實施\n特別車務安排"
         except requests.exceptions.RequestException:
             self.msg = "網絡錯誤"
         except Exception:
@@ -44,9 +46,10 @@ class Eta:
     
     @staticmethod
     def get_obj(co: str):
-        if co == Kmb.abbr:      return Kmb
-        elif co == MtrLrt.abbr: return MtrLrt
-        elif co == MtrBus.abbr: return MtrBus
+        if co == Kmb.abbr:          return Kmb
+        elif co == MtrLrt.abbr:     return MtrLrt
+        elif co == MtrBus.abbr:     return MtrBus
+        elif co == MtrTrain.abbr:   return MtrTrain
 
     def get_eta_count(self) -> int:
         return self.eta_len
@@ -270,7 +273,7 @@ class MtrTrain(Eta):
             if "suspended" in data['message']:
                 raise StationClosed
             elif data.get('url') is not None:
-                pass
+                raise AbnormalService
         else:
             data = data['data'][f'{self.route}-{self.stop}']
             output = {}
