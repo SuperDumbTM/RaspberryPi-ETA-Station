@@ -65,7 +65,7 @@ class Epd3in7(epd3in7_debug.Epd3in7):
             _eta = eta.Eta.get_obj(co)(**entry)
             
             # route
-            rte = entry['route']
+            rte = _dets.get_route_name()
             dest = self.dotted(_dets.get_dest(), 9)
             stop = self.dotted(_dets.get_stop_name(), 9)
                 

@@ -173,7 +173,7 @@ class Epd3in7(DisplayABC):
             _dets = dets.Details.get_obj(co)(**entry)
             _eta = eta.Eta.get_obj(co)(**entry)
             
-            rte = entry['route']
+            rte = _dets.get_route_name()
             dest = self.dotted(_dets.get_dest(), 9)
             stop = self.dotted(_dets.get_stop_name(), 9)
             
