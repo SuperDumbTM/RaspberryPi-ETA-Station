@@ -17,10 +17,17 @@ GRAY2  = 0xC0 #Close to white
 GRAY3  = 0x80 #Close to black
 GRAY4  = 0x00 #black
 
-LAYOUT = {
+class Epd3in7(DisplayABC):
+    
+    mode = 0
+    epd_height = EPD_HEIGHT
+    epd_width = EPD_WIDTH
+    black = GRAY4
+    white = GRAY1
+    LAYOUT = {
     # size = 8
     3:{
-        'f_route': 40,
+        'f_route': 33,
         'f_text': 16,
         'f_time': 25,
         'f_mins': 25,
@@ -39,7 +46,7 @@ LAYOUT = {
     },
     # size = 6
     2:{
-        'f_route': 40,
+        'f_route': 33,
         'f_text': 16,
         'f_time': 30,
         'f_mins': 33,
@@ -58,7 +65,7 @@ LAYOUT = {
     },
     # size = 5
     1:{
-        'f_route': 40,
+        'f_route': 33,
         'f_text': 16,
         'f_time': 40,
         'f_mins': 35,
@@ -77,14 +84,6 @@ LAYOUT = {
     }
 }
 
-class Epd3in7(DisplayABC):
-    
-    mode = 0
-    epd_height = EPD_HEIGHT
-    epd_width = EPD_WIDTH
-    black = GRAY4
-    white = GRAY1
-
     def __init__(self, root: str,size: int) -> None:
         '''
         mode:
@@ -93,7 +92,6 @@ class Epd3in7(DisplayABC):
         '''
         self.row_h = 80
         self.row_size = 6       
-        self.LAYOUT = LAYOUT
         super().__init__(root, size)
             
         # obj
@@ -123,13 +121,13 @@ class Epd3in7(DisplayABC):
             _dets = dets.Details.get_obj(co)(**entry)
             _eta = eta.Eta.get_obj(co)(**entry)
             
-            rte = entry['route']
+            rte = _dets.get_route_name()
             dest = self.dotted(_dets.get_dest(), 9)
             stop = self.dotted(_dets.get_stop_name(), 9)
             
             # titles
             self.logger.debug(f"Drawing route information")
-            self.drawing.text((5, (self.row_h*row + 0)), text=rte, fill=self.black, font=self.f_route)
+            self.drawing.text((5, (self.row_h*row + -7)), text=rte, fill=self.black, font=self.f_route)
             self.drawing.text((5, (self.row_h*row + 35)), dest, fill=self.black, font=self.f_text)
             self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
             
@@ -140,7 +138,7 @@ class Epd3in7(DisplayABC):
                 self.drawing.text((170, self.row_h*row + 25), text=_eta.msg, fill=self.black, font=self.f_text)
             else:
                 for idx, time in enumerate(_eta.get_etas()):
-                    if (idx < 3):
+                    if (idx < self.num_etas):
                         self.logger.debug(time)
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :

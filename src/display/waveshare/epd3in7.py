@@ -11,10 +11,18 @@ from eta import eta
 
 PARTIAL = True
 MAXROW = 6
-LAYOUT = {
+
+class Epd3in7(DisplayABC):
+    
+    mode = 0
+    epd_height = epd.EPD_HEIGHT
+    epd_width = epd.EPD_WIDTH
+    black = epd.GRAY4
+    white = epd.GRAY1
+    LAYOUT = {
     # size = 8
     3:{
-        'f_route': 40,
+        'f_route': 33,
         'f_text': 16,
         'f_time': 25,
         'f_mins': 25,
@@ -33,7 +41,7 @@ LAYOUT = {
     },
     # size = 6
     2:{
-        'f_route': 40,
+        'f_route': 33,
         'f_text': 16,
         'f_time': 30,
         'f_mins': 33,
@@ -52,7 +60,7 @@ LAYOUT = {
     },
     # size = 5
     1:{
-        'f_route': 40,
+        'f_route': 33,
         'f_text': 16,
         'f_time': 40,
         'f_mins': 35,
@@ -71,14 +79,6 @@ LAYOUT = {
     }
 }
 
-class Epd3in7(DisplayABC):
-    
-    mode = 0
-    epd_height = epd.EPD_HEIGHT
-    epd_width = epd.EPD_WIDTH
-    black = epd.GRAY4
-    white = epd.GRAY1
-
     def __init__(self, root: str,size: int) -> None:
         '''
         mode:
@@ -86,8 +86,7 @@ class Epd3in7(DisplayABC):
             - 1->1Gary mode
         '''
         self.row_h = 80
-        self.row_size = 6       
-        self.LAYOUT = LAYOUT
+        self.row_size = 6
         self.mode = 1
         super().__init__(root, size)
         
@@ -180,7 +179,7 @@ class Epd3in7(DisplayABC):
             
             # titles
             self.logger.debug(f"- Drawing row {row}'s route information")
-            self.drawing.text((5, (self.row_h*row + 0)), text=rte, fill=self.black, font=self.f_route)
+            self.drawing.text((5, (self.row_h*row + -5)), text=rte, fill=self.black, font=self.f_route)
             self.drawing.text((5, (self.row_h*row + 35)), dest, fill=self.black, font=self.f_text)
             self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
             
@@ -190,7 +189,7 @@ class Epd3in7(DisplayABC):
                 self.drawing.text((170, self.row_h*row + 25), text=_eta.msg, fill=self.black, font=self.f_text)
             else:
                 for idx, time in enumerate(_eta.get_etas()):
-                    if (idx < 3):
+                    if (idx < self.num_etas):
                         eta_mins = str(time['eta_mins'])
                         if len(eta_mins) <= 3 :
                             self.drawing.text((self.lyo['etax'], self.lyo['etay'] + (self.row_h*row + self.lyo['eta_pad']*idx)), text=eta_mins, fill=self.black, font=self.f_mins)

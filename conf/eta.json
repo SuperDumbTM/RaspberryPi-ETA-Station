@@ -40,11 +40,11 @@
         "lang": "zh"
     },
     {
-        "eta_co": "mtr_bus",
-        "route": "K73",
+        "eta_co": "mtr_train",
+        "route": "TML",
         "direction": "inbound",
         "service_type": null,
-        "stop": "K73-D090",
-        "lang": "zh"
+        "stop": "TIS",
+        "lang": "tc"
     }
 ]

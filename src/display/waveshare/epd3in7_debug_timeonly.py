@@ -4,8 +4,7 @@ import sys
 from PIL import Image,ImageDraw,ImageFont
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # lib path
 # sys.path.append(os.path.dirname(__file__)) # waveshare path
-from config import _configparser
-from display.interface import DisplayABC
+import epd3in7_debug
 from eta import details as dets
 from eta import eta
 
@@ -24,67 +23,7 @@ GRAY2  = 0xC0 #Close to white
 GRAY3  = 0x80 #Close to black
 GRAY4  = 0x00 #black
 
-LAYOUT = {
-    # size = 8
-    3:{
-        'f_route': 40,
-        'f_text': 16,
-        'f_time': 27,
-        'f_mins': 18,
-        'f_min': 18,
-        'f_lmins': 14,
-        'etax': 170,
-        'etay': 2,
-        'minsx': 190,
-        'minsy': 2,
-        'timex': 190,
-        'timey': 1,
-        'lminsx': 170,
-        'lminsy': 6,
-        'eta_pad': 24,
-        'min_desc': "分"
-    },
-    # size = 6
-    2:{
-        'f_route': 40,
-        'f_text': 16,
-        'f_time': 42,
-        'f_mins': 20,
-        'f_min': 20,
-        'f_lmins': 16,
-        'etax': 170,
-        'etay': 2,
-        'minsx': 190,
-        'minsy': 2,
-        'timex': 170,
-        'timey': 0,
-        'lminsx': 170,
-        'lminsy': 10,
-        'eta_pad': 35,
-        'min_desc': "分"
-    },
-    # size = 5
-    1:{
-        'f_route': 40,
-        'f_text': 16,
-        'f_time': 60,
-        'f_mins': 25,
-        'f_min': 25,
-        'f_lmins': 14,
-        'etax': 170,
-        'etay': 10,
-        'minsx': 200,
-        'minsy': 10,
-        'timex': 170,
-        'timey': 3,
-        'lminsx': 170,
-        'lminsy': 30,
-        'eta_pad': 35,
-        'min_desc': "分鐘"
-    }
-}
-
-class Epd3in7(DisplayABC):
+class Epd3in7(epd3in7_debug.Epd3in7):
 
     mode = 0
     epd_height = EPD_HEIGHT
@@ -100,7 +39,6 @@ class Epd3in7(DisplayABC):
         '''
         self.row_h = 80
         self.row_size = 6       
-        self.LAYOUT = LAYOUT
         super().__init__(root, size)
             
         # obj
@@ -134,14 +72,10 @@ class Epd3in7(DisplayABC):
             stop = _dets.get_stop_name()
             
             # titles
-            self.drawing.text((5, (self.row_h*row + 0)), text=rte, fill=self.black, font=self.f_route)
+            self.logger.debug(f"- Drawing row {row}'s route information")
+            self.drawing.text((5, (self.row_h*row + -5)), text=rte, fill=self.black, font=self.f_route)
             self.drawing.text((5, (self.row_h*row + 35)), dest, fill=self.black, font=self.f_text)
-            
-            if len(stop.replace(" ", "")) <= 8:
-                self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
-            else:
-                stop = stop[:8] + "..."
-                self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
+            self.drawing.text((5, (self.row_h*row + 55)), f"@{stop}", fill=self.black, font=self.f_text)
             
             # etas
             if _eta.error:

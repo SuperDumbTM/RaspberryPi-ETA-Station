@@ -47,6 +47,9 @@ class Details(ABC):
         except FileNotFoundError:
             return True
     
+    def get_route_name(self) -> str:
+        return self.route
+    
     @abstractmethod
     def get_stop_name(self) -> str: pass
     
@@ -356,6 +359,13 @@ class DetailsMtrBus(Details):
 class DetailsMtrTrain(Details):
     
     relpath =  os.path.join(PATH_DATA, "mtr", "train", "route.json")
+    route_names = {
+        'AEL': {'tc': "機場快線", 'en': "Airport Express"},
+        'TCL': {'tc': "東涌線", 'en': "Tung Chung Line"},
+        'TML': {'tc': "屯馬線", 'en': "Tuen Ma Line"},
+        'TKL': {'tc': "將軍澳線", 'en': "Tseung Kwan O Line"},
+        'EAL': {'tc': "東鐵線", 'en': "East Rail Line"}
+    }
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
         super().__init__(route, direction, service_type, stop, lang)
@@ -410,6 +420,9 @@ class DetailsMtrTrain(Details):
                     
         with open(os.path.join(ROOT, DetailsMtrTrain.relpath), "w", encoding="utf-8") as f:
             f.write(json.dumps(output))
+    
+    def get_route_name(self) -> str:
+        return self.route_names[self.route][self.lang]
     
     def get_stop_name(self) -> str:
         try:

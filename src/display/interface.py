@@ -43,7 +43,7 @@ class DisplayABC:
         # font
         self.logger.debug("setting up font")
         font_dir = os.path.join(root, "font")
-        self.f_route = ImageFont.truetype(os.path.join(font_dir, "superstar_memesbruh03.ttf"), self.lyo['f_route'])
+        self.f_route = ImageFont.truetype(os.path.join(font_dir, "NotoSansTC-Black.otf"), self.lyo['f_route'])
         self.f_text = ImageFont.truetype(os.path.join(font_dir, "msjh.ttc"), self.lyo['f_text'])
         self.f_time = ImageFont.truetype(os.path.join(font_dir, "agencyb.tff"), self.lyo['f_time'])
         self.f_mins = ImageFont.truetype(os.path.join(font_dir, "GenJyuuGothic-Monospace-Medium.ttf"), self.lyo['f_mins'])
