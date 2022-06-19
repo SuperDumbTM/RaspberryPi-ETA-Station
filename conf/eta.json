@@ -42,7 +42,7 @@
     {
         "eta_co": "mtr_train",
         "route": "TML",
-        "direction": "inbound",
+        "direction": "outbound",
         "service_type": null,
         "stop": "TIS",
         "lang": "tc"

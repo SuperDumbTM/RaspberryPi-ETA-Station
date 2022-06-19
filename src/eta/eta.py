@@ -35,7 +35,8 @@ class Eta:
             self.msg = "正在實施\n特別車務安排"
         except requests.exceptions.RequestException:
             self.msg = "網絡錯誤"
-        except Exception:
+        except Exception as e:
+            print(e)
             self.msg = "錯誤"
         else:
             self.msg = ""
@@ -264,7 +265,6 @@ class MtrTrain(Eta):
 
     def get_etas_data(self) -> dict:
         data: dict = rqst.mtr_train_eta(self.route.upper(), self.stop, self.lang)
-        timestamp = datetime.strptime(data["sys_time"], "%Y-%m-%d %H:%M:%S")
         # E: empty return
         if len(data) == 0: 
             raise APIStatusError
@@ -275,21 +275,20 @@ class MtrTrain(Eta):
             elif data.get('url') is not None:
                 raise AbnormalService
         else:
-            data = data['data'][f'{self.route}-{self.stop}']
+            timestamp = datetime.strptime(data["sys_time"], "%Y-%m-%d %H:%M:%S")
+            e_data = data['data'][f'{self.route}-{self.stop}']
             output = {}
             output['data'] = []
 
-            for entry in data[self.direction]:
+            for entry in e_data[self.direction]:
                 eta_time = datetime.strptime(entry["time"], "%Y-%m-%d %H:%M:%S")
                 
                 output['data'].append(
                     {
                     'eta_mins': (eta_time - timedelta(hours=timestamp.hour, minutes=timestamp.minute)).minute,
                     'eta_time': datetime.strftime(eta_time, "%H:%M"),
-                    'dest': dets.DetailsMtrTrain(
-                        self.route, self.dir_rtrans[self.direction], self.st, self.stop, self.lang
-                        ).get_stop_name(),
-                    'remark': ""
+                    'dest': entry['dest'],
+                    'remark': data['message']
                     }
                 )
 
