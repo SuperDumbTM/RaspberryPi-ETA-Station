@@ -196,7 +196,7 @@ class MtrBusSelector(Selector):
             _upd.update()
             
         with open(fpath, 'r', encoding="utf-8") as f:
-            stops = json.load(f)["data"][self.route]['stop'][self.direction]
+            stops = json.load(f)["data"][self.route][self.direction]
             print(f"{self.route} {self.direction} - 車站列表")
             
             # zero indexing

@@ -125,23 +125,25 @@ class Configurator:
             
     def __view_eta(self):
         for idx, entry in enumerate(self.eta_conf):
-            if entry['eta_co'] == eta.Kmb.abbr:
+            co = entry.pop('eta_co')
+            
+            if co == eta.Kmb.abbr:
                 _dets = dets.DetailsKmb
-            elif entry['eta_co'] == "ctb/nwb":  # TODO: ctb/nwb
+            elif co == "ctb/nwb":  # TODO: ctb/nwb
                 pass
-            elif entry['eta_co'] == eta.MtrTrain.abbr:  # TODO: mtr_hrt
+            elif co == eta.MtrTrain.abbr:  # TODO: mtr_hrt
                 _dets = dets.DetailsMtrTrain
-            elif entry['eta_co'] == eta.MtrLrt.abbr:
+            elif co == eta.MtrLrt.abbr:
                 _dets = dets.DetailsMtrLrt
-            elif entry['eta_co'] == eta.MtrBus.abbr:
+            elif co == eta.MtrBus.abbr:
                 _dets = dets.DetailsMtrBus
-                
-            del entry['eta_co']
+            
             _dets = _dets(**entry)
             orig = _dets.get_orig()
             dest = _dets.get_dest()
             stop = _dets.get_stop_name()
             print(f"[{idx}] {entry['route']:<5}@ {stop}\t\t\t {orig} → {dest}")
+            entry['eta_co'] = co
     
     def view(self, refresh: bool = True):
 
