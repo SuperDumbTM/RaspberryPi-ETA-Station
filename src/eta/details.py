@@ -1,8 +1,10 @@
 import json
 import datetime
 import os
-import _request as rqst
+import sys
 from abc import ABC, abstractmethod
+sys.path.append(os.path.join(os.path.dirname((os.path.dirname(os.path.dirname(__file__)))))) # root path
+import _request as rqst
 from src.eta import eta
 from typing import Literal
 
