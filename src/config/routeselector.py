@@ -136,7 +136,7 @@ class KmbSelector(SelectorWithServiceType):
         
     def sel_stop(self):
         cache_path = os.path.join(self.root, "kmb", "cache", f"{self.route}-{self.direction}-{self.service_type}.json")
-        _upd = dets.DetailsKmb(self.name[0], self.route, self.direction, self.service_type, 0, self.lang)
+        _upd = dets.DetailsKmb(self.route, self.direction, self.service_type, 0, self.lang)
         
         if _upd.is_outdated(cache_path):
             _upd.cache()
@@ -191,7 +191,7 @@ class MtrBusSelector(Selector):
         
     def sel_stop(self):
         fpath = os.path.join(self.root, "mtr", "bus", "route.json")
-        _upd = dets.DetailsMtrBus(self.name[0], self.route, self.direction, None, 0, self.lang)
+        _upd = dets.DetailsMtrBus(self.route, self.direction, None, 0, self.lang)
         if _upd.is_outdated(fpath):
             _upd.update()
             

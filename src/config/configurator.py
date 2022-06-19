@@ -1,6 +1,8 @@
 import os
+import sys
 import importlib
 import shutil
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # src path
 from src.config import config
 from src.config.routeselector import *
 from src.config.epdselector import *
@@ -107,6 +109,7 @@ class Configurator:
             config.put(self.path_eta , self.eta_conf)
             self.view(refresh=False)
         except (Exception, KeyboardInterrupt) as e:
+            print(e)
             # restore backups
             shutil.copyfile(self.path_epd.replace(".json", ".json.bak"), self.path_epd)
             shutil.copyfile(self.path_eta.replace(".json", ".json.bak"), self.path_eta)
@@ -149,7 +152,7 @@ class Configurator:
         self.__veiw_epd()
         # eta conf
         print("-----預報設定 -----")
-        self.__veiw_eta()
+        self.__view_eta()
         
     def edit(self):
         self.__load_confs()
