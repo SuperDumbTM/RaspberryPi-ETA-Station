@@ -54,20 +54,21 @@ epd: DisplayABC = None
 
 def path_check():
     if not os.path.exists(os.path.join(ROOT, "conf", "epd.json")):
-        Logger.log.critical("epd.json is missing")
+        Logger.log.critical("epd.json is missing, use -c to do the configuration.")
         raise FileNotFoundError()
     if not os.path.exists(os.path.join(ROOT, "conf", "eta.json")):
-        Logger.log.critical("eta.json is missing")
+        Logger.log.critical("eta.json is missing, use -c to do the configuration.")
         raise FileNotFoundError("eta.json")
     if not os.path.exists(os.path.join(ROOT, "font")):
         Logger.log.critical("font/ is missing")
         raise FileNotFoundError()
+    if not os.path.exists(os.path.join(ROOT, "tmp")):
+        Logger.log.info("tmp/ is missing, reconstructing")
+        os.mkdir(os.path.join(ROOT, "tmp"))
+        raise FileNotFoundError()
     if not os.path.exists(os.path.join(ROOT, "data")):
         Logger.log.warning("data/ is missing, reconstructing")
-        os.makedirs(os.path.join(ROOT, "data"))
-        os.makedirs(os.path.join(ROOT, "data", "route_data"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "kmb"))
-        os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "bus"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "lrt"))
 

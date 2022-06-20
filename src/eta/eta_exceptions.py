@@ -1,9 +1,6 @@
-import os
-from datetime import datetime
-
 class EndOfServices(Exception): pass
 
-class APIStatusError(Exception): pass
+class APIError(Exception): pass
 
 class EmptyDataError(Exception): pass
 

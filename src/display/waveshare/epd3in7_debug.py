@@ -122,8 +122,8 @@ class Epd3in7(DisplayABC):
             _eta = eta.Eta.get_obj(co)(**entry)
             
             rte = _dets.get_route_name()
-            dest = self.dotted(_dets.get_dest(), 9)
-            stop = self.dotted(_dets.get_stop_name(), 9)
+            dest = self._dotted(_dets.get_dest(), 9)
+            stop = self._dotted(_dets.get_stop_name(), 9)
             
             # titles
             self.logger.debug(f"Drawing route information")

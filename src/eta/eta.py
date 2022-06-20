@@ -23,7 +23,7 @@ class Eta:
             self.eta_len = 0
             self.error = True
             self.data = self.get_etas_data()['data']
-        except APIStatusError:
+        except APIError:
             self.msg = "API 錯誤"
         except EndOfServices:
             self.msg = "服務時間已過"
@@ -96,9 +96,9 @@ class Kmb(Eta):
 
     def get_etas_data(self) -> dict:
         data = rqst.kmb_eta(self.route.upper(), self.st)['data']
-        # E: empty return
+        
         if len(data) == 0: 
-            raise APIStatusError
+            raise APIError
 
         eta_seq = 1
         output = {}
@@ -111,14 +111,14 @@ class Kmb(Eta):
                 if stops["eta"] == None:
                     raise EndOfServices
 
-                eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z")
+                eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=None)
                 #timestamp = datetime.strptime(stops["data_timestamp"], "%Y-%m-%dT%H:%M:%S%z")
                 now = datetime.now()
                 
                 output['data'].append(
                     {
                     "co": stops["co"],
-                    'eta_mins': (eta_time - timedelta(hours=now.hour, minutes=now.minute)).minute,
+                    'eta_mins': int((eta_time - now).total_seconds() / 60),
                     'eta_time': datetime.strftime(eta_time, "%H:%M"),
                     'remark': stops["rmk_"+self.lang]
                     }
@@ -153,7 +153,7 @@ class MtrLrt(Eta):
         data = rqst.mtr_lrt_eta(self.stop)
         # E: return status error
         if data["status"] == 0:
-            raise APIStatusError
+            raise APIError
 
         timestamp = datetime.strptime(data["system_time"], "%Y-%m-%d %H:%M:%S")
         output = {}
@@ -208,9 +208,9 @@ class MtrBus(Eta):
     def get_etas_data(self):
         data = rqst.mtr_bus_eta(self.route.upper(), self.lang)
         
-        if data["status"] == 0: # E: return status error
-            raise APIStatusError
-        elif data["routeStatusRemarkTitle"]=="停止服務": # E: EOS
+        if data["status"] == 0:
+            raise APIError
+        elif data["routeStatusRemarkTitle"] == "停止服務":
             raise EndOfServices
         
         timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
@@ -267,7 +267,7 @@ class MtrTrain(Eta):
         data: dict = rqst.mtr_train_eta(self.route.upper(), self.stop, self.lang)
         # E: empty return
         if len(data) == 0: 
-            raise APIStatusError
+            raise APIError
         
         if not data['status']:
             if "suspended" in data['message']:
@@ -285,7 +285,7 @@ class MtrTrain(Eta):
                 
                 output['data'].append(
                     {
-                    'eta_mins': (eta_time - timedelta(hours=timestamp.hour, minutes=timestamp.minute)).minute,
+                    'eta_mins': int((eta_time - timestamp).total_seconds() / 60),
                     'eta_time': datetime.strftime(eta_time, "%H:%M"),
                     'dest': entry['dest'],
                     'remark': data['message']
@@ -302,8 +302,8 @@ if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")
     #cls = Kmb("N269",1,"outbound",1, root,"tc")
     #cls = Kmb("948","outbound",1,1,"tc")
-    cls = MtrLrt("705", "inbound", 540, None, "ch")
-    #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
+    #cls = MtrLrt("705", "inbound", 540, None, "ch")
+    cls = MtrBus("K76","outbound","K76-U010",None,"zh")
     #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
     #cls = MtrTrain("TML","outbound","TIS",None,"tc")
     print("eta\t", cls.get_etas())

@@ -56,7 +56,7 @@ class DisplayABC:
     def set_mode(self, mode):
         self.mode = mode
     
-    def dotted(self, text: str, max: int):
+    def _dotted(self, text: str, max: int):
         only_text = text.translate(str.maketrans('', '', string.punctuation)).replace(" ", "")
         offset = len(text) - len(only_text)
         if not text.lower().islower() and len(only_text) > max:
