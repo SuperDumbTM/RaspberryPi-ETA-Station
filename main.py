@@ -53,6 +53,10 @@ args = parser.parse_args()
 epd: DisplayABC = None
 
 def path_check():
+    
+    if not os.path.exists(os.path.join(ROOT, "tmp")):
+        Logger.log.info("tmp/ is missing, reconstructing")
+        os.mkdir(os.path.join(ROOT, "tmp"))
     if not os.path.exists(os.path.join(ROOT, "conf", "epd.json")):
         Logger.log.critical("epd.json is missing, use -c to do the configuration.")
         raise FileNotFoundError()
@@ -61,10 +65,6 @@ def path_check():
         raise FileNotFoundError("eta.json")
     if not os.path.exists(os.path.join(ROOT, "font")):
         Logger.log.critical("font/ is missing")
-        raise FileNotFoundError()
-    if not os.path.exists(os.path.join(ROOT, "tmp")):
-        Logger.log.info("tmp/ is missing, reconstructing")
-        os.mkdir(os.path.join(ROOT, "tmp"))
         raise FileNotFoundError()
     if not os.path.exists(os.path.join(ROOT, "data")):
         Logger.log.warning("data/ is missing, reconstructing")
