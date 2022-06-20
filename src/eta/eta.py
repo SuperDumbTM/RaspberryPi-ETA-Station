@@ -127,8 +127,7 @@ class Kmb(Eta):
                 eta_seq += 1   
             else:  continue
 
-        # E: empty output
-        if output.get('data',1) == 1: 
+        if len(output['data']) == 0 : 
             raise EmptyDataError
         
         return output
@@ -183,9 +182,9 @@ class MtrLrt(Eta):
                                 'remark': "",
                         })
                         
-        # E: empty output
-        if output.get('data') is None: 
+        if len(output['data']) == 0 : 
             raise EmptyDataError
+        
         return output
 
 class MtrBus(Eta):
@@ -244,9 +243,9 @@ class MtrBus(Eta):
                     output['data'].append(entry)
                 break
 
-        # E: empty output
-        if output.get('data',1) == 1: 
+        if len(output['data']) == 0 : 
             raise EmptyDataError
+        
         return output
 
 class MtrTrain(Eta):
@@ -265,7 +264,7 @@ class MtrTrain(Eta):
 
     def get_etas_data(self) -> dict:
         data: dict = rqst.mtr_train_eta(self.route.upper(), self.stop, self.lang)
-        # E: empty return
+        
         if len(data) == 0: 
             raise APIError
         
@@ -273,7 +272,7 @@ class MtrTrain(Eta):
             if "suspended" in data['message']:
                 raise StationClosed
             elif data.get('url') is not None:
-                raise AbnormalService
+                raise AbnormalService()
         else:
             timestamp = datetime.strptime(data["sys_time"], "%Y-%m-%d %H:%M:%S")
             e_data = data['data'][f'{self.route}-{self.stop}']
@@ -292,9 +291,9 @@ class MtrTrain(Eta):
                     }
                 )
 
-            # E: empty output
-            if output.get('data', 1) == 1: 
+            if len(output['data']) == 0 : 
                 raise EmptyDataError
+            
             return output
 
 # debug
