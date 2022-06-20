@@ -105,6 +105,7 @@ class Configurator:
                 except KeyboardInterrupt: # user quit
                     break
             # write config
+            
             config.put(self.path_epd , self.epd_conf)
             config.put(self.path_eta , self.eta_conf)
             self.view(refresh=False)

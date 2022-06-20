@@ -220,7 +220,7 @@ class MtrBusSelector(Selector):
 class MtrLrtSelector(Selector):
     
     name_tc = "港鐵：輕鐵"
-    co = "mtr_ltr"
+    co = "mtr_lrt"
     trans_lang = {'tc': "ch", 'sc': "ch", 'en': "en"}
     
     def __init__(self, data_path: str, lang: str) -> None:
