@@ -160,7 +160,7 @@ class MtrLrt(Eta):
         output['data'] = []
 
         for platform in data['platform_list']:
-            if platform.get("end_service_status",1) != 1:
+            if platform.get("end_service_status") is not None:
                 raise EndOfServices
             
             for entry in platform['route_list']:
@@ -302,9 +302,9 @@ if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")
     #cls = Kmb("N269",1,"outbound",1, root,"tc")
     #cls = Kmb("948","outbound",1,1,"tc")
-    #cls = MtrLrt("705", "inbound", 540, None, "ch")
+    cls = MtrLrt("705", "inbound", 540, None, "ch")
     #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
     #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
-    cls = MtrTrain("TML","outbound","TIS",None,"tc")
+    #cls = MtrTrain("TML","outbound","TIS",None,"tc")
     print("eta\t", cls.get_etas())
     pass
