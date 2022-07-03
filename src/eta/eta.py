@@ -207,9 +207,14 @@ class MtrBus(Eta):
     def get_etas_data(self):
         data = rqst.mtr_bus_eta(self.route.upper(), self.lang)
         
-        if data["status"] == 0:
-            raise APIError
-        elif data["routeStatusRemarkTitle"] == "停止服務":
+        # NOTE: Currently, "status" from API always is returned 0
+        #   possible due to ETA is in testing stage.
+        # -------------------------------------------------------
+        # if data["status"] == "0":
+        #     raise APIError(data[])
+        # elif data["routeStatusRemarkTitle"] == "停止服務":
+        #     raise EndOfServices
+        if data["routeStatusRemarkTitle"] in ("停止服務", "Non-service hours"):
             raise EndOfServices
         
         timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
@@ -268,11 +273,11 @@ class MtrTrain(Eta):
         if len(data) == 0: 
             raise APIError
         
-        if not data['status']:
+        if data['status'] == 0:
             if "suspended" in data['message']:
                 raise StationClosed
             elif data.get('url') is not None:
-                raise AbnormalService()
+                raise AbnormalService
         else:
             timestamp = datetime.strptime(data["sys_time"], "%Y-%m-%d %H:%M:%S")
             e_data = data['data'][f'{self.route}-{self.stop}']

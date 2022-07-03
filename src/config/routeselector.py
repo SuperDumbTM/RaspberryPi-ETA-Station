@@ -271,6 +271,7 @@ class MtrTrainSelector(Selector):
     name_tc = "港鐵：重鐵"
     co = "mtr_train"
     trans_lang = {'tc': "tc", 'sc': "tc", 'en': "en"}
+    trans_line = dets.DetailsMtrTrain.route_names
     
     def __init__(self, data_path: str, lang: str) -> None:
         super().__init__(data_path, lang)
@@ -310,14 +311,6 @@ class MtrTrainSelector(Selector):
             _input = input(">> 請輸入車站編號: ")
             while _input not in str(tuple(range(len(stops)))):
                 _input = input(">> 輸入無效，請重新選擇: ")
-            # while True:
-            #     try:
-            #         if int(_input) < 0 or int(_input) > len(stops)-1:
-            #             _input = input(">> 輸入無效，請重新選擇: ")
-            #         else: 
-            #             break
-            #     except ValueError:
-            #         _input = input(">> 車站選項不存在，請重新輸入: ") 
             self.stop = list(stops.keys())[int(_input)]
 
 if __name__ == "__main__":

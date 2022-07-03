@@ -64,11 +64,6 @@ class Details(ABC):
     @abstractmethod
     def get_orig(self): pass
 
-class DetailsFactory(ABC):
-    
-    def get_details() -> Details:
-        pass
-  
 class DetailsKmb(Details):
     
     relpath = os.path.join(PATH_DATA, "kmb")
@@ -454,4 +449,9 @@ class DetailsMtrTrain(Details):
     def get_orig(self):
         return self._get_ends("dest")
 
-DetailsMtrLrt.update()
+
+
+class DetailsFactory:
+    
+    def get_details() -> Details:
+        pass

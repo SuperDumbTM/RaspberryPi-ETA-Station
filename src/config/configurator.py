@@ -99,7 +99,7 @@ class Configurator:
             print(f"**所選擇的型號最多能顯示{max_row}個預報。\n**輸入完成按 ctrl+c 或選擇{max_row}個預報後，置設程序將自動結束。")
             for i in range(1, max_row + 1):
                 try:
-                    print(f"正在輸入：{i}/{max_row}")
+                    print(f"---------- 正在輸入：{i}/{max_row} ----------")
                     _rt = self.__select_co()
                     self.eta_conf.append(_rt)
                 except KeyboardInterrupt: # user quit
@@ -151,10 +151,10 @@ class Configurator:
         if refresh:
             self.__load_confs()
         # epd conf
-        print("----- 墨水屏設定 -----")
+        print("---------- 墨水屏設定 ----------")
         self.__veiw_epd()
         # eta conf
-        print("-----預報設定 -----")
+        print("---------- 預報設定 ----------")
         self.__view_eta()
         
     def edit(self):
