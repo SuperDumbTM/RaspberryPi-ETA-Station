@@ -25,15 +25,15 @@ class Eta:
             self.data = self.get_etas_data()['data']
         except APIError:
             self.msg = "API 錯誤"
-        except EndOfServices:
-            self.msg = "服務時間已過"
+        except EndOfServices as e:
+            self.msg = str(e)
         except EmptyDataError:
             self.msg = "沒有數據"
         except StationClosed:
             self.msg = "車站關閉"
         except AbnormalService:
             self.msg = "正在實施\n特別車務安排"
-        except requests.exceptions.RequestException:
+        except requests.exceptions.RequestException as e:
             self.msg = "網絡錯誤"
         except Exception as e:
             print(e)
@@ -103,16 +103,17 @@ class Kmb(Eta):
         eta_seq = 1
         output = {}
         output['data'] = []
-
         #TODO: Optimization: by dir
         #NOTE: the number of ETA entry form API at the same stop may not be 3 every time.  (e.g. N routes provide only 2)
         for stops in data:
             if stops["seq"] == self.stop and stops["dir"]==self.direction[0].upper():
                 if stops["eta"] == None:
-                    raise EndOfServices
+                    if stops["rmk_" + self.lang] == "":
+                        raise EndOfServices("服務時間已過")
+                    else:
+                        raise EndOfServices(stops["rmk_" + self.lang])
 
                 eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=None)
-                #timestamp = datetime.strptime(stops["data_timestamp"], "%Y-%m-%dT%H:%M:%S%z")
                 now = datetime.now()
                 
                 output['data'].append(
@@ -120,7 +121,7 @@ class Kmb(Eta):
                     "co": stops["co"],
                     'eta_mins': int((eta_time - now).total_seconds() / 60),
                     'eta_time': datetime.strftime(eta_time, "%H:%M"),
-                    'remark': stops["rmk_"+self.lang]
+                    'remark': stops["rmk_" + self.lang]
                     }
                 )
                 if eta_seq == 3: break
@@ -160,24 +161,22 @@ class MtrLrt(Eta):
 
         for platform in data['platform_list']:
             if platform.get("end_service_status") is not None:
-                raise EndOfServices
+                raise EndOfServices("服務時間已過")
             
             for entry in platform['route_list']:
                 if entry['route_no'] == self.route and entry[f'dest_{self.lang}'] == self._dets.get_dest():
                     try:
-                        eta_min = entry['time_' + self.lang].split(" ")[0]
-                        int(eta_min)
+                        eta_min = int(entry['time_' + self.lang].split(" ")[0])
                     except ValueError:
+                        #NOTE: 'eta_mins' may not a be a number due to "即將抵達/離開" -> ValueError
                         output['data'].append({
                                 'eta_mins': eta_min,
-                                #NOTE: 'eta_mins' may not a be a number due to "即將抵達/離開" -> ValueError
                                 'eta_time': "----",
                                 'remark': "",
                         })
                     else:
                         output['data'].append({
                                 'eta_mins': eta_min,
-                                #NOTE: 'eta_mins' may not a be a number due to "即將抵達/離開" -> ValueError
                                 'eta_time': datetime.strftime(timestamp + timedelta(minutes=int(eta_min)), "%H:%M"),
                                 'remark': "",
                         })
@@ -215,7 +214,7 @@ class MtrBus(Eta):
         # elif data["routeStatusRemarkTitle"] == "停止服務":
         #     raise EndOfServices
         if data["routeStatusRemarkTitle"] in ("停止服務", "Non-service hours"):
-            raise EndOfServices
+            raise EndOfServices("服務時間已過")
         
         timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
         output = {}
@@ -304,11 +303,12 @@ class MtrTrain(Eta):
 # debug
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")
-    #cls = Kmb("N269",1,"outbound",1, root,"tc")
+    cls = Kmb("N269","outbound",1,1,"tc")
     #cls = Kmb("948","outbound",1,1,"tc")
     #cls = MtrLrt("705", "inbound", 540, None, "ch")
-    cls = MtrBus("K76","outbound","K76-U010",None,"zh")
+    #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
     #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
     #cls = MtrTrain("TML","outbound","TIS",None,"tc")
     print("eta\t", cls.get_etas())
+    print("msg\t", cls.msg)
     pass

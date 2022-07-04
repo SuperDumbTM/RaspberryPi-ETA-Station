@@ -146,13 +146,6 @@ class Epd3in7(DisplayABC):
                     Please check the path or do a full update with flag -i first (optional: -I <path> to specify the path)")
 
     def draw(self):
-        '''
-        M: 
-            route:  (5,5)
-            dest:   (5,35)
-            stop:   (5,55)
-            
-        '''
         super().draw()
         # Frame
         self.logger.debug("Drawing the layout")
