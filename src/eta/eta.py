@@ -44,6 +44,7 @@ class Eta:
             self.eta_len = len(self.data)
         finally:
             pass
+        
     
     @staticmethod
     def get_obj(co: str):
