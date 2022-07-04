@@ -1,6 +1,8 @@
 import os
+import sys
 import importlib
 import shutil
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))) # src path
 from src.config import config
 from src.config.routeselector import *
 from src.config.epdselector import *
@@ -19,13 +21,13 @@ class Configurator:
         # paths
         self.path_eta = os.path.join(root, "conf", "eta.json")
         self.path_epd = os.path.join(root, "conf", "epd.json")
-        self.path_epd_list = os.path.join(root, "src", "display", "epd_list.json")        
+        self.path_epd_list = os.path.join(root, "src", "display", "epd_list.json")      
         
         dir_data = os.path.join(root, "data", "route_data")
         self.eta_co_list: dict[str, Selector] = {
             '1': KmbSelector(dir_data, "tc"),
             # '2':"新巴/城巴",
-            # '3':"港鐵-重鐵",
+            '3': MtrTrainSelector(dir_data, "tc"),
             '4': MtrLrtSelector(dir_data, "tc"),
             '5': MtrBusSelector(dir_data, "tc"),
         }
@@ -97,16 +99,19 @@ class Configurator:
             print(f"**所選擇的型號最多能顯示{max_row}個預報。\n**輸入完成按 ctrl+c 或選擇{max_row}個預報後，置設程序將自動結束。")
             for i in range(1, max_row + 1):
                 try:
-                    print(f"正在輸入：{i}/{max_row}")
+                    print(f"---------- 正在輸入：{i}/{max_row} ----------")
                     _rt = self.__select_co()
                     self.eta_conf.append(_rt)
                 except KeyboardInterrupt: # user quit
+                    print('quitting')
                     break
             # write config
+            
             config.put(self.path_epd , self.epd_conf)
             config.put(self.path_eta , self.eta_conf)
             self.view(refresh=False)
         except (Exception, KeyboardInterrupt) as e:
+            print(e)
             # restore backups
             shutil.copyfile(self.path_epd.replace(".json", ".json.bak"), self.path_epd)
             shutil.copyfile(self.path_eta.replace(".json", ".json.bak"), self.path_eta)
@@ -122,36 +127,39 @@ class Configurator:
             
     def __view_eta(self):
         for idx, entry in enumerate(self.eta_conf):
-            if entry['eta_co'] == eta.Kmb.abbr:
+            co = entry.pop('eta_co')
+            
+            if co == eta.Kmb.abbr:
                 _dets = dets.DetailsKmb
-            elif entry['eta_co'] == "ctb/nwb":  # TODO: ctb/nwb
+            elif co == "ctb/nwb":  # TODO: ctb/nwb
                 pass
-            elif entry['eta_co'] == eta.MtrTrain.abbr:  # TODO: mtr_hrt
+            elif co == eta.MtrTrain.abbr:  # TODO: mtr_hrt
                 _dets = dets.DetailsMtrTrain
-            elif entry['eta_co'] == eta.MtrLrt.abbr:
+            elif co == eta.MtrLrt.abbr:
                 _dets = dets.DetailsMtrLrt
-            elif entry['eta_co'] == eta.MtrBus.abbr:
+            elif co == eta.MtrBus.abbr:
                 _dets = dets.DetailsMtrBus
-                
-            del entry['eta_co']
+            
             _dets = _dets(**entry)
+            route = _dets.get_route_name()
             orig = _dets.get_orig()
             dest = _dets.get_dest()
             stop = _dets.get_stop_name()
-            print(f"[{idx}] {entry['route']:<5}@ {stop}\t\t\t {orig} → {dest}")
+            print(f"[{idx}] {route:<5}@ {stop}\t\t\t {orig} → {dest}")
+            entry['eta_co'] = co
     
     def view(self, refresh: bool = True):
 
         if refresh:
             self.__load_confs()
         # epd conf
-        print("----- 墨水屏設定 -----")
+        print("---------- 墨水屏設定 ----------")
         self.__veiw_epd()
         # eta conf
-        print("-----預報設定 -----")
-        self.__veiw_eta()
+        print("---------- 預報設定 ----------")
+        self.__view_eta()
+        print("------------------------------")
         
-
     def edit(self):
         self.__load_confs()
         
@@ -203,4 +211,3 @@ class Configurator:
 
 if __name__ == "__main__":
     c = Configurator("/home/vm/vscode/RaspberryPi-ETA-Station/")
-    c.new()

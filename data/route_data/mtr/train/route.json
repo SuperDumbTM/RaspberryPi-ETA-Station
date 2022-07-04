@@ -1,0 +1,2049 @@
+{
+    "lastupdate": "20220618",
+    "data": {
+        "AEL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "56",
+                        "code": "AWE",
+                        "name_tc": "\u535a\u89bd\u9928",
+                        "name_en": "AsiaWorld-Expo"
+                    },
+                    "dest": {
+                        "id": "44",
+                        "code": "HOK",
+                        "name_tc": "\u9999\u6e2f",
+                        "name_en": "Hong Kong"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "44",
+                        "code": "HOK",
+                        "name_tc": "\u9999\u6e2f",
+                        "name_en": "Hong Kong"
+                    },
+                    "dest": {
+                        "id": "56",
+                        "code": "AWE",
+                        "name_tc": "\u535a\u89bd\u9928",
+                        "name_en": "AsiaWorld-Expo"
+                    }
+                }
+            },
+            "inbound": {
+                "AWE": {
+                    "id": "56",
+                    "name_tc": "\u535a\u89bd\u9928",
+                    "name_en": "AsiaWorld-Expo",
+                    "seq": "1"
+                },
+                "AIR": {
+                    "id": "47",
+                    "name_tc": "\u6a5f\u5834",
+                    "name_en": "Airport",
+                    "seq": "2"
+                },
+                "TSY": {
+                    "id": "46",
+                    "name_tc": "\u9752\u8863",
+                    "name_en": "Tsing Yi",
+                    "seq": "3"
+                },
+                "KOW": {
+                    "id": "45",
+                    "name_tc": "\u4e5d\u9f8d",
+                    "name_en": "Kowloon",
+                    "seq": "4"
+                },
+                "HOK": {
+                    "id": "44",
+                    "name_tc": "\u9999\u6e2f",
+                    "name_en": "Hong Kong",
+                    "seq": "5"
+                }
+            },
+            "outbound": {
+                "HOK": {
+                    "id": "44",
+                    "name_tc": "\u9999\u6e2f",
+                    "name_en": "Hong Kong",
+                    "seq": "1"
+                },
+                "KOW": {
+                    "id": "45",
+                    "name_tc": "\u4e5d\u9f8d",
+                    "name_en": "Kowloon",
+                    "seq": "2"
+                },
+                "TSY": {
+                    "id": "46",
+                    "name_tc": "\u9752\u8863",
+                    "name_en": "Tsing Yi",
+                    "seq": "3"
+                },
+                "AIR": {
+                    "id": "47",
+                    "name_tc": "\u6a5f\u5834",
+                    "name_en": "Airport",
+                    "seq": "4"
+                },
+                "AWE": {
+                    "id": "56",
+                    "name_tc": "\u535a\u89bd\u9928",
+                    "name_en": "AsiaWorld-Expo",
+                    "seq": "5"
+                }
+            }
+        },
+        "DRL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "54",
+                        "code": "SUN",
+                        "name_tc": "\u6b23\u6fb3",
+                        "name_en": "Sunny Bay"
+                    },
+                    "dest": {
+                        "id": "55",
+                        "code": "DIS",
+                        "name_tc": "\u8fea\u58eb\u5c3c",
+                        "name_en": "Disneyland Resort"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "55",
+                        "code": "DIS",
+                        "name_tc": "\u8fea\u58eb\u5c3c",
+                        "name_en": "Disneyland Resort"
+                    },
+                    "dest": {
+                        "id": "54",
+                        "code": "SUN",
+                        "name_tc": "\u6b23\u6fb3",
+                        "name_en": "Sunny Bay"
+                    }
+                }
+            },
+            "inbound": {
+                "SUN": {
+                    "id": "54",
+                    "name_tc": "\u6b23\u6fb3",
+                    "name_en": "Sunny Bay",
+                    "seq": "1"
+                },
+                "DIS": {
+                    "id": "55",
+                    "name_tc": "\u8fea\u58eb\u5c3c",
+                    "name_en": "Disneyland Resort",
+                    "seq": "2"
+                }
+            },
+            "outbound": {
+                "DIS": {
+                    "id": "55",
+                    "name_tc": "\u8fea\u58eb\u5c3c",
+                    "name_en": "Disneyland Resort",
+                    "seq": "1"
+                },
+                "SUN": {
+                    "id": "54",
+                    "name_tc": "\u6b23\u6fb3",
+                    "name_en": "Sunny Bay",
+                    "seq": "2"
+                }
+            }
+        },
+        "EAL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "76",
+                        "code": "LOW",
+                        "name_tc": "\u7f85\u6e56",
+                        "name_en": "Lo Wu"
+                    },
+                    "dest": {
+                        "id": "2",
+                        "code": "ADM",
+                        "name_tc": "\u91d1\u9418",
+                        "name_en": "Admiralty"
+                    }
+                },
+                "inbound-LMC": {
+                    "orig": {
+                        "id": "78",
+                        "code": "LMC",
+                        "name_tc": "\u843d\u99ac\u6d32",
+                        "name_en": "Lok Ma Chau"
+                    },
+                    "dest": {
+                        "id": "2",
+                        "code": "ADM",
+                        "name_tc": "\u91d1\u9418",
+                        "name_en": "Admiralty"
+                    }
+                },
+                "outbound-LMC": {
+                    "orig": {
+                        "id": "2",
+                        "code": "ADM",
+                        "name_tc": "\u91d1\u9418",
+                        "name_en": "Admiralty"
+                    },
+                    "dest": {
+                        "id": "78",
+                        "code": "LMC",
+                        "name_tc": "\u843d\u99ac\u6d32",
+                        "name_en": "Lok Ma Chau"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "2",
+                        "code": "ADM",
+                        "name_tc": "\u91d1\u9418",
+                        "name_en": "Admiralty"
+                    },
+                    "dest": {
+                        "id": "76",
+                        "code": "LOW",
+                        "name_tc": "\u7f85\u6e56",
+                        "name_en": "Lo Wu"
+                    }
+                }
+            },
+            "inbound": {
+                "LOW": {
+                    "id": "76",
+                    "name_tc": "\u7f85\u6e56",
+                    "name_en": "Lo Wu",
+                    "seq": "1"
+                },
+                "SHS": {
+                    "id": "75",
+                    "name_tc": "\u4e0a\u6c34",
+                    "name_en": "Sheung Shui",
+                    "seq": "2"
+                },
+                "FAN": {
+                    "id": "74",
+                    "name_tc": "\u7c89\u5dba",
+                    "name_en": "Fanling",
+                    "seq": "3"
+                },
+                "TWO": {
+                    "id": "73",
+                    "name_tc": "\u592a\u548c",
+                    "name_en": "Tai Wo",
+                    "seq": "4"
+                },
+                "TAP": {
+                    "id": "72",
+                    "name_tc": "\u5927\u57d4\u589f",
+                    "name_en": "Tai Po Market",
+                    "seq": "5"
+                },
+                "UNI": {
+                    "id": "71",
+                    "name_tc": "\u5927\u5b78",
+                    "name_en": "University",
+                    "seq": "6"
+                },
+                "FOT": {
+                    "id": "69",
+                    "name_tc": "\u706b\u70ad",
+                    "name_en": "Fo Tan",
+                    "seq": "7"
+                },
+                "SHT": {
+                    "id": "68",
+                    "name_tc": "\u6c99\u7530",
+                    "name_en": "Sha Tin",
+                    "seq": "8"
+                },
+                "TAW": {
+                    "id": "67",
+                    "name_tc": "\u5927\u570d",
+                    "name_en": "Tai Wai",
+                    "seq": "9"
+                },
+                "KOT": {
+                    "id": "8",
+                    "name_tc": "\u4e5d\u9f8d\u5858",
+                    "name_en": "Kowloon Tong",
+                    "seq": "10"
+                },
+                "MKK": {
+                    "id": "65",
+                    "name_tc": "\u65fa\u89d2\u6771",
+                    "name_en": "Mong Kok East",
+                    "seq": "11"
+                },
+                "HUH": {
+                    "id": "64",
+                    "name_tc": "\u7d05\u78e1",
+                    "name_en": "Hung Hom",
+                    "seq": "12"
+                },
+                "EXC": {
+                    "id": "94",
+                    "name_tc": "\u6703\u5c55",
+                    "name_en": "Exhibition Centre",
+                    "seq": "13"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "14"
+                }
+            },
+            "inbound-LMC": {
+                "LMC": {
+                    "id": "78",
+                    "name_tc": "\u843d\u99ac\u6d32",
+                    "name_en": "Lok Ma Chau",
+                    "seq": "1"
+                },
+                "SHS": {
+                    "id": "75",
+                    "name_tc": "\u4e0a\u6c34",
+                    "name_en": "Sheung Shui",
+                    "seq": "2"
+                },
+                "FAN": {
+                    "id": "74",
+                    "name_tc": "\u7c89\u5dba",
+                    "name_en": "Fanling",
+                    "seq": "3"
+                },
+                "TWO": {
+                    "id": "73",
+                    "name_tc": "\u592a\u548c",
+                    "name_en": "Tai Wo",
+                    "seq": "4"
+                },
+                "TAP": {
+                    "id": "72",
+                    "name_tc": "\u5927\u57d4\u589f",
+                    "name_en": "Tai Po Market",
+                    "seq": "5"
+                },
+                "UNI": {
+                    "id": "71",
+                    "name_tc": "\u5927\u5b78",
+                    "name_en": "University",
+                    "seq": "6"
+                },
+                "FOT": {
+                    "id": "69",
+                    "name_tc": "\u706b\u70ad",
+                    "name_en": "Fo Tan",
+                    "seq": "7"
+                },
+                "SHT": {
+                    "id": "68",
+                    "name_tc": "\u6c99\u7530",
+                    "name_en": "Sha Tin",
+                    "seq": "8"
+                },
+                "TAW": {
+                    "id": "67",
+                    "name_tc": "\u5927\u570d",
+                    "name_en": "Tai Wai",
+                    "seq": "9"
+                },
+                "KOT": {
+                    "id": "8",
+                    "name_tc": "\u4e5d\u9f8d\u5858",
+                    "name_en": "Kowloon Tong",
+                    "seq": "10"
+                },
+                "MKK": {
+                    "id": "65",
+                    "name_tc": "\u65fa\u89d2\u6771",
+                    "name_en": "Mong Kok East",
+                    "seq": "11"
+                },
+                "HUH": {
+                    "id": "64",
+                    "name_tc": "\u7d05\u78e1",
+                    "name_en": "Hung Hom",
+                    "seq": "12"
+                },
+                "EXC": {
+                    "id": "94",
+                    "name_tc": "\u6703\u5c55",
+                    "name_en": "Exhibition Centre",
+                    "seq": "13"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "14"
+                }
+            },
+            "outbound-LMC": {
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "1"
+                },
+                "EXC": {
+                    "id": "94",
+                    "name_tc": "\u6703\u5c55",
+                    "name_en": "Exhibition Centre",
+                    "seq": "2"
+                },
+                "HUH": {
+                    "id": "64",
+                    "name_tc": "\u7d05\u78e1",
+                    "name_en": "Hung Hom",
+                    "seq": "3"
+                },
+                "MKK": {
+                    "id": "65",
+                    "name_tc": "\u65fa\u89d2\u6771",
+                    "name_en": "Mong Kok East",
+                    "seq": "4"
+                },
+                "KOT": {
+                    "id": "8",
+                    "name_tc": "\u4e5d\u9f8d\u5858",
+                    "name_en": "Kowloon Tong",
+                    "seq": "5"
+                },
+                "TAW": {
+                    "id": "67",
+                    "name_tc": "\u5927\u570d",
+                    "name_en": "Tai Wai",
+                    "seq": "6"
+                },
+                "SHT": {
+                    "id": "68",
+                    "name_tc": "\u6c99\u7530",
+                    "name_en": "Sha Tin",
+                    "seq": "7"
+                },
+                "FOT": {
+                    "id": "69",
+                    "name_tc": "\u706b\u70ad",
+                    "name_en": "Fo Tan",
+                    "seq": "8"
+                },
+                "UNI": {
+                    "id": "71",
+                    "name_tc": "\u5927\u5b78",
+                    "name_en": "University",
+                    "seq": "9"
+                },
+                "TAP": {
+                    "id": "72",
+                    "name_tc": "\u5927\u57d4\u589f",
+                    "name_en": "Tai Po Market",
+                    "seq": "10"
+                },
+                "TWO": {
+                    "id": "73",
+                    "name_tc": "\u592a\u548c",
+                    "name_en": "Tai Wo",
+                    "seq": "11"
+                },
+                "FAN": {
+                    "id": "74",
+                    "name_tc": "\u7c89\u5dba",
+                    "name_en": "Fanling",
+                    "seq": "12"
+                },
+                "SHS": {
+                    "id": "75",
+                    "name_tc": "\u4e0a\u6c34",
+                    "name_en": "Sheung Shui",
+                    "seq": "13"
+                },
+                "LMC": {
+                    "id": "78",
+                    "name_tc": "\u843d\u99ac\u6d32",
+                    "name_en": "Lok Ma Chau",
+                    "seq": "14"
+                }
+            },
+            "outbound": {
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "1"
+                },
+                "EXC": {
+                    "id": "94",
+                    "name_tc": "\u6703\u5c55",
+                    "name_en": "Exhibition Centre",
+                    "seq": "2"
+                },
+                "HUH": {
+                    "id": "64",
+                    "name_tc": "\u7d05\u78e1",
+                    "name_en": "Hung Hom",
+                    "seq": "3"
+                },
+                "MKK": {
+                    "id": "65",
+                    "name_tc": "\u65fa\u89d2\u6771",
+                    "name_en": "Mong Kok East",
+                    "seq": "4"
+                },
+                "KOT": {
+                    "id": "8",
+                    "name_tc": "\u4e5d\u9f8d\u5858",
+                    "name_en": "Kowloon Tong",
+                    "seq": "5"
+                },
+                "TAW": {
+                    "id": "67",
+                    "name_tc": "\u5927\u570d",
+                    "name_en": "Tai Wai",
+                    "seq": "6"
+                },
+                "SHT": {
+                    "id": "68",
+                    "name_tc": "\u6c99\u7530",
+                    "name_en": "Sha Tin",
+                    "seq": "7"
+                },
+                "FOT": {
+                    "id": "69",
+                    "name_tc": "\u706b\u70ad",
+                    "name_en": "Fo Tan",
+                    "seq": "8"
+                },
+                "UNI": {
+                    "id": "71",
+                    "name_tc": "\u5927\u5b78",
+                    "name_en": "University",
+                    "seq": "9"
+                },
+                "TAP": {
+                    "id": "72",
+                    "name_tc": "\u5927\u57d4\u589f",
+                    "name_en": "Tai Po Market",
+                    "seq": "10"
+                },
+                "TWO": {
+                    "id": "73",
+                    "name_tc": "\u592a\u548c",
+                    "name_en": "Tai Wo",
+                    "seq": "11"
+                },
+                "FAN": {
+                    "id": "74",
+                    "name_tc": "\u7c89\u5dba",
+                    "name_en": "Fanling",
+                    "seq": "12"
+                },
+                "SHS": {
+                    "id": "75",
+                    "name_tc": "\u4e0a\u6c34",
+                    "name_en": "Sheung Shui",
+                    "seq": "13"
+                },
+                "LOW": {
+                    "id": "76",
+                    "name_tc": "\u7f85\u6e56",
+                    "name_en": "Lo Wu",
+                    "seq": "14"
+                }
+            }
+        },
+        "ISL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "37",
+                        "code": "CHW",
+                        "name_tc": "\u67f4\u7063",
+                        "name_en": "Chai Wan"
+                    },
+                    "dest": {
+                        "id": "83",
+                        "code": "KET",
+                        "name_tc": "\u5805\u5c3c\u5730\u57ce",
+                        "name_en": "Kennedy Town"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "83",
+                        "code": "KET",
+                        "name_tc": "\u5805\u5c3c\u5730\u57ce",
+                        "name_en": "Kennedy Town"
+                    },
+                    "dest": {
+                        "id": "37",
+                        "code": "CHW",
+                        "name_tc": "\u67f4\u7063",
+                        "name_en": "Chai Wan"
+                    }
+                }
+            },
+            "inbound": {
+                "CHW": {
+                    "id": "37",
+                    "name_tc": "\u67f4\u7063",
+                    "name_en": "Chai Wan",
+                    "seq": "1"
+                },
+                "HFC": {
+                    "id": "36",
+                    "name_tc": "\u674f\u82b1\u90a8",
+                    "name_en": "Heng Fa Chuen",
+                    "seq": "2"
+                },
+                "SKW": {
+                    "id": "35",
+                    "name_tc": "\u7b72\u7b95\u7063",
+                    "name_en": "Shau Kei Wan",
+                    "seq": "3"
+                },
+                "SWH": {
+                    "id": "34",
+                    "name_tc": "\u897f\u7063\u6cb3",
+                    "name_en": "Sai Wan Ho",
+                    "seq": "4"
+                },
+                "TAK": {
+                    "id": "33",
+                    "name_tc": "\u592a\u53e4",
+                    "name_en": "Tai Koo",
+                    "seq": "5"
+                },
+                "QUB": {
+                    "id": "32",
+                    "name_tc": "\u9c02\u9b5a\u6d8c",
+                    "name_en": "Quarry Bay",
+                    "seq": "6"
+                },
+                "NOP": {
+                    "id": "31",
+                    "name_tc": "\u5317\u89d2",
+                    "name_en": "North Point",
+                    "seq": "7"
+                },
+                "FOH": {
+                    "id": "30",
+                    "name_tc": "\u70ae\u53f0\u5c71",
+                    "name_en": "Fortress Hill",
+                    "seq": "8"
+                },
+                "TIH": {
+                    "id": "29",
+                    "name_tc": "\u5929\u540e",
+                    "name_en": "Tin Hau",
+                    "seq": "9"
+                },
+                "CAB": {
+                    "id": "28",
+                    "name_tc": "\u9285\u947c\u7063",
+                    "name_en": "Causeway Bay",
+                    "seq": "10"
+                },
+                "WAC": {
+                    "id": "27",
+                    "name_tc": "\u7063\u4ed4",
+                    "name_en": "Wan Chai",
+                    "seq": "11"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "12"
+                },
+                "CEN": {
+                    "id": "1",
+                    "name_tc": "\u4e2d\u74b0",
+                    "name_en": "Central",
+                    "seq": "13"
+                },
+                "SHW": {
+                    "id": "26",
+                    "name_tc": "\u4e0a\u74b0",
+                    "name_en": "Sheung Wan",
+                    "seq": "14"
+                },
+                "SYP": {
+                    "id": "81",
+                    "name_tc": "\u897f\u71df\u76e4",
+                    "name_en": "Sai Ying Pun",
+                    "seq": "15"
+                },
+                "HKU": {
+                    "id": "82",
+                    "name_tc": "\u9999\u6e2f\u5927\u5b78",
+                    "name_en": "HKU",
+                    "seq": "16"
+                },
+                "KET": {
+                    "id": "83",
+                    "name_tc": "\u5805\u5c3c\u5730\u57ce",
+                    "name_en": "Kennedy Town",
+                    "seq": "17"
+                }
+            },
+            "outbound": {
+                "KET": {
+                    "id": "83",
+                    "name_tc": "\u5805\u5c3c\u5730\u57ce",
+                    "name_en": "Kennedy Town",
+                    "seq": "1"
+                },
+                "HKU": {
+                    "id": "82",
+                    "name_tc": "\u9999\u6e2f\u5927\u5b78",
+                    "name_en": "HKU",
+                    "seq": "2"
+                },
+                "SYP": {
+                    "id": "81",
+                    "name_tc": "\u897f\u71df\u76e4",
+                    "name_en": "Sai Ying Pun",
+                    "seq": "3"
+                },
+                "SHW": {
+                    "id": "26",
+                    "name_tc": "\u4e0a\u74b0",
+                    "name_en": "Sheung Wan",
+                    "seq": "4"
+                },
+                "CEN": {
+                    "id": "1",
+                    "name_tc": "\u4e2d\u74b0",
+                    "name_en": "Central",
+                    "seq": "5"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "6"
+                },
+                "WAC": {
+                    "id": "27",
+                    "name_tc": "\u7063\u4ed4",
+                    "name_en": "Wan Chai",
+                    "seq": "7"
+                },
+                "CAB": {
+                    "id": "28",
+                    "name_tc": "\u9285\u947c\u7063",
+                    "name_en": "Causeway Bay",
+                    "seq": "8"
+                },
+                "TIH": {
+                    "id": "29",
+                    "name_tc": "\u5929\u540e",
+                    "name_en": "Tin Hau",
+                    "seq": "9"
+                },
+                "FOH": {
+                    "id": "30",
+                    "name_tc": "\u70ae\u53f0\u5c71",
+                    "name_en": "Fortress Hill",
+                    "seq": "10"
+                },
+                "NOP": {
+                    "id": "31",
+                    "name_tc": "\u5317\u89d2",
+                    "name_en": "North Point",
+                    "seq": "11"
+                },
+                "QUB": {
+                    "id": "32",
+                    "name_tc": "\u9c02\u9b5a\u6d8c",
+                    "name_en": "Quarry Bay",
+                    "seq": "12"
+                },
+                "TAK": {
+                    "id": "33",
+                    "name_tc": "\u592a\u53e4",
+                    "name_en": "Tai Koo",
+                    "seq": "13"
+                },
+                "SWH": {
+                    "id": "34",
+                    "name_tc": "\u897f\u7063\u6cb3",
+                    "name_en": "Sai Wan Ho",
+                    "seq": "14"
+                },
+                "SKW": {
+                    "id": "35",
+                    "name_tc": "\u7b72\u7b95\u7063",
+                    "name_en": "Shau Kei Wan",
+                    "seq": "15"
+                },
+                "HFC": {
+                    "id": "36",
+                    "name_tc": "\u674f\u82b1\u90a8",
+                    "name_en": "Heng Fa Chuen",
+                    "seq": "16"
+                },
+                "CHW": {
+                    "id": "37",
+                    "name_tc": "\u67f4\u7063",
+                    "name_en": "Chai Wan",
+                    "seq": "17"
+                }
+            }
+        },
+        "KTL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "49",
+                        "code": "TIK",
+                        "name_tc": "\u8abf\u666f\u5dba",
+                        "name_en": "Tiu Keng Leng"
+                    },
+                    "dest": {
+                        "id": "85",
+                        "code": "WHA",
+                        "name_tc": "\u9ec3\u57d4",
+                        "name_en": "Whampo"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "85",
+                        "code": "WHA",
+                        "name_tc": "\u9ec3\u57d4",
+                        "name_en": "Whampo"
+                    },
+                    "dest": {
+                        "id": "49",
+                        "code": "TIK",
+                        "name_tc": "\u8abf\u666f\u5dba",
+                        "name_en": "Tiu Keng Leng"
+                    }
+                }
+            },
+            "inbound": {
+                "TIK": {
+                    "id": "49",
+                    "name_tc": "\u8abf\u666f\u5dba",
+                    "name_en": "Tiu Keng Leng",
+                    "seq": "1"
+                },
+                "YAT": {
+                    "id": "48",
+                    "name_tc": "\u6cb9\u5858",
+                    "name_en": "Yau Tong",
+                    "seq": "2"
+                },
+                "LAT": {
+                    "id": "38",
+                    "name_tc": "\u85cd\u7530",
+                    "name_en": "Lam Tin",
+                    "seq": "3"
+                },
+                "KWT": {
+                    "id": "15",
+                    "name_tc": "\u89c0\u5858",
+                    "name_en": "Kwun Tong",
+                    "seq": "4"
+                },
+                "NTK": {
+                    "id": "14",
+                    "name_tc": "\u725b\u982d\u89d2",
+                    "name_en": "Ngau Tau Kok",
+                    "seq": "5"
+                },
+                "KOB": {
+                    "id": "13",
+                    "name_tc": "\u4e5d\u9f8d\u7063",
+                    "name_en": "Kowloon Bay",
+                    "seq": "6"
+                },
+                "CHH": {
+                    "id": "12",
+                    "name_tc": "\u5f69\u8679",
+                    "name_en": "Choi Hung",
+                    "seq": "7"
+                },
+                "DIH": {
+                    "id": "11",
+                    "name_tc": "\u947d\u77f3\u5c71",
+                    "name_en": "Diamond Hill",
+                    "seq": "8"
+                },
+                "WTS": {
+                    "id": "10",
+                    "name_tc": "\u9ec3\u5927\u4ed9",
+                    "name_en": "Wong Tai Sin",
+                    "seq": "9"
+                },
+                "LOF": {
+                    "id": "9",
+                    "name_tc": "\u6a02\u5bcc",
+                    "name_en": "Lok Fu",
+                    "seq": "10"
+                },
+                "KOT": {
+                    "id": "8",
+                    "name_tc": "\u4e5d\u9f8d\u5858",
+                    "name_en": "Kowloon Tong",
+                    "seq": "11"
+                },
+                "SKM": {
+                    "id": "7",
+                    "name_tc": "\u77f3\u7864\u5c3e",
+                    "name_en": "Shek Kip Mei",
+                    "seq": "12"
+                },
+                "PRE": {
+                    "id": "16",
+                    "name_tc": "\u592a\u5b50",
+                    "name_en": "Prince Edward",
+                    "seq": "13"
+                },
+                "MOK": {
+                    "id": "6",
+                    "name_tc": "\u65fa\u89d2",
+                    "name_en": "Mong Kok",
+                    "seq": "14"
+                },
+                "YMT": {
+                    "id": "5",
+                    "name_tc": "\u6cb9\u9ebb\u5730",
+                    "name_en": "Yau Ma Tei",
+                    "seq": "15"
+                },
+                "HOM": {
+                    "id": "84",
+                    "name_tc": "\u4f55\u6587\u7530",
+                    "name_en": "Ho Man Tin",
+                    "seq": "16"
+                },
+                "WHA": {
+                    "id": "85",
+                    "name_tc": "\u9ec3\u57d4",
+                    "name_en": "Whampo",
+                    "seq": "17"
+                }
+            },
+            "outbound": {
+                "WHA": {
+                    "id": "85",
+                    "name_tc": "\u9ec3\u57d4",
+                    "name_en": "Whampo",
+                    "seq": "1"
+                },
+                "HOM": {
+                    "id": "84",
+                    "name_tc": "\u4f55\u6587\u7530",
+                    "name_en": "Ho Man Tin",
+                    "seq": "2"
+                },
+                "YMT": {
+                    "id": "5",
+                    "name_tc": "\u6cb9\u9ebb\u5730",
+                    "name_en": "Yau Ma Tei",
+                    "seq": "3"
+                },
+                "MOK": {
+                    "id": "6",
+                    "name_tc": "\u65fa\u89d2",
+                    "name_en": "Mong Kok",
+                    "seq": "4"
+                },
+                "PRE": {
+                    "id": "16",
+                    "name_tc": "\u592a\u5b50",
+                    "name_en": "Prince Edward",
+                    "seq": "5"
+                },
+                "SKM": {
+                    "id": "7",
+                    "name_tc": "\u77f3\u7864\u5c3e",
+                    "name_en": "Shek Kip Mei",
+                    "seq": "6"
+                },
+                "KOT": {
+                    "id": "8",
+                    "name_tc": "\u4e5d\u9f8d\u5858",
+                    "name_en": "Kowloon Tong",
+                    "seq": "7"
+                },
+                "LOF": {
+                    "id": "9",
+                    "name_tc": "\u6a02\u5bcc",
+                    "name_en": "Lok Fu",
+                    "seq": "8"
+                },
+                "WTS": {
+                    "id": "10",
+                    "name_tc": "\u9ec3\u5927\u4ed9",
+                    "name_en": "Wong Tai Sin",
+                    "seq": "9"
+                },
+                "DIH": {
+                    "id": "11",
+                    "name_tc": "\u947d\u77f3\u5c71",
+                    "name_en": "Diamond Hill",
+                    "seq": "10"
+                },
+                "CHH": {
+                    "id": "12",
+                    "name_tc": "\u5f69\u8679",
+                    "name_en": "Choi Hung",
+                    "seq": "11"
+                },
+                "KOB": {
+                    "id": "13",
+                    "name_tc": "\u4e5d\u9f8d\u7063",
+                    "name_en": "Kowloon Bay",
+                    "seq": "12"
+                },
+                "NTK": {
+                    "id": "14",
+                    "name_tc": "\u725b\u982d\u89d2",
+                    "name_en": "Ngau Tau Kok",
+                    "seq": "13"
+                },
+                "KWT": {
+                    "id": "15",
+                    "name_tc": "\u89c0\u5858",
+                    "name_en": "Kwun Tong",
+                    "seq": "14"
+                },
+                "LAT": {
+                    "id": "38",
+                    "name_tc": "\u85cd\u7530",
+                    "name_en": "Lam Tin",
+                    "seq": "15"
+                },
+                "YAT": {
+                    "id": "48",
+                    "name_tc": "\u6cb9\u5858",
+                    "name_en": "Yau Tong",
+                    "seq": "16"
+                },
+                "TIK": {
+                    "id": "49",
+                    "name_tc": "\u8abf\u666f\u5dba",
+                    "name_en": "Tiu Keng Leng",
+                    "seq": "17"
+                }
+            }
+        },
+        "TML": {
+            "details": {
+                "outbound": {
+                    "orig": {
+                        "id": "103",
+                        "code": "WKS",
+                        "name_tc": "\u70cf\u6eaa\u6c99",
+                        "name_en": "Wu Kai Sha"
+                    },
+                    "dest": {
+                        "id": "120",
+                        "code": "TUM",
+                        "name_tc": "\u5c6f\u9580",
+                        "name_en": "Tuen Mun"
+                    }
+                },
+                "inbound": {
+                    "orig": {
+                        "id": "120",
+                        "code": "TUM",
+                        "name_tc": "\u5c6f\u9580",
+                        "name_en": "Tuen Mun"
+                    },
+                    "dest": {
+                        "id": "103",
+                        "code": "WKS",
+                        "name_tc": "\u70cf\u6eaa\u6c99",
+                        "name_en": "Wu Kai Sha"
+                    }
+                }
+            },
+            "outbound": {
+                "WKS": {
+                    "id": "103",
+                    "name_tc": "\u70cf\u6eaa\u6c99",
+                    "name_en": "Wu Kai Sha",
+                    "seq": "1"
+                },
+                "MOS": {
+                    "id": "102",
+                    "name_tc": "\u99ac\u978d\u5c71",
+                    "name_en": "Ma On Shan",
+                    "seq": "2"
+                },
+                "HEO": {
+                    "id": "101",
+                    "name_tc": "\u6046\u5b89",
+                    "name_en": "Heng On",
+                    "seq": "3"
+                },
+                "TSH": {
+                    "id": "100",
+                    "name_tc": "\u5927\u6c34\u5751",
+                    "name_en": "Tai Shui Hang",
+                    "seq": "4"
+                },
+                "SHM": {
+                    "id": "99",
+                    "name_tc": "\u77f3\u9580",
+                    "name_en": "Shek Mun",
+                    "seq": "5"
+                },
+                "CIO": {
+                    "id": "98",
+                    "name_tc": "\u7b2c\u4e00\u57ce",
+                    "name_en": "City One",
+                    "seq": "6"
+                },
+                "STW": {
+                    "id": "97",
+                    "name_tc": "\u6c99\u7530\u570d",
+                    "name_en": "Sha Tin Wai",
+                    "seq": "7"
+                },
+                "CKT": {
+                    "id": "96",
+                    "name_tc": "\u8eca\u516c\u5edf",
+                    "name_en": "Che Kung Temple",
+                    "seq": "8"
+                },
+                "TAW": {
+                    "id": "67",
+                    "name_tc": "\u5927\u570d",
+                    "name_en": "Tai Wai",
+                    "seq": "9"
+                },
+                "HIK": {
+                    "id": "90",
+                    "name_tc": "\u986f\u5f91",
+                    "name_en": "Hin Keng",
+                    "seq": "10"
+                },
+                "DIH": {
+                    "id": "11",
+                    "name_tc": "\u947d\u77f3\u5c71",
+                    "name_en": "Diamond Hill",
+                    "seq": "11"
+                },
+                "KAT": {
+                    "id": "91",
+                    "name_tc": "\u555f\u5fb7",
+                    "name_en": "Kai Tak",
+                    "seq": "12"
+                },
+                "SUW": {
+                    "id": "92",
+                    "name_tc": "\u5b8b\u7687\u81fa",
+                    "name_en": "Sung Wong Toi",
+                    "seq": "13"
+                },
+                "TKW": {
+                    "id": "93",
+                    "name_tc": "\u571f\u74dc\u7063",
+                    "name_en": "To Kwa Wan",
+                    "seq": "14"
+                },
+                "HOM": {
+                    "id": "84",
+                    "name_tc": "\u4f55\u6587\u7530",
+                    "name_en": "Ho Man Tin",
+                    "seq": "15"
+                },
+                "HUH": {
+                    "id": "64",
+                    "name_tc": "\u7d05\u78e1",
+                    "name_en": "Hung Hom",
+                    "seq": "16"
+                },
+                "ETS": {
+                    "id": "80",
+                    "name_tc": "\u5c16\u6771",
+                    "name_en": "East Tsim Sha Tsui",
+                    "seq": "17"
+                },
+                "AUS": {
+                    "id": "111",
+                    "name_tc": "\u67ef\u58eb\u7538",
+                    "name_en": "Austin",
+                    "seq": "18"
+                },
+                "NAC": {
+                    "id": "53",
+                    "name_tc": "\u5357\u660c",
+                    "name_en": "Nam Cheong",
+                    "seq": "19"
+                },
+                "MEF": {
+                    "id": "20",
+                    "name_tc": "\u7f8e\u5b5a",
+                    "name_en": "Mei Foo",
+                    "seq": "20"
+                },
+                "TWW": {
+                    "id": "114",
+                    "name_tc": "\u8343\u7063\u897f",
+                    "name_en": "Tsuen Wan West",
+                    "seq": "21"
+                },
+                "KSR": {
+                    "id": "115",
+                    "name_tc": "\u9326\u4e0a\u8def",
+                    "name_en": "Kam Sheung Road",
+                    "seq": "22"
+                },
+                "YUL": {
+                    "id": "116",
+                    "name_tc": "\u5143\u6717",
+                    "name_en": "Yuen Long",
+                    "seq": "23"
+                },
+                "LOP": {
+                    "id": "117",
+                    "name_tc": "\u6717\u5c4f",
+                    "name_en": "Long Ping",
+                    "seq": "24"
+                },
+                "TIS": {
+                    "id": "118",
+                    "name_tc": "\u5929\u6c34\u570d",
+                    "name_en": "Tin Shui Wai",
+                    "seq": "25"
+                },
+                "SIH": {
+                    "id": "119",
+                    "name_tc": "\u5146\u5eb7",
+                    "name_en": "Siu Hong",
+                    "seq": "26"
+                },
+                "TUM": {
+                    "id": "120",
+                    "name_tc": "\u5c6f\u9580",
+                    "name_en": "Tuen Mun",
+                    "seq": "27"
+                }
+            },
+            "inbound": {
+                "TUM": {
+                    "id": "120",
+                    "name_tc": "\u5c6f\u9580",
+                    "name_en": "Tuen Mun",
+                    "seq": "1"
+                },
+                "SIH": {
+                    "id": "119",
+                    "name_tc": "\u5146\u5eb7",
+                    "name_en": "Siu Hong",
+                    "seq": "2"
+                },
+                "TIS": {
+                    "id": "118",
+                    "name_tc": "\u5929\u6c34\u570d",
+                    "name_en": "Tin Shui Wai",
+                    "seq": "3"
+                },
+                "LOP": {
+                    "id": "117",
+                    "name_tc": "\u6717\u5c4f",
+                    "name_en": "Long Ping",
+                    "seq": "4"
+                },
+                "YUL": {
+                    "id": "116",
+                    "name_tc": "\u5143\u6717",
+                    "name_en": "Yuen Long",
+                    "seq": "5"
+                },
+                "KSR": {
+                    "id": "115",
+                    "name_tc": "\u9326\u4e0a\u8def",
+                    "name_en": "Kam Sheung Road",
+                    "seq": "6"
+                },
+                "TWW": {
+                    "id": "114",
+                    "name_tc": "\u8343\u7063\u897f",
+                    "name_en": "Tsuen Wan West",
+                    "seq": "7"
+                },
+                "MEF": {
+                    "id": "20",
+                    "name_tc": "\u7f8e\u5b5a",
+                    "name_en": "Mei Foo",
+                    "seq": "8"
+                },
+                "NAC": {
+                    "id": "53",
+                    "name_tc": "\u5357\u660c",
+                    "name_en": "Nam Cheong",
+                    "seq": "9"
+                },
+                "AUS": {
+                    "id": "111",
+                    "name_tc": "\u67ef\u58eb\u7538",
+                    "name_en": "Austin",
+                    "seq": "10"
+                },
+                "ETS": {
+                    "id": "80",
+                    "name_tc": "\u5c16\u6771",
+                    "name_en": "East Tsim Sha Tsui",
+                    "seq": "11"
+                },
+                "HUH": {
+                    "id": "64",
+                    "name_tc": "\u7d05\u78e1",
+                    "name_en": "Hung Hom",
+                    "seq": "12"
+                },
+                "HOM": {
+                    "id": "84",
+                    "name_tc": "\u4f55\u6587\u7530",
+                    "name_en": "Ho Man Tin",
+                    "seq": "13"
+                },
+                "TKW": {
+                    "id": "93",
+                    "name_tc": "\u571f\u74dc\u7063",
+                    "name_en": "To Kwa Wan",
+                    "seq": "14"
+                },
+                "SUW": {
+                    "id": "92",
+                    "name_tc": "\u5b8b\u7687\u81fa",
+                    "name_en": "Sung Wong Toi",
+                    "seq": "15"
+                },
+                "KAT": {
+                    "id": "91",
+                    "name_tc": "\u555f\u5fb7",
+                    "name_en": "Kai Tak",
+                    "seq": "16"
+                },
+                "DIH": {
+                    "id": "11",
+                    "name_tc": "\u947d\u77f3\u5c71",
+                    "name_en": "Diamond Hill",
+                    "seq": "17"
+                },
+                "HIK": {
+                    "id": "90",
+                    "name_tc": "\u986f\u5f91",
+                    "name_en": "Hin Keng",
+                    "seq": "18"
+                },
+                "TAW": {
+                    "id": "67",
+                    "name_tc": "\u5927\u570d",
+                    "name_en": "Tai Wai",
+                    "seq": "19"
+                },
+                "CKT": {
+                    "id": "96",
+                    "name_tc": "\u8eca\u516c\u5edf",
+                    "name_en": "Che Kung Temple",
+                    "seq": "20"
+                },
+                "STW": {
+                    "id": "97",
+                    "name_tc": "\u6c99\u7530\u570d",
+                    "name_en": "Sha Tin Wai",
+                    "seq": "21"
+                },
+                "CIO": {
+                    "id": "98",
+                    "name_tc": "\u7b2c\u4e00\u57ce",
+                    "name_en": "City One",
+                    "seq": "22"
+                },
+                "SHM": {
+                    "id": "99",
+                    "name_tc": "\u77f3\u9580",
+                    "name_en": "Shek Mun",
+                    "seq": "23"
+                },
+                "TSH": {
+                    "id": "100",
+                    "name_tc": "\u5927\u6c34\u5751",
+                    "name_en": "Tai Shui Hang",
+                    "seq": "24"
+                },
+                "HEO": {
+                    "id": "101",
+                    "name_tc": "\u6046\u5b89",
+                    "name_en": "Heng On",
+                    "seq": "25"
+                },
+                "MOS": {
+                    "id": "102",
+                    "name_tc": "\u99ac\u978d\u5c71",
+                    "name_en": "Ma On Shan",
+                    "seq": "26"
+                },
+                "WKS": {
+                    "id": "103",
+                    "name_tc": "\u70cf\u6eaa\u6c99",
+                    "name_en": "Wu Kai Sha",
+                    "seq": "27"
+                }
+            }
+        },
+        "TCL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "43",
+                        "code": "TUC",
+                        "name_tc": "\u6771\u6d8c",
+                        "name_en": "Tung Chung"
+                    },
+                    "dest": {
+                        "id": "39",
+                        "code": "HOK",
+                        "name_tc": "\u9999\u6e2f",
+                        "name_en": "Hong Kong"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "39",
+                        "code": "HOK",
+                        "name_tc": "\u9999\u6e2f",
+                        "name_en": "Hong Kong"
+                    },
+                    "dest": {
+                        "id": "43",
+                        "code": "TUC",
+                        "name_tc": "\u6771\u6d8c",
+                        "name_en": "Tung Chung"
+                    }
+                }
+            },
+            "inbound": {
+                "TUC": {
+                    "id": "43",
+                    "name_tc": "\u6771\u6d8c",
+                    "name_en": "Tung Chung",
+                    "seq": "1"
+                },
+                "SUN": {
+                    "id": "54",
+                    "name_tc": "\u6b23\u6fb3",
+                    "name_en": "Sunny Bay",
+                    "seq": "2"
+                },
+                "TSY": {
+                    "id": "42",
+                    "name_tc": "\u9752\u8863",
+                    "name_en": "Tsing Yi",
+                    "seq": "3"
+                },
+                "LAK": {
+                    "id": "21",
+                    "name_tc": "\u8318\u666f",
+                    "name_en": "Lai King",
+                    "seq": "4"
+                },
+                "NAC": {
+                    "id": "53",
+                    "name_tc": "\u5357\u660c",
+                    "name_en": "Nam Cheong",
+                    "seq": "5"
+                },
+                "OLY": {
+                    "id": "41",
+                    "name_tc": "\u5967\u904b",
+                    "name_en": "Olympic",
+                    "seq": "6"
+                },
+                "KOW": {
+                    "id": "40",
+                    "name_tc": "\u4e5d\u9f8d",
+                    "name_en": "Kowloon",
+                    "seq": "7"
+                },
+                "HOK": {
+                    "id": "39",
+                    "name_tc": "\u9999\u6e2f",
+                    "name_en": "Hong Kong",
+                    "seq": "8"
+                }
+            },
+            "outbound": {
+                "HOK": {
+                    "id": "39",
+                    "name_tc": "\u9999\u6e2f",
+                    "name_en": "Hong Kong",
+                    "seq": "1"
+                },
+                "KOW": {
+                    "id": "40",
+                    "name_tc": "\u4e5d\u9f8d",
+                    "name_en": "Kowloon",
+                    "seq": "2"
+                },
+                "OLY": {
+                    "id": "41",
+                    "name_tc": "\u5967\u904b",
+                    "name_en": "Olympic",
+                    "seq": "3"
+                },
+                "NAC": {
+                    "id": "53",
+                    "name_tc": "\u5357\u660c",
+                    "name_en": "Nam Cheong",
+                    "seq": "4"
+                },
+                "LAK": {
+                    "id": "21",
+                    "name_tc": "\u8318\u666f",
+                    "name_en": "Lai King",
+                    "seq": "5"
+                },
+                "TSY": {
+                    "id": "42",
+                    "name_tc": "\u9752\u8863",
+                    "name_en": "Tsing Yi",
+                    "seq": "6"
+                },
+                "SUN": {
+                    "id": "54",
+                    "name_tc": "\u6b23\u6fb3",
+                    "name_en": "Sunny Bay",
+                    "seq": "7"
+                },
+                "TUC": {
+                    "id": "43",
+                    "name_tc": "\u6771\u6d8c",
+                    "name_en": "Tung Chung",
+                    "seq": "8"
+                }
+            }
+        },
+        "TKL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "52",
+                        "code": "POA",
+                        "name_tc": "\u5bf6\u7433",
+                        "name_en": "Po Lam"
+                    },
+                    "dest": {
+                        "id": "31",
+                        "code": "NOP",
+                        "name_tc": "\u5317\u89d2",
+                        "name_en": "North Point"
+                    }
+                },
+                "inbound-TKS": {
+                    "orig": {
+                        "id": "57",
+                        "code": "LHP",
+                        "name_tc": "\u5eb7\u57ce",
+                        "name_en": "LOHAS Park"
+                    },
+                    "dest": {
+                        "id": "49",
+                        "code": "TIK",
+                        "name_tc": "\u8abf\u666f\u5dba",
+                        "name_en": "Tiu Keng Leng"
+                    }
+                },
+                "outbount-TKS": {
+                    "orig": {
+                        "id": "49",
+                        "code": "TIK",
+                        "name_tc": "\u8abf\u666f\u5dba",
+                        "name_en": "Tiu Keng Leng"
+                    },
+                    "dest": {
+                        "id": "57",
+                        "code": "LHP",
+                        "name_tc": "\u5eb7\u57ce",
+                        "name_en": "LOHAS Park"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "31",
+                        "code": "NOP",
+                        "name_tc": "\u5317\u89d2",
+                        "name_en": "North Point"
+                    },
+                    "dest": {
+                        "id": "52",
+                        "code": "POA",
+                        "name_tc": "\u5bf6\u7433",
+                        "name_en": "Po Lam"
+                    }
+                }
+            },
+            "inbound": {
+                "POA": {
+                    "id": "52",
+                    "name_tc": "\u5bf6\u7433",
+                    "name_en": "Po Lam",
+                    "seq": "1"
+                },
+                "HAH": {
+                    "id": "51",
+                    "name_tc": "\u5751\u53e3",
+                    "name_en": "Hang Hau",
+                    "seq": "2"
+                },
+                "TKO": {
+                    "id": "50",
+                    "name_tc": "\u5c07\u8ecd\u6fb3",
+                    "name_en": "Tseung Kwan O",
+                    "seq": "3"
+                },
+                "TIK": {
+                    "id": "49",
+                    "name_tc": "\u8abf\u666f\u5dba",
+                    "name_en": "Tiu Keng Leng",
+                    "seq": "4"
+                },
+                "YAT": {
+                    "id": "48",
+                    "name_tc": "\u6cb9\u5858",
+                    "name_en": "Yau Tong",
+                    "seq": "5"
+                },
+                "QUB": {
+                    "id": "32",
+                    "name_tc": "\u9c02\u9b5a\u6d8c",
+                    "name_en": "Quarry Bay",
+                    "seq": "6"
+                },
+                "NOP": {
+                    "id": "31",
+                    "name_tc": "\u5317\u89d2",
+                    "name_en": "North Point",
+                    "seq": "7"
+                }
+            },
+            "inbound-TKS": {
+                "LHP": {
+                    "id": "57",
+                    "name_tc": "\u5eb7\u57ce",
+                    "name_en": "LOHAS Park",
+                    "seq": "1"
+                },
+                "TKO": {
+                    "id": "50",
+                    "name_tc": "\u5c07\u8ecd\u6fb3",
+                    "name_en": "Tseung Kwan O",
+                    "seq": "2"
+                },
+                "TIK": {
+                    "id": "49",
+                    "name_tc": "\u8abf\u666f\u5dba",
+                    "name_en": "Tiu Keng Leng",
+                    "seq": "3"
+                }
+            },
+            "outbount-TKS": {
+                "TIK": {
+                    "id": "49",
+                    "name_tc": "\u8abf\u666f\u5dba",
+                    "name_en": "Tiu Keng Leng",
+                    "seq": "1"
+                },
+                "TKO": {
+                    "id": "50",
+                    "name_tc": "\u5c07\u8ecd\u6fb3",
+                    "name_en": "Tseung Kwan O",
+                    "seq": "2"
+                },
+                "LHP": {
+                    "id": "57",
+                    "name_tc": "\u5eb7\u57ce",
+                    "name_en": "LOHAS Park",
+                    "seq": "3"
+                }
+            },
+            "outbound": {
+                "NOP": {
+                    "id": "31",
+                    "name_tc": "\u5317\u89d2",
+                    "name_en": "North Point",
+                    "seq": "1"
+                },
+                "QUB": {
+                    "id": "32",
+                    "name_tc": "\u9c02\u9b5a\u6d8c",
+                    "name_en": "Quarry Bay",
+                    "seq": "2"
+                },
+                "YAT": {
+                    "id": "48",
+                    "name_tc": "\u6cb9\u5858",
+                    "name_en": "Yau Tong",
+                    "seq": "3"
+                },
+                "TIK": {
+                    "id": "49",
+                    "name_tc": "\u8abf\u666f\u5dba",
+                    "name_en": "Tiu Keng Leng",
+                    "seq": "4"
+                },
+                "TKO": {
+                    "id": "50",
+                    "name_tc": "\u5c07\u8ecd\u6fb3",
+                    "name_en": "Tseung Kwan O",
+                    "seq": "5"
+                },
+                "HAH": {
+                    "id": "51",
+                    "name_tc": "\u5751\u53e3",
+                    "name_en": "Hang Hau",
+                    "seq": "6"
+                },
+                "POA": {
+                    "id": "52",
+                    "name_tc": "\u5bf6\u7433",
+                    "name_en": "Po Lam",
+                    "seq": "7"
+                }
+            }
+        },
+        "TWL": {
+            "details": {
+                "inbound": {
+                    "orig": {
+                        "id": "25",
+                        "code": "TSW",
+                        "name_tc": "\u8343\u7063",
+                        "name_en": "Tsuen Wan"
+                    },
+                    "dest": {
+                        "id": "1",
+                        "code": "CEN",
+                        "name_tc": "\u4e2d\u74b0",
+                        "name_en": "Central"
+                    }
+                },
+                "outbound": {
+                    "orig": {
+                        "id": "1",
+                        "code": "CEN",
+                        "name_tc": "\u4e2d\u74b0",
+                        "name_en": "Central"
+                    },
+                    "dest": {
+                        "id": "25",
+                        "code": "TSW",
+                        "name_tc": "\u8343\u7063",
+                        "name_en": "Tsuen Wan"
+                    }
+                }
+            },
+            "inbound": {
+                "TSW": {
+                    "id": "25",
+                    "name_tc": "\u8343\u7063",
+                    "name_en": "Tsuen Wan",
+                    "seq": "1"
+                },
+                "TWH": {
+                    "id": "24",
+                    "name_tc": "\u5927\u7aa9\u53e3",
+                    "name_en": "Tai Wo Hau",
+                    "seq": "2"
+                },
+                "KWH": {
+                    "id": "23",
+                    "name_tc": "\u8475\u8208",
+                    "name_en": "Kwai Hing",
+                    "seq": "3"
+                },
+                "KWF": {
+                    "id": "22",
+                    "name_tc": "\u8475\u82b3",
+                    "name_en": "Kwai Fong",
+                    "seq": "4"
+                },
+                "LAK": {
+                    "id": "21",
+                    "name_tc": "\u8318\u666f",
+                    "name_en": "Lai King",
+                    "seq": "5"
+                },
+                "MEF": {
+                    "id": "20",
+                    "name_tc": "\u7f8e\u5b5a",
+                    "name_en": "Mei Foo",
+                    "seq": "6"
+                },
+                "LCK": {
+                    "id": "19",
+                    "name_tc": "\u8318\u679d\u89d2",
+                    "name_en": "Lai Chi Kok",
+                    "seq": "7"
+                },
+                "CSW": {
+                    "id": "18",
+                    "name_tc": "\u9577\u6c99\u7063",
+                    "name_en": "Cheung Sha Wan",
+                    "seq": "8"
+                },
+                "SSP": {
+                    "id": "17",
+                    "name_tc": "\u6df1\u6c34\u57d7",
+                    "name_en": "Sham Shui Po",
+                    "seq": "9"
+                },
+                "PRE": {
+                    "id": "16",
+                    "name_tc": "\u592a\u5b50",
+                    "name_en": "Prince Edward",
+                    "seq": "10"
+                },
+                "MOK": {
+                    "id": "6",
+                    "name_tc": "\u65fa\u89d2",
+                    "name_en": "Mong Kok",
+                    "seq": "11"
+                },
+                "YMT": {
+                    "id": "5",
+                    "name_tc": "\u6cb9\u9ebb\u5730",
+                    "name_en": "Yau Ma Tei",
+                    "seq": "12"
+                },
+                "JOR": {
+                    "id": "4",
+                    "name_tc": "\u4f50\u6566",
+                    "name_en": "Jordan",
+                    "seq": "13"
+                },
+                "TST": {
+                    "id": "3",
+                    "name_tc": "\u5c16\u6c99\u5480",
+                    "name_en": "Tsim Sha Tsui",
+                    "seq": "14"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "15"
+                },
+                "CEN": {
+                    "id": "1",
+                    "name_tc": "\u4e2d\u74b0",
+                    "name_en": "Central",
+                    "seq": "16"
+                }
+            },
+            "outbound": {
+                "CEN": {
+                    "id": "1",
+                    "name_tc": "\u4e2d\u74b0",
+                    "name_en": "Central",
+                    "seq": "1"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "2"
+                },
+                "TST": {
+                    "id": "3",
+                    "name_tc": "\u5c16\u6c99\u5480",
+                    "name_en": "Tsim Sha Tsui",
+                    "seq": "3"
+                },
+                "JOR": {
+                    "id": "4",
+                    "name_tc": "\u4f50\u6566",
+                    "name_en": "Jordan",
+                    "seq": "4"
+                },
+                "YMT": {
+                    "id": "5",
+                    "name_tc": "\u6cb9\u9ebb\u5730",
+                    "name_en": "Yau Ma Tei",
+                    "seq": "5"
+                },
+                "MOK": {
+                    "id": "6",
+                    "name_tc": "\u65fa\u89d2",
+                    "name_en": "Mong Kok",
+                    "seq": "6"
+                },
+                "PRE": {
+                    "id": "16",
+                    "name_tc": "\u592a\u5b50",
+                    "name_en": "Prince Edward",
+                    "seq": "7"
+                },
+                "SSP": {
+                    "id": "17",
+                    "name_tc": "\u6df1\u6c34\u57d7",
+                    "name_en": "Sham Shui Po",
+                    "seq": "8"
+                },
+                "CSW": {
+                    "id": "18",
+                    "name_tc": "\u9577\u6c99\u7063",
+                    "name_en": "Cheung Sha Wan",
+                    "seq": "9"
+                },
+                "LCK": {
+                    "id": "19",
+                    "name_tc": "\u8318\u679d\u89d2",
+                    "name_en": "Lai Chi Kok",
+                    "seq": "10"
+                },
+                "MEF": {
+                    "id": "20",
+                    "name_tc": "\u7f8e\u5b5a",
+                    "name_en": "Mei Foo",
+                    "seq": "11"
+                },
+                "LAK": {
+                    "id": "21",
+                    "name_tc": "\u8318\u666f",
+                    "name_en": "Lai King",
+                    "seq": "12"
+                },
+                "KWF": {
+                    "id": "22",
+                    "name_tc": "\u8475\u82b3",
+                    "name_en": "Kwai Fong",
+                    "seq": "13"
+                },
+                "KWH": {
+                    "id": "23",
+                    "name_tc": "\u8475\u8208",
+                    "name_en": "Kwai Hing",
+                    "seq": "14"
+                },
+                "TWH": {
+                    "id": "24",
+                    "name_tc": "\u5927\u7aa9\u53e3",
+                    "name_en": "Tai Wo Hau",
+                    "seq": "15"
+                },
+                "TSW": {
+                    "id": "25",
+                    "name_tc": "\u8343\u7063",
+                    "name_en": "Tsuen Wan",
+                    "seq": "16"
+                }
+            }
+        },
+        "SIL": {
+            "details": {
+                "outbound": {
+                    "orig": {
+                        "id": "2",
+                        "code": "ADM",
+                        "name_tc": "\u91d1\u9418",
+                        "name_en": "Admiralty"
+                    },
+                    "dest": {
+                        "id": "89",
+                        "code": "SOH",
+                        "name_tc": "\u6d77\u6021\u534a\u5cf6",
+                        "name_en": "South Horizons"
+                    }
+                },
+                "inbound": {
+                    "orig": {
+                        "id": "89",
+                        "code": "SOH",
+                        "name_tc": "\u6d77\u6021\u534a\u5cf6",
+                        "name_en": "South Horizons"
+                    },
+                    "dest": {
+                        "id": "2",
+                        "code": "ADM",
+                        "name_tc": "\u91d1\u9418",
+                        "name_en": "Admiralty"
+                    }
+                }
+            },
+            "outbound": {
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "1"
+                },
+                "OCP": {
+                    "id": "86",
+                    "name_tc": "\u6d77\u6d0b\u516c\u5712",
+                    "name_en": "Ocean Park",
+                    "seq": "2"
+                },
+                "WCH": {
+                    "id": "87",
+                    "name_tc": "\u9ec3\u7af9\u5751",
+                    "name_en": "Wong Chuk Hang",
+                    "seq": "3"
+                },
+                "LET": {
+                    "id": "88",
+                    "name_tc": "\u5229\u6771",
+                    "name_en": "Lei Tung",
+                    "seq": "4"
+                },
+                "SOH": {
+                    "id": "89",
+                    "name_tc": "\u6d77\u6021\u534a\u5cf6",
+                    "name_en": "South Horizons",
+                    "seq": "5"
+                }
+            },
+            "inbound": {
+                "SOH": {
+                    "id": "89",
+                    "name_tc": "\u6d77\u6021\u534a\u5cf6",
+                    "name_en": "South Horizons",
+                    "seq": "1"
+                },
+                "LET": {
+                    "id": "88",
+                    "name_tc": "\u5229\u6771",
+                    "name_en": "Lei Tung",
+                    "seq": "2"
+                },
+                "WCH": {
+                    "id": "87",
+                    "name_tc": "\u9ec3\u7af9\u5751",
+                    "name_en": "Wong Chuk Hang",
+                    "seq": "3"
+                },
+                "OCP": {
+                    "id": "86",
+                    "name_tc": "\u6d77\u6d0b\u516c\u5712",
+                    "name_en": "Ocean Park",
+                    "seq": "4"
+                },
+                "ADM": {
+                    "id": "2",
+                    "name_tc": "\u91d1\u9418",
+                    "name_en": "Admiralty",
+                    "seq": "5"
+                }
+            }
+        }
+    }
+}

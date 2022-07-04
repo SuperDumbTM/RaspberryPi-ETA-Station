@@ -7,7 +7,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__f
 from src.config import config
 from src.log.mylogger import Logger
 
-class DisplayABC(ABC):
+class DisplayABC:
     
     partial: bool
     epd_height: int
@@ -43,7 +43,7 @@ class DisplayABC(ABC):
         # font
         self.logger.debug("setting up font")
         font_dir = os.path.join(root, "font")
-        self.f_route = ImageFont.truetype(os.path.join(font_dir, "superstar_memesbruh03.ttf"), self.lyo['f_route'])
+        self.f_route = ImageFont.truetype(os.path.join(font_dir, "NotoSansTC-Black.otf"), self.lyo['f_route'])
         self.f_text = ImageFont.truetype(os.path.join(font_dir, "msjh.ttc"), self.lyo['f_text'])
         self.f_time = ImageFont.truetype(os.path.join(font_dir, "agencyb.tff"), self.lyo['f_time'])
         self.f_mins = ImageFont.truetype(os.path.join(font_dir, "GenJyuuGothic-Monospace-Medium.ttf"), self.lyo['f_mins'])
@@ -56,7 +56,7 @@ class DisplayABC(ABC):
     def set_mode(self, mode):
         self.mode = mode
     
-    def dotted(self, text: str, max: int):
+    def _dotted(self, text: str, max: int):
         only_text = text.translate(str.maketrans('', '', string.punctuation)).replace(" ", "")
         offset = len(text) - len(only_text)
         if not text.lower().islower() and len(only_text) > max:

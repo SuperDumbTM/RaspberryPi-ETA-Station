@@ -1,9 +1,11 @@
 import json
 import datetime
 import os
-import eta
-import _request as rqst
+import sys
 from abc import ABC, abstractmethod
+sys.path.append(os.path.join(os.path.dirname((os.path.dirname(os.path.dirname(__file__)))))) # root path
+import _request as rqst
+from src.eta import eta
 from typing import Literal
 
 ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
@@ -47,6 +49,9 @@ class Details(ABC):
         except FileNotFoundError:
             return True
     
+    def get_route_name(self) -> str:
+        return self.route
+    
     @abstractmethod
     def get_stop_name(self) -> str: pass
     
@@ -59,11 +64,6 @@ class Details(ABC):
     @abstractmethod
     def get_orig(self): pass
 
-class DetailsFactory(ABC):
-    
-    def get_details() -> Details:
-        pass
-  
 class DetailsKmb(Details):
     
     relpath = os.path.join(PATH_DATA, "kmb")
@@ -356,6 +356,13 @@ class DetailsMtrBus(Details):
 class DetailsMtrTrain(Details):
     
     relpath =  os.path.join(PATH_DATA, "mtr", "train", "route.json")
+    route_names = {
+        'AEL': {'tc': "機場快線", 'en': "Airport Express"},
+        'TCL': {'tc': "東涌線", 'en': "Tung Chung Line"},
+        'TML': {'tc': "屯馬線", 'en': "Tuen Ma Line"},
+        'TKL': {'tc': "將軍澳線", 'en': "Tseung Kwan O Line"},
+        'EAL': {'tc': "東鐵線", 'en': "East Rail Line"}
+    }
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
         super().__init__(route, direction, service_type, stop, lang)
@@ -411,6 +418,9 @@ class DetailsMtrTrain(Details):
         with open(os.path.join(ROOT, DetailsMtrTrain.relpath), "w", encoding="utf-8") as f:
             f.write(json.dumps(output))
     
+    def get_route_name(self) -> str:
+        return self.route_names[self.route][self.lang]
+    
     def get_stop_name(self) -> str:
         try:
             if self.is_outdated(self.rte_path):
@@ -439,4 +449,9 @@ class DetailsMtrTrain(Details):
     def get_orig(self):
         return self._get_ends("dest")
 
-DetailsMtrLrt.update()
+
+
+class DetailsFactory:
+    
+    def get_details() -> Details:
+        pass
