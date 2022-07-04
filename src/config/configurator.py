@@ -21,13 +21,13 @@ class Configurator:
         # paths
         self.path_eta = os.path.join(root, "conf", "eta.json")
         self.path_epd = os.path.join(root, "conf", "epd.json")
-        self.path_epd_list = os.path.join(root, "src", "display", "epd_list.json")        
+        self.path_epd_list = os.path.join(root, "src", "display", "epd_list.json")      
         
         dir_data = os.path.join(root, "data", "route_data")
         self.eta_co_list: dict[str, Selector] = {
             '1': KmbSelector(dir_data, "tc"),
             # '2':"新巴/城巴",
-            # '3':"港鐵-重鐵",
+            '3': MtrTrainSelector(dir_data, "tc"),
             '4': MtrLrtSelector(dir_data, "tc"),
             '5': MtrBusSelector(dir_data, "tc"),
         }
@@ -103,6 +103,7 @@ class Configurator:
                     _rt = self.__select_co()
                     self.eta_conf.append(_rt)
                 except KeyboardInterrupt: # user quit
+                    print('quitting')
                     break
             # write config
             
@@ -140,10 +141,11 @@ class Configurator:
                 _dets = dets.DetailsMtrBus
             
             _dets = _dets(**entry)
+            route = _dets.get_route_name()
             orig = _dets.get_orig()
             dest = _dets.get_dest()
             stop = _dets.get_stop_name()
-            print(f"[{idx}] {entry['route']:<5}@ {stop}\t\t\t {orig} → {dest}")
+            print(f"[{idx}] {route:<5}@ {stop}\t\t\t {orig} → {dest}")
             entry['eta_co'] = co
     
     def view(self, refresh: bool = True):
@@ -156,6 +158,7 @@ class Configurator:
         # eta conf
         print("---------- 預報設定 ----------")
         self.__view_eta()
+        print("------------------------------")
         
     def edit(self):
         self.__load_confs()
@@ -208,4 +211,3 @@ class Configurator:
 
 if __name__ == "__main__":
     c = Configurator("/home/vm/vscode/RaspberryPi-ETA-Station/")
-    c.new()

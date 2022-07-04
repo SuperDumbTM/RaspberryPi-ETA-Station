@@ -1,18 +1,34 @@
 [
     {
-        "eta_co": "mtr_bus",
-        "route": "K76",
-        "direction": "outbound",
-        "service_type": null,
-        "stop": "K76-U010",
-        "lang": "zh"
-    },
-    {
-        "route": "2",
+        "eta_co": "kmb",
+        "route": "265M",
         "direction": "outbound",
         "service_type": 1,
-        "stop": "4",
-        "lang": "tc",
-        "eta_co": "kmb"
+        "stop": "1",
+        "lang": "tc"
+    },
+    {
+        "eta_co": "mtr_train",
+        "route": "TKL",
+        "direction": "outbound",
+        "service_type": null,
+        "stop": "NOP",
+        "lang": "tc"
+    },
+    {
+        "eta_co": "mtr_lrt",
+        "route": "761P",
+        "direction": "inbound",
+        "service_type": null,
+        "stop": "425",
+        "lang": "ch"
+    },
+    {
+        "eta_co": "mtr_bus",
+        "route": "K73",
+        "direction": "inbound",
+        "service_type": null,
+        "stop": "K73-D090",
+        "lang": "zh"
     }
 ]

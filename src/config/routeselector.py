@@ -195,7 +195,7 @@ class MtrBusSelector(Selector):
         if _upd.is_outdated(self.rte_path):
             _upd.update()
             
-        stops: dict = self.rte_path[self.route][self.direction]
+        stops: dict = self.route_data[self.route][self.direction]
         print(f"{self.route} {self.direction} - 車站列表")
         
         # zero indexing
