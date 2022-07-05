@@ -1,4 +1,5 @@
 # RaspberryPi-ETA-Station
+暫時支援九巴、港鐵到站時間預報
 
 ![output](https://user-images.githubusercontent.com/71750702/177256250-56625f1c-f7bb-487d-9ce6-c91fcf683998.jpg)
 <br>Waveshare 3.7" (epd3in7) 預覽
