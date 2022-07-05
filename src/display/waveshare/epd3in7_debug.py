@@ -118,7 +118,7 @@ class Epd3in7(DisplayABC):
             self.logger.debug(f"----- Row {row} -----")
             self.logger.debug(f"Reading entry {str(entry)}")
             
-            _dets = dets.Details.get_obj(co)(**entry)
+            _dets = dets._Details.get_obj(co)(**entry)
             _eta = eta.Eta.get_obj(co)(**entry)
             
             rte = _dets.get_route_name()

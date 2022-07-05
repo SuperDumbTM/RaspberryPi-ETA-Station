@@ -190,11 +190,7 @@ class MtrBusSelector(Selector):
                 dest = self.route_data[self.route]['details'][self.trans_dir[dir]]['dest']['name_' + self.lang]
                 print(f"\t {orig}→{dest}")
         
-    def sel_stop(self):
-        _upd = dets.DetailsMtrBus(self.route, self.direction, None, 0, self.lang)
-        if _upd.is_outdated(self.rte_path):
-            _upd.update()
-            
+    def sel_stop(self):           
         stops: dict = self.route_data[self.route][self.direction]
         print(f"{self.route} {self.direction} - 車站列表")
         
@@ -287,11 +283,7 @@ class MtrTrainSelector(Selector):
                 dest = self.route_data[self.route]['details'][self.trans_dir[dir]]['dest']['name_' + self.lang]
                 print(f"\t {orig}→{dest}")
         
-    def sel_stop(self):
-        _upd = dets.DetailsMtrTrain(self.route, self.direction, None, 0, self.lang)
-        if _upd.is_outdated(self.rte_path):
-            _upd.update()
-            
+    def sel_stop(self):            
         stops: dict = self.route_data[self.route][self.direction]
         print(f"{self.route} {self.direction} - 車站列表")
         

@@ -3,54 +3,42 @@ import datetime
 import os
 import sys
 from abc import ABC, abstractmethod
+from typing import Literal
 sys.path.append(os.path.join(os.path.dirname((os.path.dirname(os.path.dirname(__file__)))))) # root path
 import _request as rqst
-from src.eta import eta
-from typing import Literal
 
 ROOT = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 PATH_DATA = os.path.join("data", "route_data")
-        
 
 class Details(ABC):
-
-    root = ROOT
-    today = datetime.date.today().strftime('%Y%m%d')
-    
-    @staticmethod
-    def get_obj(co: str):
-        if co == eta.Kmb.abbr:        return DetailsKmb
-        elif co == eta.MtrLrt.abbr:   return DetailsMtrLrt
-        elif co == eta.MtrBus.abbr:   return DetailsMtrBus
-        elif co == eta.MtrTrain.abbr: return DetailsMtrTrain
-    
-    def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str) -> None:
-        self.route = str(route).upper()
-        self.direction = direction.lower()
-        self.service_type = str(service_type)
-        self.stop = stop
-        self.lang = lang
     
     @staticmethod
     @abstractmethod
-    def update(self): pass
+    def get_obj(co: str) -> object:
+        """get class by company abbreviation
+
+        Args:
+            co (str): abbreviation
+        """
     
-    def is_outdated(self, fpath: str, outdated = 30) -> bool:
+    @staticmethod
+    @abstractmethod
+    def update() -> None:
+        """
+        update the routes file of the class (ETA company)
+        """
+    
+    @staticmethod
+    @abstractmethod
+    def is_outdated(fpath: str, threshold = 30) -> bool:
         """
         check if the file needs update: 
         - outdated
         - not exists
         """
-        try:
-            with open(fpath, "r", encoding = "utf-8") as f:
-                lastupd = json.load(f)["lastupdate"]
-                day_diff = (datetime.datetime.strptime(self.today, "%Y%m%d") - datetime.datetime.strptime(lastupd, "%Y%m%d")).days
-                return True if day_diff > outdated else False
-        except FileNotFoundError:
-            return True
     
-    def get_route_name(self) -> str:
-        return self.route
+    @abstractmethod
+    def get_route_name(self) -> str: pass
     
     @abstractmethod
     def get_stop_name(self) -> str: pass
@@ -64,24 +52,67 @@ class Details(ABC):
     @abstractmethod
     def get_orig(self): pass
 
-class DetailsKmb(Details):
+class _Details(Details):
+
+    today = datetime.date.today().strftime('%Y%m%d')
+        
+    @staticmethod
+    def get_obj(co: str):
+        if co == DetailsKmb.abbr:        return DetailsKmb
+        elif co == DetailsMtrLrt.abbr:   return DetailsMtrLrt
+        elif co == DetailsMtrBus.abbr:   return DetailsMtrBus
+        elif co == DetailsMtrTrain.abbr: return DetailsMtrTrain
     
-    relpath = os.path.join(PATH_DATA, "kmb")
+    @staticmethod
+    def update_all():
+        for scls in _Details.__subclasses__():
+            fpath = os.path.join(ROOT, scls.rtepath)
+            if _Details.is_outdated(fpath):
+                scls.update()
+    
+    @staticmethod
+    def is_outdated(fpath: str, threshold = 30) -> bool:
+        today = _Details.today
+        try:
+            with open(fpath, "r", encoding = "utf-8") as f:
+                lastupd = json.load(f)["lastupdate"]
+                day_diff = (datetime.datetime.strptime(today, "%Y%m%d") - datetime.datetime.strptime(lastupd, "%Y%m%d")).days
+                return True if day_diff > threshold else False
+        except FileNotFoundError:
+            return True
+    
+    def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal) -> None:
+        self.route = str(route).upper()
+        self.direction = direction.lower()
+        self.service_type = str(service_type)
+        self.stop = stop
+        self.lang = lang
+        if root is not None: 
+            self.root = root
+        else:
+            self.root = ROOT
+    
+    def get_route_name(self) -> str:
+        return self.route
+
+class DetailsKmb(_Details):
+    
+    abbr = "kmb"
+    basedir = os.path.join(PATH_DATA, "kmb")
+    rtepath = os.path.join(basedir, "route.json")
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
-        super().__init__(route, direction, service_type, int(stop), lang)
+        super().__init__(route, direction, service_type, int(stop), lang, root)
         
-        if root is not None: self.root = root
-        self.rte_path = os.path.join(self.root, self.relpath, "route.json")
-        
+        self.rte_path = os.path.join(self.root, self.rtepath)
         fname = f"{self.route}-{self.direction}-{self.service_type}.json"
-        self.cache_path = os.path.join(self.root, self.relpath, "cache", fname)
+        self.cache_path = os.path.join(self.root, self.basedir, "cache", fname)
 
     @staticmethod
     def update():
         dir_trans = {'O': "outbound", 'I': "inbound"}
         data = rqst.kmb_route_detail()['data']
-        output = {'lastupdate': Details.today, 'data': {}}
+        output = {'lastupdate': _Details.today, 'data': {}}
         od = output['data']
 
         for entry in data:
@@ -96,7 +127,7 @@ class DetailsKmb(Details):
                 'dest_sc': entry['dest_sc'],
             })
             
-        with open(os.path.join(ROOT, DetailsKmb.relpath), "w", encoding="utf-8") as f:
+        with open(os.path.join(ROOT, DetailsKmb.rtepath), "w", encoding="utf-8") as f:
             f.write(json.dumps(output))
     
     def cache(self):
@@ -121,7 +152,7 @@ class DetailsKmb(Details):
         #NOTE: stop ID -1 due to cache file zero-indexing
         try:
             key = "name_" + self.lang
-            if self.is_outdated(self.cache_path):
+            if super().is_outdated(self.cache_path):
                 self.cache()
             with open(self.cache_path, "r", encoding="utf-8") as f:
                 data = json.load(f)["data"]
@@ -131,12 +162,11 @@ class DetailsKmb(Details):
     
     def _get_ends(self, key: str):
         try:
-            if self.is_outdated(self.rte_path):
-                DetailsKmb.update()
             with open(self.rte_path, "r", encoding="utf-8") as f:
                 data = json.load(f)['data']
                 return data[self.route][self.direction][self.service_type][key]
         except Exception as e:
+            print(e)
             return "err"
     
     def get_dest(self):
@@ -145,21 +175,21 @@ class DetailsKmb(Details):
     def get_orig(self):
         return self._get_ends("orig_" + self.lang)
 
-class DetailsMtrLrt(Details):
+class DetailsMtrLrt(_Details):
     
-    relpath = os.path.join(PATH_DATA, "mtr", "lrt", "route.json")
+    abbr = "mtr_lrt"
+    basedir = os.path.join(PATH_DATA, "mtr", "lrt")
+    rtepath = os.path.join(basedir, "route.json")
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
-        super().__init__(route, direction, service_type, stop, lang)
-        
-        if root is not None: self.root = root
-        self.rte_path = os.path.join(self.root, self.relpath)
+        super().__init__(route, direction, service_type, stop, lang, root)
+        self.rte_path = os.path.join(self.root, self.rtepath)
         
     @staticmethod
     def update():
         data = rqst.mtr_lrt_route_stop_detail()
         dir_trans = {'1': "outbound", '2': "inbound"}
-        output = {'lastupdate': Details.today, 'data': {}}
+        output = {'lastupdate': _Details.today, 'data': {}}
         od = output['data']
         
         # [0]route, [1]direction , [2]stopCode, [3]stopID, [4]stopTCName, [5]stopENName, [6]seq
@@ -214,14 +244,11 @@ class DetailsMtrLrt(Details):
             stop[1]['seq'] = str(seq)
             output['data']['706']['outbound'].setdefault(stop[0], stop[1])
         
-        with open(os.path.join(ROOT, DetailsMtrLrt.relpath), 'w', encoding="utf-8") as f:
+        with open(os.path.join(ROOT, DetailsMtrLrt.rtepath), 'w', encoding="utf-8") as f:
             f.write(json.dumps(output))
     
     def get_stop_name(self) -> str:
-        try:
-            if self.is_outdated(self.rte_path, 90):
-                DetailsMtrLrt.update()   
-                  
+        try:                  
             with open(self.rte_path, 'r', encoding="utf-8") as f:
                 data = json.load(f)['data']
                 return data[self.route][self.direction][self.stop]["name_" + self.lang]
@@ -229,10 +256,7 @@ class DetailsMtrLrt(Details):
             return "err"
     
     def _get_ends(self, key):
-        try:
-            if self.is_outdated(self.rte_path, 90):
-                DetailsMtrLrt.update()
-                
+        try:                
             with open(self.rte_path, "r", encoding="utf-8") as f:
                 data = json.load(f)['data']
                 return data[self.route]['details'][self.direction][key]["name_" + self.lang]
@@ -249,21 +273,21 @@ class DetailsMtrLrt(Details):
             return "天水圍循環綫" if self.lang == "ch" else "TSW Circular"
         return self._get_ends("dest")
        
-class DetailsMtrBus(Details):
+class DetailsMtrBus(_Details):
     
-    relpath  = os.path.join(PATH_DATA, "mtr", "bus", "route.json")
+    abbr = "mtr_bus"
+    basedir = os.path.join(PATH_DATA, "mtr", "bus")
+    rtepath = os.path.join(basedir, "route.json")
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
-        super().__init__(route, direction, service_type, stop, lang)
-        
-        if root is not None: self.root = root
-        self.rte_path = os.path.join(self.root, self.relpath)
+        super().__init__(route, direction, service_type, stop, lang, root)
+        self.rte_path = os.path.join(self.root, self.rtepath)
     
     @staticmethod
     def update():
         stop_data = rqst.mtr_bus_stop_detail()
         dir_trans = {"I":"inbound","O":"outbound"}
-        output = {'lastupdate': Details.today, 'data': {}}
+        output = {'lastupdate': _Details.today, 'data': {}}
         od = output['data']
 
         # [0]route, [1]direction, [2]seq, [3]stopID, [4]stopLAT, [5]stopLONG, [6]stopTCName, [7]stopENName
@@ -299,14 +323,11 @@ class DetailsMtrBus(Details):
                     'stop_id': line[3]
                 }
 
-        with open(os.path.join(ROOT, DetailsMtrBus.relpath), "w", encoding="utf-8") as f:
+        with open(os.path.join(ROOT, DetailsMtrBus.rtepath), "w", encoding="utf-8") as f:
             f.write(json.dumps(output))
     
     def get_stop_name(self) -> str:
-        try:
-            if self.is_outdated(self.rte_path):
-                DetailsMtrLrt.update()
-                
+        try:                
             with open(self.rte_path, 'r', encoding="utf-8") as f:
                 data = json.load(f)['data']
                 return data[self.route][self.direction][self.stop]["name_" + self.lang]
@@ -353,9 +374,11 @@ class DetailsMtrBus(Details):
         except Exception as e:
             return "err"
         
-class DetailsMtrTrain(Details):
+class DetailsMtrTrain(_Details):
     
-    relpath =  os.path.join(PATH_DATA, "mtr", "train", "route.json")
+    abbr = "mtr_train"
+    basedir = os.path.join(PATH_DATA, "mtr", "train")
+    rtepath = os.path.join(basedir, "route.json")    
     route_names = {
         'AEL': {'tc': "機場快線", 'en': "Airport Express"},
         'TCL': {'tc': "東涌線", 'en': "Tung Chung Line"},
@@ -365,10 +388,9 @@ class DetailsMtrTrain(Details):
     }
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:
-        super().__init__(route, direction, service_type, stop, lang)
+        super().__init__(route, direction, service_type, stop, lang, root)
         
-        if root is not None: self.root = root
-        self.rte_path = os.path.join(self.root, self.relpath)
+        self.rte_path = os.path.join(self.root, self.rtepath)
     
     @staticmethod
     def update():
@@ -379,8 +401,9 @@ class DetailsMtrTrain(Details):
             'LMC-DT': "inbound-LMC",
             'LMC-UT': "outbound-LMC",
             'TKS-DT': "inbound-TKS",
-            'TKS-UT': "outbount-TKS"}
-        output = {'lastupdate': Details.today, 'data': {}}
+            'TKS-UT': "outbount-TKS"
+            }
+        output = {'lastupdate': _Details.today, 'data': {}}
         od = output['data']
         
         # line, direction, stopCode, stopID, TCName, ENName, stopSeq
@@ -415,17 +438,14 @@ class DetailsMtrTrain(Details):
                         'name_en': row[5]
                     }
                     
-        with open(os.path.join(ROOT, DetailsMtrTrain.relpath), "w", encoding="utf-8") as f:
+        with open(os.path.join(ROOT, DetailsMtrTrain.rtepath), "w", encoding="utf-8") as f:
             f.write(json.dumps(output))
     
     def get_route_name(self) -> str:
         return self.route_names[self.route][self.lang]
     
     def get_stop_name(self) -> str:
-        try:
-            if self.is_outdated(self.rte_path):
-                DetailsMtrTrain.update()
-                
+        try:                
             with open(self.rte_path, 'r', encoding="utf-8") as f:
                 data = json.load(f)['data']
                 return data[self.route][self.direction][self.stop]["name_" + self.lang]
@@ -433,10 +453,7 @@ class DetailsMtrTrain(Details):
             return "err"
     
     def _get_ends(self, key):
-        try:
-            if self.is_outdated(self.rte_path):
-                self.update()
-                
+        try:                
             with open(self.rte_path, "r", encoding="utf-8") as f:
                 data = json.load(f)['data']
                 return data[self.route]['details'][self.direction][key]['name_' + self.lang]
@@ -449,9 +466,3 @@ class DetailsMtrTrain(Details):
     def get_orig(self):
         return self._get_ends("dest")
 
-
-
-class DetailsFactory:
-    
-    def get_details() -> Details:
-        pass

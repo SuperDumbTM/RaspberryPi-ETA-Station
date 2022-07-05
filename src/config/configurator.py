@@ -129,15 +129,15 @@ class Configurator:
         for idx, entry in enumerate(self.eta_conf):
             co = entry.pop('eta_co')
             
-            if co == eta.Kmb.abbr:
+            if co == dets.DetailsKmb.abbr:
                 _dets = dets.DetailsKmb
             elif co == "ctb/nwb":  # TODO: ctb/nwb
                 pass
-            elif co == eta.MtrTrain.abbr:  # TODO: mtr_hrt
+            elif co == dets.DetailsMtrTrain.abbr:  # TODO: mtr_hrt
                 _dets = dets.DetailsMtrTrain
-            elif co == eta.MtrLrt.abbr:
+            elif co == dets.DetailsMtrLrt.abbr:
                 _dets = dets.DetailsMtrLrt
-            elif co == eta.MtrBus.abbr:
+            elif co == dets.DetailsMtrBus.abbr:
                 _dets = dets.DetailsMtrBus
             
             _dets = _dets(**entry)
