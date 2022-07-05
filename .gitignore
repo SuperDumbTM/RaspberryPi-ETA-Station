@@ -1,6 +1,6 @@
 # custom ignor
 /tmp/*
-/data/route_data/*
+/data/route_data
 /conf
 
 # Byte-compiled / optimized / DLL files
