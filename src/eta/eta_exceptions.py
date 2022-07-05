@@ -1,4 +1,4 @@
-class EndOfServices(Exception): pass
+class EndOfService(Exception): pass
 
 class APIError(Exception): pass
 

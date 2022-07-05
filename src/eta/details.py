@@ -53,6 +53,7 @@ class Details(ABC):
     def get_orig(self): pass
 
 class _Details(Details):
+    """NOT intended to be instantiated"""
 
     today = datetime.date.today().strftime('%Y%m%d')
         
@@ -380,11 +381,11 @@ class DetailsMtrTrain(_Details):
     basedir = os.path.join(PATH_DATA, "mtr", "train")
     rtepath = os.path.join(basedir, "route.json")    
     route_names = {
-        'AEL': {'tc': "機場快線", 'en': "Airport Express"},
-        'TCL': {'tc': "東涌線", 'en': "Tung Chung Line"},
-        'TML': {'tc': "屯馬線", 'en': "Tuen Ma Line"},
-        'TKL': {'tc': "將軍澳線", 'en': "Tseung Kwan O Line"},
-        'EAL': {'tc': "東鐵線", 'en': "East Rail Line"}
+        'AEL': {'tc': "機場快線", 'en': "AIR EXP"},
+        'TCL': {'tc': "東涌線", 'en': "TCL"},
+        'TML': {'tc': "屯馬線", 'en': "TML"},
+        'TKL': {'tc': "將軍澳線", 'en': "TKOL"},
+        'EAL': {'tc': "東鐵線", 'en': "EAL"}
     }
     
     def __init__(self, route: str, direction: str, service_type: int | None, stop: int | str, lang: str, root: Literal = None) -> None:

@@ -20,7 +20,6 @@ class Epd3in7(DisplayABC):
     black = epd.GRAY4
     white = epd.GRAY1
     LAYOUT = {
-    # size = 8
     3:{
         'f_route': 33,
         'f_text': 16,
@@ -39,7 +38,6 @@ class Epd3in7(DisplayABC):
         'eta_pad': 25,
         'min_desc': "分"
     },
-    # size = 6
     2:{
         'f_route': 33,
         'f_text': 16,
@@ -58,7 +56,6 @@ class Epd3in7(DisplayABC):
         'eta_pad': 35,
         'min_desc': "分"
     },
-    # size = 5
     1:{
         'f_route': 33,
         'f_text': 16,
