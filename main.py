@@ -66,7 +66,7 @@ def path_check():
     if not os.path.exists(os.path.join(ROOT, "font")):
         Logger.log.critical("font/ is missing")
         raise FileNotFoundError()
-    if not os.path.exists(os.path.join(ROOT, "data")):
+    if not os.path.exists(os.path.join(ROOT, "data")) or not os.path.exists(os.path.join(ROOT, "data", "route_data")):
         Logger.log.warning("data/ is missing, reconstructing")
         os.makedirs(os.path.join(ROOT, "data", "route_data", "kmb", "cache"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "bus"))
