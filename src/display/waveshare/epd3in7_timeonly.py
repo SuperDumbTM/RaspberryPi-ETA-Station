@@ -57,7 +57,7 @@ class Epd3in7TimeOnly(epd3in7.Epd3in7):
                 break
             
             self.logger.debug(f"- Reading entry {entry}")
-            _dets = dets.Details.get_obj(co)(**entry)
+            _dets = dets._Details.get_obj(co)(**entry)
             _eta = eta.Eta.get_obj(co)(**entry)
             
             rte = _dets.get_route_name()

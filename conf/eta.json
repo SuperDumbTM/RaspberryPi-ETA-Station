@@ -10,7 +10,7 @@
     {
         "eta_co": "mtr_train",
         "route": "TKL",
-        "direction": "outbound",
+        "direction": "inbound",
         "service_type": null,
         "stop": "NOP",
         "lang": "tc"

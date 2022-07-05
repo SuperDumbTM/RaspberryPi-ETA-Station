@@ -61,7 +61,7 @@ class Epd3in7(epd3in7_debug.Epd3in7):
             co = entry['eta_co']
             del entry['eta_co']
                        
-            _dets = dets.Details.get_obj(co)(**entry)
+            _dets = dets._Details.get_obj(co)(**entry)
             _eta = eta.Eta.get_obj(co)(**entry)
             
             # route

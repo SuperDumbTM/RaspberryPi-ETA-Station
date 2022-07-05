@@ -8,6 +8,7 @@ from src.config import config
 from src.config import configurator
 from src.log.mylogger import Logger
 from src.display.interface import DisplayABC
+from src.eta import details as dets
 
 ROOT = os.path.dirname(__file__)
 
@@ -53,7 +54,6 @@ args = parser.parse_args()
 epd: DisplayABC = None
 
 def path_check():
-    
     if not os.path.exists(os.path.join(ROOT, "tmp")):
         Logger.log.info("tmp/ is missing, reconstructing")
         os.mkdir(os.path.join(ROOT, "tmp"))
@@ -68,9 +68,11 @@ def path_check():
         raise FileNotFoundError()
     if not os.path.exists(os.path.join(ROOT, "data")):
         Logger.log.warning("data/ is missing, reconstructing")
-        os.makedirs(os.path.join(ROOT, "data", "route_data", "kmb"))
+        os.makedirs(os.path.join(ROOT, "data", "route_data", "kmb", "cache"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "bus"))
         os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "lrt"))
+        os.makedirs(os.path.join(ROOT, "data", "route_data", "mtr", "train"))
+    dets._Details.update_all()
 
 def obj_setup():
     path_conf = os.path.join(ROOT, "conf", "epd.json")
@@ -126,8 +128,8 @@ def main():
 
 if __name__=='__main__':
     try:
+        path_check()
         if not args.is_config:
-            path_check()
             # set dry run
             if args.dryrun:
                 args.verbose = True

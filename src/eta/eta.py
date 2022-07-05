@@ -18,14 +18,26 @@ class Eta:
     msg: str
     data: list
     
+    @staticmethod
+    def get_obj(co: str):
+        """get class by ETA company abbreviation
+
+        Args:
+            co (str): comapany abbreviation
+        """
+        if co == dets.DetailsKmb.abbr:          return Kmb
+        elif co == dets.DetailsMtrLrt.abbr:     return MtrLrt
+        elif co == dets.DetailsMtrBus.abbr:     return MtrBus
+        elif co == dets.DetailsMtrTrain.abbr:   return MtrTrain
+    
     def __init__(self) -> None:
         try:
             self.eta_len = 0
             self.error = True
-            self.data = self.get_etas_data()['data']
+            self.data = self._fetch_etas()['data']
         except APIError:
             self.msg = "API 錯誤"
-        except EndOfServices as e:
+        except EndOfService as e:
             self.msg = str(e)
         except EmptyDataError:
             self.msg = "沒有數據"
@@ -36,57 +48,39 @@ class Eta:
         except requests.exceptions.RequestException as e:
             self.msg = "網絡錯誤"
         except Exception as e:
-            print(e)
+            Logger.debug(f"[Unhandled Exception] {e}")
             self.msg = "錯誤"
         else:
             self.msg = ""
             self.error = False
             self.eta_len = len(self.data)
         finally:
-            pass
-        
-    
-    @staticmethod
-    def get_obj(co: str):
-        if co == Kmb.abbr:          return Kmb
-        elif co == MtrLrt.abbr:     return MtrLrt
-        elif co == MtrBus.abbr:     return MtrBus
-        elif co == MtrTrain.abbr:   return MtrTrain
+            pass   
 
     def get_eta_count(self) -> int:
         return self.eta_len
 
-    def get_etas_data(self) -> dict:
+    def _fetch_etas(self) -> dict:
+        """fetch ETA data from API
+
+        Returns:
+            dict: `{'co', 'eta_mins', 'eta_time', 'remark'}`
+        """
         pass
-
-    def get_eta(self, seq: int = 0) -> tuple:
-        '''
-        Special cases:
-        1. ``seq``: eta sequence no, if ``seq`` less than available eta sequences, return ["",""]
-        2. Error occurs: return [message,""]
-
-
-        @Return:
-        ``[0]``: eta in miniutes
-        ``[1]``: eta in time
-        '''
-        if self.error:
-            return (self.msg, "--")
-        elif seq > self.get_eta_count():
-            return ("---", "--")
-        else:
-            return (self.data[seq]['eta_mins'], self.data[seq]['eta_time'])
     
-    def get_etas(self):
+    def get_etas(self) -> list:
+        """get all ETA data returned from API
+
+        Returns:
+            list: list of dictionary `{'co', 'eta_mins', 'eta_time', 'remark'}`
+        """
         try:
             return self.data
         except AttributeError:
             return []
     
 class Kmb(Eta):
-
-    abbr = 'kmb'
-
+    
     def __init__(self, route: str, direction: Literal["inbound", "outbound"], stop: int, service_type: int, lang: Literal["tc", "sc", "en"]):
         self.route = route
         self.direction = direction
@@ -95,7 +89,7 @@ class Kmb(Eta):
         self.lang = lang
         super().__init__()
 
-    def get_etas_data(self) -> dict:
+    def _fetch_etas(self) -> dict:
         data = rqst.kmb_eta(self.route.upper(), self.st)['data']
         
         if len(data) == 0: 
@@ -107,12 +101,12 @@ class Kmb(Eta):
         #TODO: Optimization: by dir
         #NOTE: the number of ETA entry form API at the same stop may not be 3 every time.  (e.g. N routes provide only 2)
         for stops in data:
-            if stops["seq"] == self.stop and stops["dir"]==self.direction[0].upper():
+            if stops["seq"] == self.stop and stops["dir"] == self.direction[0].upper():
                 if stops["eta"] == None:
                     if stops["rmk_" + self.lang] == "":
-                        raise EndOfServices("服務時間已過")
+                        raise EndOfService("服務時間已過")
                     else:
-                        raise EndOfServices(stops["rmk_" + self.lang])
+                        raise EndOfService(stops["rmk_" + self.lang])
 
                 eta_time = datetime.strptime(stops["eta"], "%Y-%m-%dT%H:%M:%S%z").replace(tzinfo=None)
                 now = datetime.now()
@@ -136,8 +130,6 @@ class Kmb(Eta):
 
 class MtrLrt(Eta):
 
-    abbr = "mtr_lrt"
-
     def __init__(self, route: str, direction: None, stop: int, service_type: None, lang: Literal["ch", "en"]):
         '''
         ``lang``: ch, en
@@ -150,7 +142,7 @@ class MtrLrt(Eta):
         
         super().__init__()
 
-    def get_etas_data(self):
+    def _fetch_etas(self):
         data = rqst.mtr_lrt_eta(self.stop)
         # E: return status error
         if data["status"] == 0:
@@ -162,12 +154,13 @@ class MtrLrt(Eta):
 
         for platform in data['platform_list']:
             if platform.get("end_service_status") is not None:
-                raise EndOfServices("服務時間已過")
+                raise EndOfService("服務時間已過")
             
             for entry in platform['route_list']:
                 if entry['route_no'] == self.route and entry[f'dest_{self.lang}'] == self._dets.get_dest():
                     try:
-                        eta_min = int(entry['time_' + self.lang].split(" ")[0])
+                        eta_min = entry['time_' + self.lang].split(" ")[0]
+                        eta_min = int(eta_min)
                     except ValueError:
                         #NOTE: 'eta_mins' may not a be a number due to "即將抵達/離開" -> ValueError
                         output['data'].append({
@@ -188,8 +181,6 @@ class MtrLrt(Eta):
         return output
 
 class MtrBus(Eta):
-
-    abbr = "mtr_bus"
     
     def __init__(self, route: str, direction: str, stop: str, service_type: None, lang: Literal["zh", "en"]):
         '''
@@ -204,7 +195,7 @@ class MtrBus(Eta):
         
         super().__init__()
 
-    def get_etas_data(self):
+    def _fetch_etas(self):
         data = rqst.mtr_bus_eta(self.route.upper(), self.lang)
         
         # NOTE: Currently, "status" from API always is returned 0
@@ -215,7 +206,7 @@ class MtrBus(Eta):
         # elif data["routeStatusRemarkTitle"] == "停止服務":
         #     raise EndOfServices
         if data["routeStatusRemarkTitle"] in ("停止服務", "Non-service hours"):
-            raise EndOfServices("服務時間已過")
+            raise EndOfService("服務時間已過")
         
         timestamp = datetime.strptime(data["routeStatusTime"], "%Y/%m/%d %H:%M")
         output = {}
@@ -255,7 +246,6 @@ class MtrBus(Eta):
 
 class MtrTrain(Eta):
     
-    abbr = "mtr_train"
     dir_trans = {"inbound": "UP", "outbound": "DOWN"}
     dir_rtrans = {'UP': "inbound", 'DOWN': "outbound"}
     
@@ -267,9 +257,8 @@ class MtrTrain(Eta):
         self.lang = lang
         super().__init__()
 
-    def get_etas_data(self) -> dict:
+    def _fetch_etas(self) -> dict:
         data: dict = rqst.mtr_train_eta(self.route.upper(), self.stop, self.lang)
-        
         if len(data) == 0: 
             raise APIError
         
@@ -304,12 +293,12 @@ class MtrTrain(Eta):
 # debug
 if __name__ == "__main__":
     root = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data", "route_data")
-    cls = Kmb("N269","outbound",1,1,"tc")
+    # cls = Kmb("N269","outbound",1,1,"tc")
     #cls = Kmb("948","outbound",1,1,"tc")
     #cls = MtrLrt("705", "inbound", 540, None, "ch")
     #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
     #cls = MtrBus("K76","outbound","K76-U010",None,"zh")
-    #cls = MtrTrain("TML","outbound","TIS",None,"tc")
+    cls = MtrTrain("TKL","inbound","NOP",None,"tc")
     print("eta\t", cls.get_etas())
     print("msg\t", cls.msg)
     pass
